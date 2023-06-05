@@ -15,7 +15,6 @@ services:
       - hv_cao_network
 
   hvcao_api_docker:
-    container_name: hvcao_api
     build:
       context: ./api
       dockerfile: ApiDjangoDockerfile
