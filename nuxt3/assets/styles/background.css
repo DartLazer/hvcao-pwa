@@ -1,0 +1,7 @@
+body {
+    background-image: url("/static/background2.jpg");
+    background-size: cover;
+    background-position: right;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* This ensures the image doesn't scroll with the page. */
+}

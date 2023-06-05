@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  hvcao-nuxt:
+    build:
+      context: .
+      dockerfile: Nuxt3Dockerfile
+    ports:
+      - '3100:3000'
+    environment:
+      - NODE_ENV=production
+    restart: always
+    networks:
+      - hv_cao_network
+
+  hvcao_api:
+    container_name: hvcao_api
+    build:
+      context: ./api
+      dockerfile: ApiDjangoDockerfile
+    command: gunicorn hvcao_rest_api.wsgi:application --bind 0.0.0.0:8002
+    volumes:
+      - hvcao_static_volume:/code/django_static
+      - hv_cao_media_volume:/code/django_mediafiles
+    expose:
+      - 8002
+    env_file:
+      - config_files/env.ssl
+    restart: unless-stopped
+    working_dir: /code  # Set the working directory to '/code'
+    networks:
+      - hv_cao_network
+
+networks:
+  hv_cao_network:
+
+
+volumes:
+  hvcao_static_volume:
+  hv_cao_media_volume:

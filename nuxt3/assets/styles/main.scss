@@ -1,0 +1,30 @@
+@import 'bootstrap/scss/bootstrap';
+
+.container {
+  color: white;
+}
+
+.navbar .nav-link {
+  //color: white !important;
+}
+
+.navbar .nav-link:hover {
+  //color: white !important;
+  font-weight: bold;
+  font-size: 110%;
+}
+
+.navbar .nav-link:active,
+.navbar .nav-link:focus,
+.nuxt-link-active{
+  //color: white !important;
+  font-weight: bold;
+}
+.navbar-brand,
+.navbar-brand:hover {
+  //color: white !important;
+  font-weight: bold;
+}
+
+
+

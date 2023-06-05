@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "title": "Laat landen voor je weekend",
+    "bron": "Bijlage 4 Art. 1",
+    "explanation": "Ja maar dan heb je recht op 1 pd.",
+    "tags": ["laat", "landen", "weekend", "pd"]
+  },
+  {
+    "id": 2,
+    "title": "Mogen ze mij bellen op een vrije dag?",
+    "bron": "Bijlage 2 Art. 5",
+    "explanation": "Ja maar opnemen is bewilligen",
+    "tags": ["bellen", "vrije", "dag"]
+  },
+  {
+    "id": 3,
+    "title": "Wat krijg ik voor bewilligen?",
+    "bron": "Bijlage 8 Art. 2",
+    "explanation": "1 Premie dag (PD)",
+    "tags": ["bewilligen", "pd", "vrije dag"]
+  }
+]

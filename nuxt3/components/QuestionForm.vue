@@ -1,0 +1,74 @@
+<template>
+  <form @submit.prevent="submitQuestionForm" class="form-signin ">
+    <h2 class="form-signin-heading">Een vraag toevoegen</h2>
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Titel" required autofocus v-model="title">
+    </div>
+    <div class="form-group">
+      <textarea class="form-control" placeholder="Antwoord" required v-model="explanation"></textarea>
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Bron" required v-model="source">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Categorie" required v-model="category">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Tags (comma seperated, helpen met zoeken)" required
+             v-model="tags">
+    </div>
+    <button class="btn btn-primary btn-block" type="submit">Submit</button>
+  </form>
+</template>
+
+<script setup>
+import {deleteQuestion, submitQuestion} from '~/services/api.js';
+
+// Define props
+const questionData = ref([]);
+const successMessage = ref('');
+
+// Initialize fields
+const title = ref('');
+const explanation = ref('');
+const source = ref('');
+const category = ref('');
+const tags = ref('');
+// Define emitters
+const emit = defineEmits(['questionDeleted', 'errorAlert']);
+
+const deleteQuestionMethod = async (id) => {
+  try {
+    const message = await deleteQuestion(id);
+    emit('questionDeleted');
+    emit(message[0], message[1]);
+  } catch (error) {
+    console.error(error.message);
+    emit('errorAlert', error.message);
+  }
+};
+const submitQuestionForm = async () => {
+  try {
+    const question = {
+      title: title.value,
+      explanation: explanation.value,
+      source: source.value,
+      category: category.value,
+      tags: tags.value,
+    };
+    await submitQuestion(question);
+    emit('questionSubmitted')
+    emit('successAlert', 'Message submitted succesfully!')
+    title.value = '';
+    explanation.value = '';
+    source.value = '';
+    category.value = '';
+    tags.value = '';
+  } catch (error) {
+    // Error handling
+    console.error(error);
+    emit('errorAlert', error.message)
+    $nuxt.emit('submissionError', error);
+  }
+};
+</script>

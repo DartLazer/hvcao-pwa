@@ -1,0 +1,24 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nuxt generate",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "start": "nuxt start",
+    "buildandpreview": "nuxt generate && nuxt preview"
+  },
+  "devDependencies": {
+    "@types/node": "^18",
+    "@vite-pwa/nuxt": "^0.0.9",
+    "nuxt": "^3.5.0",
+    "sass": "^1.62.1",
+    "vite": "^4.3.8"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.7",
+    "bootstrap": "^5.2.3",
+    "idb-keyval": "^6.2.1"
+  }
+}

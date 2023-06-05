@@ -1,0 +1,427 @@
+[
+  {
+    "id": 1,
+    "title": "Wat is de standplaats van de werknemer?",
+    "bron": "Hoofdstuk 7 - Plaats van de werkzaamheden, Artikel 7.1",
+    "explanation": "De standplaats van de werknemer is Schiphol, tenzij anders vermeld in de arbeidsovereenkomst of na wijziging volgens artikel 7.4.",
+    "tags": [
+      "standplaats",
+      "werkzaamheden",
+      "arbeidsovereenkomst",
+      "wijziging"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Kan een werknemer aan- en afmelden op andere luchthavens dan Schiphol?",
+    "bron": "Hoofdstuk 7 - Plaats van de werkzaamheden, Artikel 7.1",
+    "explanation": "Ja, vliegers kunnen ook aan- en afmelden op meldstations te Rotterdam Airport en Eindhoven Airport volgens de regeling in Bijlage 8.",
+    "tags": [
+      "aanmelden",
+      "afmelden",
+      "luchthavens",
+      "meldstations",
+      "regeling"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Hoe vindt stationering plaats?",
+    "bron": "Hoofdstuk 7 - Plaats van de werkzaamheden, Artikel 7.2",
+    "explanation": "Stationering vindt plaats volgens de vereiste type-, dan wel versie- kwalificaties. Bij onvoldoende vrijwilligers wordt senioriteit en toerbeurt in overleg met de werknemersorganisatie gehanteerd.",
+    "tags": [
+      "stationering",
+      "type",
+      "versie",
+      "kwalificaties",
+      "vrijwilligers",
+      "senioriteit",
+      "toerbeurt",
+      "werknemersorganisatie"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Kan de werkgever de werknemer overplaatsen?",
+    "bron": "Hoofdstuk 7 - Plaats van de werkzaamheden, Artikel 7.3",
+    "explanation": "Ja, de werkgever kan de werknemer overplaatsen, maar zal zoveel mogelijk rekening houden met ernstige bezwaren van de werknemer. De voorwaarden voor overplaatsing worden in overleg geregeld.",
+    "tags": [
+      "overplaatsing",
+      "werkgever",
+      "werknemer",
+      "voorwaarden",
+      "overleg"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Wat zijn de voorwaarden voor detachering van de werknemer?",
+    "bron": "Hoofdstuk 7 - Plaats van de werkzaamheden, Artikel 7.4",
+    "explanation": "De voorwaarden voor detachering worden in overleg met de werknemersorganisatie geregeld. Bij verplichte detachering wordt overeenstemming bereikt over de noodzaak, de aard van de werkzaamheden en de duur van de detachering. Individuele detachering kan plaatsvinden onder voorwaarden die worden overeengekomen tussen werkgever en werknemer, met inachtneming van de CAO.",
+    "tags": [
+      "detachering",
+      "werknemersorganisatie",
+      "overleg",
+      "noodzaak",
+      "werkzaamheden",
+      "duur",
+      "individuele detachering",
+      "voorwaarden",
+      "CAO"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Kan de werknemer overnachten buiten de standplaats?",
+    "bron": "Hoofdstuk 7 - Plaats van de werkzaamheden, Artikel 7.5",
+    "explanation": "Ja, indien gedurende verblijf buiten de standplaats in opdracht van werkgever overnachting noodzakelijk is, kan de werknemer gebruikmaken van passende (hotel)accommodatie, zoals beschreven in Bijlage 12.",
+    "tags": [
+      "overnachten",
+      "standplaats",
+      "verblijf",
+      "opdracht",
+      "werkgever",
+      "passende accommodatie",
+      "hotelaccommodatie",
+      "Bijlage 12"
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Hoe wordt de duur en opname van vakantie geregeld?",
+    "bron": "Hoofdstuk 9 - Vakantie en verlof, Artikel 9.1",
+    "explanation": "De duur en de wijze van opname van vakantie worden vermeld in Bijlage 9. Daarnaast wordt rekening gehouden met het seizoengevoelige karakter van het bedrijf en de wensen van de werknemer met betrekking tot de aanvangsdatum van zijn vakantie. Gedurende de vakantiedagen heeft de werknemer recht op salaris volgens het gestelde in artikel 10.9.",
+    "tags": [
+      "vakantie",
+      "duur",
+      "opname",
+      "Bijlage 9",
+      "seizoengevoelig",
+      "aanvangsdatum",
+      "salaris"
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Heeft de werknemer recht op buitengewoon verlof?",
+    "bron": "Hoofdstuk 9 - Vakantie en verlof, Artikel 9.2",
+    "explanation": "Ja, de werknemer heeft aanspraak op buitengewoon verlof bij bijzondere gebeurtenissen zoals geregeld in Bijlage 10 van deze CAO. Tijdens buitengewoon verlof heeft de werknemer recht op salaris volgens het gestelde in artikel 10.9. Daarnaast is in Bijlage 10a een regeling opgenomen voor zwangerschaps- en bevallingsverlof, ouderschapsverlof, kortdurend zorgverlof, langdurend zorgverlof en adoptieverlof.",
+    "tags": [
+      "buitengewoon verlof",
+      "bijzondere gebeurtenissen",
+      "Bijlage 10",
+      "salaris",
+      "artikel 10.9",
+      "Bijlage 10a",
+      "zwangerschapsverlof",
+      "bevallingsverlof",
+      "ouderschapsverlof",
+      "zorgverlof",
+      "adoptieverlof"
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Wordt er extra vrije tijd gegeven op specifieke dagen?",
+    "bron": "Hoofdstuk 9 - Vakantie en verlof, Artikel 9.3",
+    "explanation": "Ja, op specifieke dagen zoals Goede Vrijdag, Tweede Paasdag, Hemelvaartsdag, Tweede Pinksterdag, Nieuwjaarsdag, Koningsdag, Eerste en Tweede Kerstdag en Bevrijdingsdag (eens in de vijf jaar) wordt extra vrije tijd gegeven volgens de regeling in Bijlage 9.",
+    "tags": [
+      "extra vrije tijd",
+      "specifieke dagen",
+      "Bijlage 9",
+      "Goede Vrijdag",
+      "Tweede Paasdag",
+      "Hemelvaartsdag",
+      "Tweede Pinksterdag",
+      "Nieuwjaarsdag",
+      "Koningsdag",
+      "Eerste Kerstdag",
+      "Tweede Kerstdag",
+      "Bevrijdingsdag"
+    ]
+  },
+  {
+    "id": 10,
+    "title": "Kan een werknemer onbetaald verlof aanvragen?",
+    "bron": "Hoofdstuk 9 - Vakantie en verlof, Artikel 9.4",
+    "explanation": "Ja, indien de dienstuitvoering het toestaat, kan de werkgever op verzoek van de werknemer onbetaald verlof verlenen met behoud van het dienstverband. Tijdens onbetaald verlof zijn bepaalde artikelen niet van toepassing en is de werknemer verantwoordelijk voor de volledige premie voor zijn pensioenvoorziening, tenzij anders overeengekomen.",
+    "tags": [
+      "onbetaald verlof",
+      "dienstuitvoering",
+      "verzoek",
+      "dienstverband",
+      "artikelen",
+      "pensioenvoorziening",
+      "premie"
+    ]
+  },
+  {
+    "id": 11,
+    "title": "Worden faciliteiten verleend aan werknemers die een openbaar ambt bekleden?",
+    "bron": "Hoofdstuk 9 - Vakantie en verlof, Artikel 9.5",
+    "explanation": "Ja, indien een werknemer een openbaar ambt wenst te bekleden, zal de werkgever bekijken in hoeverre faciliteiten kunnen worden verleend voor de vervulling hiervan.",
+    "tags": [
+      "faciliteiten",
+      "openbaar ambt",
+      "vervulling"
+    ]
+  },
+  {
+    "id": 12,
+    "title": "Moet de resterende vrije tijd voor pensionering worden opgenomen?",
+    "bron": "Hoofdstuk 9 - Vakantie en verlof, Artikel 9.6",
+    "explanation": "Ja, de werknemer is verplicht en de werkgever zal hem de gelegenheid bieden om de resterende vrije tijd waarop hij nog recht heeft, vóór de pensioendatum op te nemen. Tenzij anders overeengekomen, dient de vrije tijd vóór pensionering te worden opgenomen.",
+    "tags": [
+      "resterende vrije tijd",
+      "pensionering",
+      "pensioendatum",
+      "overeenkomst"
+    ]
+  },
+  {
+    "id": 13,
+    "title": "Heeft de werknemer recht op roostervrije dagen?",
+    "bron": "Hoofdstuk 9 - Vakantie en verlof, Artikel 9.7",
+    "explanation": "Ja, de werknemer heeft recht op roostervrije dagen volgens het aantal en de wijze van opname zoals vermeld in Bijlage 7, Hoofdstuk VI.",
+    "tags": [
+      "roostervrije dagen",
+      "aantal",
+      "wijze van opname",
+      "Bijlage 7",
+      "Hoofdstuk VI"
+    ]
+  },
+  {
+    "id": 14,
+    "title": "Kan een werknemer gebruikmaken van de afbouwregeling?",
+    "bron": "Hoofdstuk 9 - Vakantie en verlof, Artikel 9.8",
+    "explanation": "Ja, een werknemer kan gebruikmaken van de afbouwregeling zoals vastgelegd in Bijlage 25.",
+    "tags": [
+      "afbouwregeling",
+      "gebruikmaken",
+      "Bijlage 25"
+    ]
+  },
+  {
+    "id": 15,
+    "title": "Hoe wordt het salaris bepaald?",
+    "bron": "Hoofdstuk 10 - Financiële regelingen, Artikel 10.1",
+    "explanation": "Het salaris van de werknemer wordt bepaald volgens de geldende salarisregeling zoals vastgelegd in Bijlage 2. Werkgever zal elke wijziging van het salaris schriftelijk aan de werknemer mededelen, behalve bij collectieve salariswijzigingen die algemeen bekend zijn gemaakt. Het salaris wordt maandelijks betaald na aftrek van belastingen, sociale heffingen, pensioenbijdragen, verschuldigde bedragen aan werkgever, contributie/premies voor collectieve verzekeringen (met machtiging van de werknemer).",
+    "tags": [
+      "salaris",
+      "salarisregeling",
+      "Bijlage 2",
+      "wijziging salaris",
+      "belastingen",
+      "sociale heffingen",
+      "pensioenbijdragen",
+      "verschuldigde bedragen",
+      "contributie",
+      "premies",
+      "collectieve verzekeringen"
+    ]
+  },
+  {
+    "id": 16,
+    "title": "Zijn er bijzondere vergoedingen?",
+    "bron": "Hoofdstuk 10 - Financiële regelingen, Artikel 10.2",
+    "explanation": "Ja, de regeling voor betaling van de routekostenvergoeding is vermeld in Bijlage 2A.",
+    "tags": [
+      "bijzondere vergoedingen",
+      "routekostenvergoeding",
+      "Bijlage 2A"
+    ]
+  },
+  {
+    "id": 17,
+    "title": "Heeft de werknemer recht op vakantietoeslag?",
+    "bron": "Hoofdstuk 10 - Financiële regelingen, Artikel 10.3",
+    "explanation": "Ja, de werknemer heeft recht op vakantietoeslag volgens de regeling in Bijlage 2.",
+    "tags": [
+      "vakantietoeslag",
+      "Bijlage 2"
+    ]
+  },
+  {
+    "id": 18,
+    "title": "Hoe wordt het vervoer naar en van het werk geregeld?",
+    "bron": "Hoofdstuk 10 - Financiële regelingen, Artikel 10.4",
+    "explanation": "Met inachtneming van Bijlage 4 is het vervoer op de standplaats voor rekening van de werknemer. Buiten de standplaats is het vervoer naar en van het werk voor rekening van de werkgever. Deze bepaling laat hetgeen is bepaald in Bijlage 8 onverlet.",
+    "tags": [
+      "vervoer",
+      "standplaats",
+      "Bijlage 4",
+      "Bijlage 8"
+    ]
+  },
+  {
+    "id": 19,
+    "title": "Welke betalingen gelden bij arbeidsongeschiktheid?",
+    "bron": "Hoofdstuk 10 - Financiële regelingen, Artikel 10.5",
+    "explanation": "Bij arbeidsongeschiktheid gelden de voorzieningen zoals vermeld in Bijlage 3.",
+    "tags": [
+      "arbeidsongeschiktheid",
+      "voorzieningen",
+      "Bijlage 3"
+    ]
+  },
+  {
+    "id": 20,
+    "title": "Hoe worden ziekte en ziektekosten tijdens verblijf buiten Nederland behandeld?",
+    "bron": "Hoofdstuk 10 - Financiële regelingen, Artikel 10.6",
+    "explanation": "Voor werknemers met standplaats in Nederland die tijdens verblijf buiten Nederland een opdracht of taak uitvoeren, geldt de regeling zoals vermeld in Bijlage 6.",
+    "tags": [
+      "ziekte",
+      "ziektekosten",
+      "verblijf buiten Nederland",
+      "standplaats",
+      "Bijlage 6"
+    ]
+  },
+  {
+    "id": 21,
+    "title": "Ontvangt de werknemer een onkostenvergoeding tijdens verblijf buiten de standplaats?",
+    "bron": "Hoofdstuk 10 - Financiële regelingen, Artikel 10.7",
+    "explanation": "Ja, de werknemer ontvangt een onkostenvergoeding tijdens verblijf buiten de standplaats volgens de regeling in Bijlage 5 of Bijlage 11.",
+    "tags": [
+      "onkostenvergoeding",
+      "verblijf buiten standplaats",
+      "Bijlage 5",
+      "Bijlage 11"
+    ]
+  },
+  {
+    "id": 22,
+    "title": "Welke voorzieningen gelden bij overlijden?",
+    "bron": "Hoofdstuk 10 - Financiële regelingen, Artikel 10.8",
+    "explanation": "Bij overlijden van de werknemer wordt er een overlijdensuitkering betaald aan de weduwe/weduwnaar of gezamenlijke wezen. De hoogte van de uitkering is 3 keer het laatst verdiende maandsalaris. De voorwaarden en eventuele andere uitkeringen worden bepaald volgens de regeling in Bijlage 16.",
+    "tags": [
+      "overlijden",
+      "overlijdensuitkering",
+      "weduwe",
+      "weduwnaar",
+      "wezen",
+      "maandsalaris",
+      "Bijlage 16"
+    ]
+  },
+  {
+    "id": 23,
+    "title": "Hoe worden pensioenen geregeld?",
+    "bron": "Hoofdstuk 10 - Financiële regelingen, Artikel 10.9",
+    "explanation": "Tenzij uitgesloten of onmogelijk volgens de pensioenregeling, komt er tussen Transavia en de werknemer een pensioenovereenkomst tot stand. Deelname aan de pensioenregeling wordt bepaald volgens het pensioenreglement dat van toepassing is. De pensioenregeling is een individuele beschikbare premieregeling en wordt uitgevoerd door BeFrank (bruto en netto pensioen) en elipsLife (risicoverzekeringen).",
+    "tags": [
+      "pensioenen",
+      "pensioenovereenkomst",
+      "pensioenregeling",
+      "pensioenreglement",
+      "BeFrank",
+      "elipsLife",
+      "individuele beschikbare premieregeling"
+    ]
+  },
+  {
+    "id": 24,
+    "title": "Wat is de regeling bij molestrisico?",
+    "bron": "Hoofdstuk 10 - Financiële regelingen, Artikel 10.10",
+    "explanation": "Voor werknemers die overlijden of blijvend arbeidsongeschikt worden als gevolg van molest waarmee ze in dienst worden geconfronteerd (behalve bij actieve deelname aan de molestdaad ter verdediging van werkgeversbelangen), geldt de regeling zoals vermeld in Bijlage 16.",
+    "tags": [
+      "molestrisico",
+      "overlijden",
+      "arbeidsongeschiktheid",
+      "molest",
+      "Bijlage 16"
+    ]
+  },
+  {
+    "id": 25,
+    "title": "Welke voorzieningen gelden bij het niet voldoen aan gewijzigde bekwaamheidseisen?",
+    "bron": "Hoofdstuk 10 - Financiële regelingen, Artikel 10.11",
+    "explanation": "Werknemers die niet meer voldoen aan de bekwaamheidseisen vanwege organisatieverandering, functie-inhoudsverandering of technologische ontwikkeling en niet in een andere functie kunnen worden geplaatst, hebben recht op voorzieningen zoals bepaald in overleg tussen werkgever en werknemersorganisatie. Indien gewenst, kan de werknemer in overleg met de werkgever deze voorzieningen zelf vaststellen.",
+    "tags": [
+      "gewijzigde bekwaamheidseisen",
+      "voorzieningen",
+      "werkgever",
+      "werknemersorganisatie"
+    ]
+  },
+  {
+    "id": 26,
+    "title": "Wat is de brevetverliesregeling?",
+    "bron": "Hoofdstuk 10 - Financiële regelingen, Artikel 10.12",
+    "explanation": "Voor cockpitpersoneel geldt een verplichte deelname aan een collectieve verzekering (voor de periode 1 januari 2017 tot en met 31 december 2018) of een collectieve regeling (vanaf 1 januari 2019) die een kapitaalsuitkering biedt bij algehele en blijvende ongeschiktheid en het verlies van het brevet. De voorwaarden van de brevetverliesregeling zijn opgenomen in Bijlage 2 (1 januari 2017 tot en met 31 december 2018) of uitgevoerd door de Stichting Loss of License Transavia Vliegers (SLOLTV) (vanaf 1 januari 2019).",
+    "tags": [
+      "brevetverliesregeling",
+      "cockpitpersoneel",
+      "collectieve verzekering",
+      "kapitaalsuitkering",
+      "Bijlage 2",
+      "Stichting Loss of License Transavia Vliegers",
+      "SLOLTV"
+    ]
+  },
+  {
+    "id": 27,
+    "title": "Hoe werkt de studieschuldregeling voor First Officers?",
+    "bron": "Hoofdstuk 10 - Financiële regelingen, Artikel 10.13",
+    "explanation": "Voor First Officers die op of na 1 april 2013 in dienst treden bij Transavia, wordt deelname aan de studieschuldregeling aangeboden. Hierbij wordt een bruto gekapitaliseerd bedrag eenmalig uitbetaald, gebaseerd op het deelnameformulier en bewijs van studieschuld dat aan Transavia is overhandigd. Het bedrag wordt gefinancierd uit de aanspraak volgens Artikel 6 van Bijlage 2. Terugbetaling van onverschuldigd betaalde bedragen kan plaatsvinden bij beëindiging van het dienstverband.",
+    "tags": [
+      "studieschuldregeling",
+      "First Officers",
+      "bruto gekapitaliseerd bedrag",
+      "Bijlage 2",
+      "terugbetaling"
+    ]
+  },
+  {
+    "id": 27,
+    "title": "Wat zijn de vergoedingen voor verblijf buiten de standplaats?",
+    "bron": "Bijlage 5",
+    "explanation": "De kosten van logies inclusief ontbijt zijn voor rekening van de werkgever. Verblijfkosten buiten de standplaats en verplichte stationering worden vergoed volgens de daggeldregeling. De hoogte van het daggeld wordt bepaald aan de hand van de geldende normen en kan verschillen per land en tijdsduur van het verblijf.",
+    "tags": [
+      "vergoedingen",
+      "verblijf",
+      "standplaats",
+      "daggeldregeling"
+    ]
+  },
+  {
+    "id": 29,
+    "title": "Geldt de daggeldregeling ook bij nevenopdrachten of trainingen?",
+    "bron": "Bijlage 5",
+    "explanation": "Bij nevenopdrachten, inclusief trainingen, wordt een adequaat daggeld vastgesteld door het Hoofd Vliegdienst.",
+    "tags": [
+      "daggeldregeling",
+      "nevenopdrachten",
+      "trainingen",
+      "Hoofd Vliegdienst"
+    ]
+  },
+  {
+    "id": 30,
+    "title": "Kunnen de kosten van wassen en chemisch reinigen van kleding worden gedeclareerd?",
+    "bron": "Bijlage 5",
+    "explanation": "Bij reizen langer dan vijf dagen zijn de kosten van het wassen van gebruikte kleding voor rekening van de werkgever en kunnen worden gedeclareerd. Het chemisch reinigen van uniformkleding komt te allen tijde voor rekening van de werkgever en kan ook worden gedeclareerd.",
+    "tags": [
+      "kosten",
+      "wassen",
+      "chemisch reinigen",
+      "kleding",
+      "declareren"
+    ]
+  },
+  {
+    "id": 31,
+    "title": "Kan er worden afgeweken van de regeling voor verblijfkosten buiten de standplaats?",
+    "bron": "Bijlage 5",
+    "explanation": "Afwijkingen van de regeling voor verblijfkosten buiten de standplaats kunnen alleen worden gemaakt in overleg tussen de werkgever en de werknemersorganisatie.",
+    "tags": [
+      "afwijkingen",
+      "verblijfkosten",
+      "standplaats",
+      "overleg",
+      "werknemersorganisatie"
+    ]
+  }
+]
+

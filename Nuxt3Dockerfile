@@ -1,0 +1,20 @@
+# Base image
+FROM node:16-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Copy package.json and package-lock.json
+COPY nuxt3/package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy source files
+COPY nuxt3/ .
+
+# Build the project for production
+RUN npm run build
+
+# Start the application in production mode
+CMD ["npx", "nuxt", "start"]
