@@ -29,10 +29,13 @@ services:
     restart: unless-stopped
     working_dir: /code  # Set the working directory to '/code'
     networks:
+      - npm-nw
       - hv_cao_network
 
 networks:
   hv_cao_network:
+  npm-nw:
+    external: true
 
 
 volumes:
