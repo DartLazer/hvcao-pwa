@@ -6,19 +6,18 @@ services:
       context: .
       dockerfile: Nuxt3Dockerfile
     ports:
-      - '3100:3000'
+      - '3099:3000'
     environment:
       - NODE_ENV=production
     restart: always
     networks:
-      - npm-nw
       - hv_cao_network
 
   hvcao_api_docker:
     build:
       context: ./api
       dockerfile: ApiDjangoDockerfile
-    command: bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn hvcao_rest_api.wsgi:application --bind 0.0.0.0:8002"
+    command: bash -c "python manage.py migrate && gunicorn hvcao_rest_api.wsgi:application --bind 0.0.0.0:8002"
     volumes:
       - hvcao_static_volume:/code/django_static
       - hv_cao_media_volume:/code/django_mediafiles
@@ -29,13 +28,20 @@ services:
     restart: unless-stopped
     working_dir: /code  # Set the working directory to '/code'
     networks:
-      - npm-nw
       - hv_cao_network
+
+  database:
+    image: postgres
+    restart: unless-stopped
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data/
+    env_file:
+      - config_files/database.env
+    networks:
+      hv_cao_network:
 
 networks:
   hv_cao_network:
-  npm-nw:
-    external: true
 
 
 volumes:
