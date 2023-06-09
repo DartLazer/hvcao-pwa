@@ -6,7 +6,7 @@
 
     <div class="form-group">
       <select class="form-select" aria-label="category" required v-model="category">
-        <option disabled value="">Filteren op Categorie</option>
+        <option value="">Alle Categorieën/option>
         <option value="WRR">WRR</option>
         <option value="Salaris">Salaris</option>
         <option value="Vakantie">Vakantie</option>
