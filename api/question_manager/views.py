@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from question_manager.models import QuestionData
-from question_manager.serializers import QuestionDataSerializer, QuestionDataGetSerializer, ChangePasswordSerializer
+from question_manager.serializers import QuestionDataSerializer, QuestionDataGetSerializer
 
 
 @api_view(['POST'])
