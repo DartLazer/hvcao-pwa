@@ -126,3 +126,9 @@ const filteredItems = computed(() => {
     }
 );
 </script>
+
+<style>
+.form-group {
+  margin-bottom: 1rem;
+}
+</style>
