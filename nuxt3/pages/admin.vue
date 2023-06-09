@@ -14,9 +14,12 @@
 
     <hr/>
     <QuestionAccordion :questionData="questionData" @questionDeleted="fetchData"
-                       @successAlert="handleQuestionSubmitted" @errorAlert="handleQuestionDeleted" />
+                       @successAlert="handleQuestionSubmitted" @errorAlert="handleQuestionDeleted"/>
+    <div class="mt-5 mb-5">
+      <change-password/>
 
-    <button class="btn btn-danger mt-3" @click="logOut">Logout</button>
+      <button class="btn btn-danger" style="margin-left: 1rem" @click="logOut">Logout</button>
+    </div>
 
 
   </div>
@@ -28,6 +31,7 @@ import QuestionForm from '~/components/QuestionForm.vue';
 import QuestionAccordion from '~/components/questionDatabaseAccordion.vue';
 import {fetchQuestionData} from '~/services/api.js';
 import {useRouter} from 'vue-router';
+import ChangePassword from "../components/changePassword";
 
 definePageMeta({
   middleware: ['auth']

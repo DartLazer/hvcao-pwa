@@ -23,7 +23,6 @@ export async function fetchLatestQuestionId() {
     } catch (e) {
         console.warn('Unable to fetch questionid. Offline?', e)
     }
-
 }
 
 export async function submitQuestion(question) {
@@ -43,8 +42,26 @@ export async function submitQuestion(question) {
     } catch (e) {
         console.warn('Unable to post to api. Offline?', e)
     }
+}
 
 
+export async function changePassword(newPassword) {
+    const token = sessionStorage.getItem('token');
+    try {
+        const response = await fetch(apiRemoteHost + '/api/change-password/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`
+            },
+            body: JSON.stringify({"newPassword": newPassword})
+        });
+        if (response.ok) {
+            return true;
+        }
+    } catch (e) {
+        console.warn('Unable to post to api. Offline?', e)
+    }
 }
 
 export async function deleteQuestion(id) {
@@ -59,10 +76,11 @@ export async function deleteQuestion(id) {
         });
         if (response.ok) {
             return ['successAlert', 'Question Deleted'];
-        } if (response.status === 401){
+        }
+        if (response.status === 401) {
             return ['errorAlert', 'You can only delete your own questions!'];
 
-        } else{
+        } else {
             return ['errorAlert', 'Server Error!'];
         }
     } catch (e) {
