@@ -4,6 +4,17 @@
       <input v-model="search" class="form-control" placeholder="Zoeken..."/>
     </div>
 
+    <div class="form-group">
+      <select class="form-select" aria-label="category" required v-model="category">
+        <option disabled value="">Filteren op Categorie</option>
+        <option value="WRR">WRR</option>
+        <option value="Salaris">Salaris</option>
+        <option value="Vakantie">Vakantie</option>
+        <option value="Compensatie">Compensatie</option>
+        <option value="Handige Info">Handige Info</option>
+      </select>
+    </div>
+
     <div class="accordion" id="caoFAQAccordion">
       <div class="accordion-item" v-for="(item) in filteredItems" :key="item.id">
         <h2 class="accordion-header" :id="'heading' + item.id">
@@ -17,7 +28,7 @@
           <div class="accordion-body">
             <p>{{ item.explanation }}</p>
             <p class="small">Bron: <strong>{{ item.source }}</strong></p>
-            <p class="small">Toegevoegd op:  <strong>{{ item.date_created }}</strong></p>
+            <p class="small">Toegevoegd op: <strong>{{ item.date_created }}</strong></p>
           </div>
         </div>
       </div>
@@ -29,74 +40,89 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import {ref, onMounted, watchEffect} from 'vue';
 import {get, set, del, keys} from 'idb-keyval';
 import {fetchLatestQuestionId, fetchQuestionData} from "~/services/api";
 
-export default {
-  data() {
-    return {
-      search: '',
-      items: [],
-    };
-  },
-  async created() {
-    await this.fetchQuestionData();
-    await this.performVersionCheck();
-  },
-  methods: {
-    async fetchQuestionData() {
-      const allKeys = await keys();
-      const questionKeys = allKeys.filter(key => String(key).startsWith('question-'));
-      if (questionKeys.length === 0) {
-        console.log("No question data available.")
-        return
-      }
+const search = ref('');
+const items = ref([]);
+const category = ref('');
 
-      this.items = [];
 
-      for (const key of questionKeys) {
-        const question = await get(key);
-        this.items.push(question);
-      }
-    },
-    async performVersionCheck() {
-      const remoteVersion = await fetchLatestQuestionId()
-      const localVersion = await get('questionsVersion');
+async function loadQuestionData() {
+  const allKeys = await keys();
+  const questionKeys = allKeys.filter(key => String(key).startsWith('question-'));
+  if (questionKeys.length === 0) {
+    console.log("No question data available.")
+    return
+  }
 
-      if (remoteVersion !== localVersion) {
+  items.value = [];
 
-        const questionsData = await fetchQuestionData();
+  for (const key of questionKeys) {
+    const question = await get(key);
+    items.value.push(question);
+  }
+}
 
-        const allKeys = await keys();
-        const questionKeys = allKeys.filter(key => String(key).startsWith('question-'));
+async function performVersionCheck() {
+  const remoteVersion = await fetchLatestQuestionId()
+  const localVersion = await get('questionsVersion');
 
-        for (const key of questionKeys) {
-          await del(key);
-        }
+  if (remoteVersion !== localVersion) {
 
-        for (const question of questionsData) {
-          await set('question-' + question.id, question);
-        }
+    const questionsData = await fetchQuestionData();
 
-        await set('questionsVersion', remoteVersion);
+    const allKeys = await keys();
+    const questionKeys = allKeys.filter(key => String(key).startsWith('question-'));
 
-        this.fetchQuestionData();
-      }
-    },
-  },
-  computed: {
-    filteredItems() {
-      const searchLower = this.search.toLowerCase();
+    for (const key of questionKeys) {
+      await del(key);
+    }
+
+    for (const question of questionsData) {
+      await set('question-' + question.id, question);
+    }
+
+    await set('questionsVersion', remoteVersion);
+
+    loadQuestionData();
+  }
+}
+
+onMounted(async () => {
+  await loadQuestionData();
+  await performVersionCheck();
+});
+watchEffect(() => {
+  if (search.value) {
+    category.value = '';
+  }
+});
+
+watchEffect(() => {
+  if (category.value) {
+    search.value = '';
+  }
+});
+
+
+const filteredItems = computed(() => {
+      let searchLower = search.value.toLowerCase();
       if (searchLower) {
-        return this.items.filter(item =>
+        return items.value.filter(item =>
             item.title.toLowerCase().includes(searchLower) ||
             item.tags.some(tag => tag.toLowerCase().includes(searchLower))
         );
-      } else {
-        return this.items;
       }
-    },
-  },
-};
+      if (category.value !== ''){
+        return items.value.filter(item =>
+            item.category.toLowerCase().includes(category.value.toLowerCase())
+        );
+      } else {
+        return items.value;
+      }
+    }
+);
 </script>
