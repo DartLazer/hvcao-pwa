@@ -21,7 +21,7 @@ def login(request):
     user = authenticate(username=username, password=password)
     if not user:
         return Response({'error': 'Invalid Credentials'},
-                        status=status.HTTP_404_NOT_FOUND)
+                        status=status.HTTP_401_UNAUTHORIZED)
 
     token, _ = Token.objects.get_or_create(user=user)
     return Response({'token': token.key},
@@ -47,7 +47,10 @@ class GetQuestionVersion(APIView):
         Returns the ID of the last question.
         """
         question_data = QuestionData.objects.all()
-        return Response({"version": len(question_data) + question_data.latest('id').id})
+        if len(question_data) > 0:
+            return Response({"version": len(question_data) + question_data.latest('id').id})
+        else:
+            return Response({"version": 0})
 
 
 class QuestionDataCreateAPIView(APIView):
@@ -102,9 +105,12 @@ class ChangePasswordView(APIView):
         new_password = request.data.get('newPassword')
 
         if new_password is None:
-            return Response({'error': 'New password is not provided'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Wachtwoord veld is leeg'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if len(new_password) < 6:
+            return Response({'error': 'Wachtwoord moet minimaal 6 tekens lang zijn'}, status=status.HTTP_411_LENGTH_REQUIRED)
 
         user.set_password(new_password)
         user.save()
         print(f'User: {user} changed password successfully')
-        return Response({'status': 'password changed successfully'}, status=status.HTTP_200_OK)
+        return Response({'status': 'Wachtwoord veranderd!'}, status=status.HTTP_200_OK)
