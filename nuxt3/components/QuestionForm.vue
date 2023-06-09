@@ -8,10 +8,17 @@
       <textarea class="form-control" placeholder="Antwoord" required v-model="explanation"></textarea>
     </div>
     <div class="form-group">
-      <input type="text" class="form-control" placeholder="Bron" required v-model="source">
+      <input type="text" class="form-control" placeholder="Bron (bv: Hoofdstuk 8 Art. 2.3)" required v-model="source">
     </div>
     <div class="form-group">
-      <input type="text" class="form-control" placeholder="Categorie" required v-model="category">
+      <select class="form-select"  aria-label="category" required v-model="category">
+        <option disabled value="">Categorie</option>
+        <option value="WRR">WRR</option>
+        <option value="Salaris">Salaris</option>
+        <option value="Vakantie">Vakantie</option>
+        <option value="Compensatie">Compensatie</option>
+        <option value="Handige Info">Handige Info</option>
+      </select>
     </div>
     <div class="form-group">
       <input type="text" class="form-control" placeholder="Tags (comma seperated, helpen met zoeken)" required
@@ -34,6 +41,7 @@ const explanation = ref('');
 const source = ref('');
 const category = ref('');
 const tags = ref('');
+
 // Define emitters
 const emit = defineEmits(['questionDeleted', 'errorAlert']);
 
