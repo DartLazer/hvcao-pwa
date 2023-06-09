@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from question_manager.models import QuestionData
-from question_manager.serializers import QuestionDataSerializer, QuestionDataGetSerializer
+from question_manager.serializers import QuestionDataSerializer, QuestionDataGetSerializer, ChangePasswordSerializer
 
 
 @api_view(['POST'])
@@ -90,3 +90,21 @@ class QuestionDataDeleteAPIView(generics.DestroyAPIView):
             obj_to_delete.delete()
             return Response(status=status.HTTP_200_OK)
         return Response(status=status.HTTP_401_UNAUTHORIZED,)
+
+
+
+class ChangePasswordView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        user = request.user
+        new_password = request.data.get('newPassword')
+
+        if new_password is None:
+            return Response({'error': 'New password is not provided'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user.set_password(new_password)
+        user.save()
+        print(f'User: {user} changed password successfully')
+        return Response({'status': 'password changed successfully'}, status=status.HTTP_200_OK)
