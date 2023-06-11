@@ -2,7 +2,7 @@
   <div>
     <nav class="navbar navbar-expand-lg" aria-label="Eighth navbar example" style="background: RGBA(248, 249, 250, 0.5)">
       <div class="container">
-        <NuxtLink class="navbar-brand" to="/">HV Cao</NuxtLink>
+        <NuxtLink class="navbar-brand text-white" to="/">HV Cao Vragen</NuxtLink>
         <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false"
                 aria-label="Toggle navigation">

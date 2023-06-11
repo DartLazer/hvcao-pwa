@@ -15,6 +15,7 @@ services:
     build:
       context: .
       dockerfile: Nuxt3Dockerfile
+    command: npx nuxt start
     ports:
       - '3099:3000'
     environment:

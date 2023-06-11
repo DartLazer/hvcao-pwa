@@ -11,7 +11,7 @@
       <input type="text" class="form-control" placeholder="Bron (bv: Hoofdstuk 8 Art. 2.3)" required v-model="source">
     </div>
     <div class="form-group">
-      <select class="form-select"  aria-label="category" required v-model="category">
+      <select class="form-select" aria-label="category" required v-model="category">
         <option disabled value="">Categorie</option>
         <option value="WRR">WRR</option>
         <option value="Salaris">Salaris</option>

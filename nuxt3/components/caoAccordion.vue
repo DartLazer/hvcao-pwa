@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="pb-5">
+    <div class="pb-3">
       <input v-model="search" class="form-control" placeholder="Zoeken..."/>
     </div>
 
-    <div class="form-group">
+    <div class="form-group pb-3">
       <select class="form-select" aria-label="category" required v-model="category">
         <option value="">Alle Categorieën</option>
         <option value="WRR">WRR</option>

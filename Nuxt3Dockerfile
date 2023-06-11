@@ -17,4 +17,4 @@ COPY nuxt3/ .
 RUN npm run build
 
 # Start the application in production mode
-CMD ["npx", "nuxt", "start"]
+# CMD ["npx", "nuxt", "start"]
