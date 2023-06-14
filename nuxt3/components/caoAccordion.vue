@@ -86,7 +86,7 @@ async function performVersionCheck() {
 // Generates a list of unique categories dynamically.
 const uniqueCategories = computed(() => {
   const categories = questionsDataObject.value.map(item => item.category);
-  return [...new Set(categories)]; // remove duplicates
+  return [...new Set(categories)].sort(); // remove duplicates
 });
 
 
