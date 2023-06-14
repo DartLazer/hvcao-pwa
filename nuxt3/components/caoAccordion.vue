@@ -4,19 +4,15 @@
       <input v-model="search" class="form-control" placeholder="Zoeken..."/>
     </div>
 
-    <div class="form-group pb-3">
-      <select class="form-select" aria-label="category" required v-model="category">
-        <option value="">Alle Categorieën</option>
-        <option value="WRR">WRR</option>
-        <option value="Salaris">Salaris</option>
-        <option value="Vakantie">Vakantie</option>
-        <option value="Compensatie">Compensatie</option>
-        <option value="Handige Info">Handige Info</option>
-      </select>
-    </div>
+
+    <select class="form-select form-group" aria-label="category" required v-model="category">
+      <option value="">Alle Categorieën</option>
+      <option v-for="(cat, index) in uniqueCategories" :value="cat" :key="index">{{ cat }}</option>
+    </select>
+
 
     <div class="accordion" id="caoFAQAccordion">
-      <div class="accordion-item" v-for="(item) in filteredItems" :key="item.id">
+      <div class="accordion-item" v-for="(item) in filteredQuestionData" :key="item.id">
         <h2 class="accordion-header" :id="'heading' + item.id">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                   :data-bs-target="'#collapse' + item.id" aria-expanded="false" :aria-controls="'collapse' + item.id">
@@ -34,7 +30,7 @@
       </div>
     </div>
 
-    <div v-if="search && filteredItems.length === 0">
+    <div v-if="search && filteredQuestionData.length === 0">
       <p>Geen resultaten gevonden...</p>
     </div>
   </div>
@@ -46,50 +42,53 @@ import {get, set, del, keys} from 'idb-keyval';
 import {fetchLatestQuestionId, fetchQuestionData} from "~/services/api";
 
 const search = ref('');
-const items = ref([]);
+const questionsDataObject = ref([]);
 const category = ref('');
 
 
 async function loadQuestionData() {
+  // Function that loads the question data from the indexedDB into an object if available.
   const allKeys = await keys();
   const questionKeys = allKeys.filter(key => String(key).startsWith('question-'));
   if (questionKeys.length === 0) {
     console.log("No question data available.")
     return
   }
-
-  items.value = [];
-
+  questionsDataObject.value = [];
   for (const key of questionKeys) {
     const question = await get(key);
-    items.value.push(question);
+    questionsDataObject.value.push(question);
   }
 }
 
 async function performVersionCheck() {
+  // Checks with the remote API which question set ID is available.
+  // If different then it will update the indexedDB
   const remoteVersion = await fetchLatestQuestionId()
   const localVersion = await get('questionsVersion');
 
   if (remoteVersion !== localVersion) {
-
     const questionsData = await fetchQuestionData();
-
     const allKeys = await keys();
     const questionKeys = allKeys.filter(key => String(key).startsWith('question-'));
 
     for (const key of questionKeys) {
       await del(key);
     }
-
     for (const question of questionsData) {
       await set('question-' + question.id, question);
     }
-
     await set('questionsVersion', remoteVersion);
-
-    loadQuestionData();
+    await loadQuestionData();
   }
 }
+
+// Generates a list of unique categories dynamically.
+const uniqueCategories = computed(() => {
+  const categories = questionsDataObject.value.map(item => item.category);
+  return [...new Set(categories)]; // remove duplicates
+});
+
 
 onMounted(async () => {
   await loadQuestionData();
@@ -108,20 +107,20 @@ watchEffect(() => {
 });
 
 
-const filteredItems = computed(() => {
+const filteredQuestionData = computed(() => {
       let searchLower = search.value.toLowerCase();
       if (searchLower) {
-        return items.value.filter(item =>
+        return questionsDataObject.value.filter(item =>
             item.title.toLowerCase().includes(searchLower) ||
             item.tags.some(tag => tag.toLowerCase().includes(searchLower))
         );
       }
-      if (category.value !== ''){
-        return items.value.filter(item =>
+      if (category.value !== '') {
+        return questionsDataObject.value.filter(item =>
             item.category.toLowerCase().includes(category.value.toLowerCase())
         );
       } else {
-        return items.value;
+        return questionsDataObject.value;
       }
     }
 );
