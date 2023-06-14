@@ -13,11 +13,17 @@
     <div class="form-group">
       <select class="form-select" aria-label="category" required v-model="category">
         <option disabled value="">Categorie</option>
-        <option value="WRR">WRR</option>
+        <option value="basebeleid">Basebeleid</option>
+        <option value="Compensatie">Compensatie</option>
+        <option value="deeltijdenafbouw">Deeltijd & Afbouw</option>
+        <option value="Handige Info">Handige Info Non-CAO</option>
         <option value="Salaris">Salaris</option>
         <option value="Vakantie">Vakantie</option>
-        <option value="Compensatie">Compensatie</option>
-        <option value="Handige Info">Handige Info</option>
+        <option value="WRR">WRR - CBM & Off-base melden</option>
+        <option value="WRR-standbyenreserve">WRR - Standby & Reserve</option>
+        <option value="WRR-uitvoering">WRR - Uitvoering & Ongepland Overnachten</option>
+        <option value="WRR-planning;">WRR - Planning</option>
+        <option value="WRR-jokverzoekenensnipperdagen">WRR - Jokerverzoeken & Snipperdagen</option>
       </select>
     </div>
     <div class="form-group">
