@@ -17,6 +17,7 @@
         <option value="Compensatie">Compensatie</option>
         <option value="deeltijdenafbouw">Deeltijd & Afbouw</option>
         <option value="Handige Info">Handige Info Non-CAO</option>
+        <option value="Overig">Overig Info CAO</option>
         <option value="Salaris">Salaris</option>
         <option value="Vakantie">Vakantie</option>
         <option value="WRR">WRR - CBM & Off-base melden</option>

@@ -22,7 +22,7 @@
         <div :id="'collapse' + item.id" class="accordion-collapse collapse" :aria-labelledby="'heading' + item.id"
              data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            <p>{{ item.explanation }}</p>
+            <p style="white-space: pre-line;">{{ item.explanation }}</p>
             <p class="small">Bron: <strong>{{ item.source }}</strong></p>
             <p class="small">Toegevoegd op: <strong>{{ item.date_created }}</strong></p>
           </div>

@@ -18,7 +18,7 @@
         <div :id="'collapse' + item.id" class="accordion-collapse collapse" :aria-labelledby="'heading' + item.id"
              data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            <p>{{ item.explanation }}</p>
+            <p style="white-space: pre-line;">{{ item.explanation }}</p>
             <p class="small">Bron: {{ item.source }}</p>
             <p class="small">Created by: <strong>{{ item.created_by }}</strong> at
               <strong>{{ item.date_created }}</strong></p>
