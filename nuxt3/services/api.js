@@ -25,6 +25,31 @@ export async function fetchLatestQuestionId() {
     }
 }
 
+export async function editQuestion(id, question) {
+    const token = sessionStorage.getItem('token');
+    try {
+        const response = await fetch(apiRemoteHost + '/api/question-data/' + id + '/', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`
+            },
+            body: JSON.stringify(question),
+        });
+        if (response.ok) {
+            return true;
+        } else {
+            const responseJson = await response.json();
+            console.log(responseJson);
+        }
+    } catch (e) {
+        console.warn('Unable to update item. Offline?', e);
+        throw e;
+    }
+}
+
+
+
 export async function submitQuestion(question) {
     const token = sessionStorage.getItem('token');
     try {

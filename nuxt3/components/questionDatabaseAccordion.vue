@@ -18,7 +18,7 @@
         <div :id="'collapse' + item.id" class="accordion-collapse collapse" :aria-labelledby="'heading' + item.id"
              data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            <p style="white-space: pre-line;">{{ item.explanation }}</p>
+            <p>{{ item.explanation }}</p>
             <p class="small">Bron: {{ item.source }}</p>
             <p class="small">Created by: <strong>{{ item.created_by }}</strong> at
               <strong>{{ item.date_created }}</strong></p>
@@ -29,7 +29,11 @@
               </span>
 
             </p>
-            <button class="btn btn-danger align btn-sm" @click="deleteQuestion(item.id)">
+            <button class="btn btn-primary btn-sm mx-2" @click="updateEditModalData(item.id, item)" data-bs-toggle="modal" data-bs-target="#editQuestionModal">
+              Edit
+            </button>
+
+            <button class="btn btn-danger align btn-sm" @click="deleteItem(item.id)">
               Delete
             </button>
           </div>
@@ -41,36 +45,132 @@
       Failed to fetch remote data
     </div>
 
+    <!-- Edit Question Modal -->
+    <div class="modal modal-lg fade" id="editQuestionModal" tabindex="-1" aria-labelledby="editQuestionModalLabel"
+         aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-black" id="editQuestionModalLabel">Vraag aanpassen</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-black">
+            <form @submit.prevent="submitQuestionForm" class="form-signin ">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Titel" required autofocus v-model="title">
+              </div>
+              <div class="form-group">
+                <textarea class="form-control" placeholder="Antwoord" required v-model="explanation" rows="5"></textarea>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Bron (bv: Hoofdstuk 8 Art. 2.3)" required v-model="source">
+              </div>
+              <div class="form-group">
+                <select class="form-select" aria-label="category" required v-model="category">
+                  <option disabled value="">Categorie</option>
+                  <option value="basebeleid">Basebeleid</option>
+                  <option value="Compensatie">Compensatie</option>
+                  <option value="deeltijdenafbouw">Deeltijd & Afbouw</option>
+                  <option value="Handige Info">Handige Info Non-CAO</option>
+                  <option value="Overig">Overig Info CAO</option>
+                  <option value="Salaris">Salaris</option>
+                  <option value="Vakantie">Vakantie</option>
+                  <option value="WRR">WRR - CBM & Off-base melden</option>
+                  <option value="WRR-standbyenreserve">WRR - Standby & Reserve</option>
+                  <option value="WRR-uitvoering">WRR - Uitvoering & Ongepland Overnachten</option>
+                  <option value="WRR-planning;">WRR - Planning</option>
+                  <option value="WRR-jokverzoekenensnipperdagen">WRR - Jokerverzoeken & Snipperdagen</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Tags (comma seperated, helpen met zoeken)" required
+                       v-model="tags">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <div v-if="showAlert" class="alert alert-success" role="alert">
+              Question edited successfully!
+            </div>
+            <button type="button" @click="editQuestionForm" class="btn btn-primary">Opslaan</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sluiten</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
-<script>
-import {fetchQuestionData, deleteQuestion} from '~/services/api.js';
+<script setup>
+import { ref } from 'vue';
+import {editQuestion, deleteQuestion as deleteQuestionAPI, submitQuestion} from '~/services/api.js';
 
-export default {
-  props: {
-    questionData: {
-      type: Array,
-      required: true,
-    },
-    successMessage: {
-      type: String,
-      default: '',
-    },
+// Initialize fields
+const title = ref('');
+const explanation = ref('');
+const source = ref('');
+const category = ref('');
+const tags = ref('');
+let editableQuestionId = null;
+const showAlert = ref(false);
+
+
+
+const props = defineProps({
+  questionData: {
+    type: Array,
+    required: true,
   },
-  methods: {
-    async deleteQuestion(id) {
-      try {
-        const message = await deleteQuestion(id);
-        this.$emit('questionDeleted');
-        this.$emit(message[0], message[1])
-      } catch (error) {
-        console.error(error.message);
-        this.$emit('errorAlert', error.message)
-      }
-    },
-  },
+});
+
+const successMessage = ref('');
+
+const deleteItem = async (id) => {
+  try {
+    const message = await deleteQuestionAPI(id);
+    emit('questionDeleted');
+    emit(message[0], message[1])
+  } catch (error) {
+    console.error(error.message);
+    emit('errorAlert', error.message)
+  }
 };
+
+const updateEditModalData = function (questionId, questionObject) {
+  title.value = questionObject.title;
+  explanation.value = questionObject.explanation;
+  source.value = questionObject.source;
+  category.value = questionObject.category;
+  tags.value = questionObject.tags.join(', ');  // convert array to string
+  editableQuestionId = questionId;
+}
+
+// In the `editQuestionForm` function, convert string back to array
+const editQuestionForm = async () => {
+  console.log(tags.value);
+  try {
+    const question = {
+      title: title.value,
+      explanation: explanation.value,
+      source: source.value,
+      category: category.value,
+      tags: tags.value,  // convert string to array
+    };
+    console.log(question)
+    await editQuestion(editableQuestionId, question);
+    showAlert.value = true; // show the alert
+    emit('questionSubmitted')
+    emit('successAlert', 'Question edited successfully!');
+  } catch (error) {
+    // Error handling
+    console.error(error);
+    emit('errorAlert', error.message)
+    $nuxt.emit('submissionError', error);
+  }
+};
+
+const emit = defineEmits(['questionDeleted', 'errorAlert']);
 </script>
 
 <style>

@@ -67,6 +67,15 @@ class QuestionDataCreateAPIView(APIView):
             permissions = self.permission_classes
         return [permission() for permission in permissions]
 
+    def put(self, request, pk, format=None):
+        question = self.get_object(pk)
+        serializer = QuestionDataSerializer(question, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
     def post(self, request, format=None):
         serializer = QuestionDataSerializer(data=request.data)
         if serializer.is_valid():
@@ -79,6 +88,11 @@ class QuestionDataCreateAPIView(APIView):
         serializer = QuestionDataGetSerializer(question_data, many=True)
         return Response(serializer.data)
 
+    def get_object(self, pk):
+        try:
+            return QuestionData.objects.get(pk=pk)
+        except QuestionData.DoesNotExist:
+            raise Http404
 
 class QuestionDataDeleteAPIView(generics.DestroyAPIView):
     queryset = QuestionData.objects.all()
