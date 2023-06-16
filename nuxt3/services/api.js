@@ -37,10 +37,10 @@ export async function editQuestion(id, question) {
             body: JSON.stringify(question),
         });
         if (response.ok) {
-            return true;
+            return ['editedSuccessfullyAlert', 'Vraag aangepast!'];
         } else {
             const responseJson = await response.json();
-            console.log(responseJson);
+            return ['editedErrorAlert', 'Foutmelding bij het aanpassen: ' + responseJson]
         }
     } catch (e) {
         console.warn('Unable to update item. Offline?', e);

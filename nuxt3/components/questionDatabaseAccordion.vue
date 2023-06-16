@@ -18,7 +18,7 @@
         <div :id="'collapse' + item.id" class="accordion-collapse collapse" :aria-labelledby="'heading' + item.id"
              data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            <p>{{ item.explanation }}</p>
+            <p style="white-space: pre-line;">{{ item.explanation }}</p>
             <p class="small">Bron: {{ item.source }}</p>
             <p class="small">Created by: <strong>{{ item.created_by }}</strong> at
               <strong>{{ item.date_created }}</strong></p>
@@ -29,7 +29,8 @@
               </span>
 
             </p>
-            <button class="btn btn-primary btn-sm mx-2" @click="updateEditModalData(item.id, item)" data-bs-toggle="modal" data-bs-target="#editQuestionModal">
+            <button class="btn btn-primary btn-sm mx-2" @click="updateEditModalData(item.id, item)"
+                    data-bs-toggle="modal" data-bs-target="#editQuestionModal">
               Edit
             </button>
 
@@ -60,10 +61,12 @@
                 <input type="text" class="form-control" placeholder="Titel" required autofocus v-model="title">
               </div>
               <div class="form-group">
-                <textarea class="form-control" placeholder="Antwoord" required v-model="explanation" rows="5"></textarea>
+                <textarea style="white-space: pre-line;" class="form-control" placeholder="Antwoord" required
+                          v-model="explanation" rows="5"></textarea>
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Bron (bv: Hoofdstuk 8 Art. 2.3)" required v-model="source">
+                <input type="text" class="form-control" placeholder="Bron (bv: Hoofdstuk 8 Art. 2.3)" required
+                       v-model="source">
               </div>
               <div class="form-group">
                 <select class="form-select" aria-label="category" required v-model="category">
@@ -89,8 +92,11 @@
             </form>
           </div>
           <div class="modal-footer">
-            <div v-if="showAlert" class="alert alert-success" role="alert">
-              Question edited successfully!
+            <div v-if="showEditSuccessAlert.show" class="alert alert-success p-1" role="alert">
+              {{ showEditSuccessAlert.message }}
+            </div>
+            <div v-if="showEditErrorAlert.show" class="alert danger p-1" role="alert">
+              {{ showEditErrorAlert.message }}
             </div>
             <button type="button" @click="editQuestionForm" class="btn btn-primary">Opslaan</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sluiten</button>
@@ -103,8 +109,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import {editQuestion, deleteQuestion as deleteQuestionAPI, submitQuestion} from '~/services/api.js';
+import {ref} from 'vue';
+import {editQuestion, deleteQuestion as deleteQuestionAPI,} from '~/services/api.js';
 
 // Initialize fields
 const title = ref('');
@@ -113,9 +119,10 @@ const source = ref('');
 const category = ref('');
 const tags = ref('');
 let editableQuestionId = null;
-const showAlert = ref(false);
+const showEditSuccessAlert = ref({show: false, message: ''});
+const showEditErrorAlert = ref({show: false, message: ''});
 
-
+const emit = defineEmits(['questionDeleted', 'errorAlert', 'questionEdited']);
 
 const props = defineProps({
   questionData: {
@@ -148,20 +155,17 @@ const updateEditModalData = function (questionId, questionObject) {
 
 // In the `editQuestionForm` function, convert string back to array
 const editQuestionForm = async () => {
-  console.log(tags.value);
   try {
     const question = {
       title: title.value,
       explanation: explanation.value,
       source: source.value,
       category: category.value,
-      tags: tags.value,  // convert string to array
+      tags: tags.value,
     };
-    console.log(question)
-    await editQuestion(editableQuestionId, question);
-    showAlert.value = true; // show the alert
-    emit('questionSubmitted')
-    emit('successAlert', 'Question edited successfully!');
+    const responseMessage = await editQuestion(editableQuestionId, question);
+    await showEditedAlert(responseMessage)
+        emit('questionEdited')
   } catch (error) {
     // Error handling
     console.error(error);
@@ -170,7 +174,26 @@ const editQuestionForm = async () => {
   }
 };
 
-const emit = defineEmits(['questionDeleted', 'errorAlert']);
+const showEditedAlert = function (messageArray) {
+  console.log(messageArray)
+  const alertType = messageArray[0];
+  const alertMessage = messageArray[1]
+  // Read response and determine which message to show
+  if (alertType === 'editedSuccessfullyAlert') {
+    showEditSuccessAlert.value = {show: true, message: alertMessage}
+  } else {
+    showEditErrorAlert.value = {show: true, message: alertMessage}
+  }
+
+  // Make alert disappear after 3 seconds
+  setTimeout(() => {
+    showEditErrorAlert.value = {show: false, message: ''};
+    showEditSuccessAlert.value = {show: false, message: ''};
+  }, 3000);
+
+
+}
+
 </script>
 
 <style>

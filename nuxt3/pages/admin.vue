@@ -13,7 +13,7 @@
     </div>
 
     <hr/>
-    <QuestionAccordion :questionData="questionData" @questionDeleted="fetchData"
+    <QuestionAccordion :questionData="questionData" @questionDeleted="fetchData" @questionEdited="fetchData"
                        @successAlert="handleQuestionSubmitted" @errorAlert="handleQuestionDeleted"/>
     <div class="mt-5 mb-5">
       <change-password/>
@@ -71,6 +71,7 @@ const handleQuestionDeleted = (message) => {
   }, 3000);
   fetchData();
 };
+
 
 
 onMounted(fetchData);
