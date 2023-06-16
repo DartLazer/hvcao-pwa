@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 
 
 class QuestionData(models.Model):
@@ -13,3 +15,26 @@ class QuestionData(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class QuestionVersion(models.Model):
+    version = models.IntegerField(default=0)
+
+    @classmethod
+    def increment(cls):
+        if cls.objects.count() == 0:
+            cls.objects.create(version=1)
+        else:
+            obj = cls.objects.first()
+            obj.version += 1
+            obj.save()
+
+
+@receiver(post_save, sender=QuestionData)
+def increment_version_on_save(sender, **kwargs):
+    QuestionVersion.increment()
+
+
+@receiver(post_delete, sender=QuestionData)
+def increment_version_on_delete(sender, **kwargs):
+    QuestionVersion.increment()

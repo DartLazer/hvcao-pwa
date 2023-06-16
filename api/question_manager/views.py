@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate
+from django.http import Http404
 from rest_framework import status, generics
 from rest_framework.decorators import api_view
 from rest_framework.authtoken.models import Token
@@ -7,7 +8,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from question_manager.models import QuestionData
+from question_manager.models import QuestionData, QuestionVersion
 from question_manager.serializers import QuestionDataSerializer, QuestionDataGetSerializer
 
 
@@ -44,13 +45,13 @@ class GetQuestionVersion(APIView):
 
     def get(self, request, format=None):
         """
-        Returns the ID of the last question.
+        Returns the version of the questions.
         """
-        question_data = QuestionData.objects.all()
-        if len(question_data) > 0:
-            return Response({"version": len(question_data) + question_data.latest('id').id})
-        else:
-            return Response({"version": 0})
+        try:
+            question_version = QuestionVersion.objects.first()
+            return Response({"version": question_version.version})
+        except QuestionVersion.DoesNotExist:
+            raise Http404
 
 
 class QuestionDataCreateAPIView(APIView):
@@ -75,7 +76,6 @@ class QuestionDataCreateAPIView(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
     def post(self, request, format=None):
         serializer = QuestionDataSerializer(data=request.data)
         if serializer.is_valid():
@@ -94,6 +94,7 @@ class QuestionDataCreateAPIView(APIView):
         except QuestionData.DoesNotExist:
             raise Http404
 
+
 class QuestionDataDeleteAPIView(generics.DestroyAPIView):
     queryset = QuestionData.objects.all()
     serializer_class = QuestionDataSerializer
@@ -106,8 +107,7 @@ class QuestionDataDeleteAPIView(generics.DestroyAPIView):
         if request.user == obj_to_delete.created_by or request.user.is_superuser:
             obj_to_delete.delete()
             return Response(status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_401_UNAUTHORIZED,)
-
+        return Response(status=status.HTTP_401_UNAUTHORIZED, )
 
 
 class ChangePasswordView(APIView):
@@ -122,7 +122,8 @@ class ChangePasswordView(APIView):
             return Response({'error': 'Wachtwoord veld is leeg'}, status=status.HTTP_400_BAD_REQUEST)
 
         if len(new_password) < 6:
-            return Response({'error': 'Wachtwoord moet minimaal 6 tekens lang zijn'}, status=status.HTTP_411_LENGTH_REQUIRED)
+            return Response({'error': 'Wachtwoord moet minimaal 6 tekens lang zijn'},
+                            status=status.HTTP_411_LENGTH_REQUIRED)
 
         user.set_password(new_password)
         user.save()
