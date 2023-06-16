@@ -92,7 +92,7 @@ export async function changePassword(newPassword) {
 export async function deleteQuestion(id) {
     const token = sessionStorage.getItem('token');
     try {
-        const response = await fetch(apiRemoteHost + `/api/question-data/${id}/`, {
+        const response = await fetch(apiRemoteHost + `/api/question-data/delete/${id}/`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
