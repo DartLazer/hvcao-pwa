@@ -5,7 +5,9 @@
       <input type="text" class="form-control" placeholder="Titel" required autofocus v-model="title">
     </div>
     <div class="form-group">
-      <textarea class="form-control" placeholder="Antwoord" required rows="5" v-model="explanation"></textarea>
+      <textarea class="form-control"
+                placeholder="Antwoord. Gebruik *tekst* voor schuine tekst en **tekst** voor dikgedrukte tekst." required
+                rows="5" v-model="explanation"></textarea>
     </div>
     <div class="form-group">
       <input type="text" class="form-control" placeholder="Bron (bv: Hoofdstuk 8 Art. 2.3)" required v-model="source">

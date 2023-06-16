@@ -22,7 +22,7 @@
         <div :id="'collapse' + item.id" class="accordion-collapse collapse" :aria-labelledby="'heading' + item.id"
              data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            <p style="white-space: pre-line;">{{ item.explanation }}</p>
+            <p v-html="item.markedExplanation"> </p>
             <p class="small">Bron: <strong>{{ item.source }}</strong></p>
             <p class="small">Toegevoegd op: <strong>{{ item.date_created }}</strong></p>
           </div>
@@ -40,6 +40,7 @@
 import {ref, onMounted, watchEffect} from 'vue';
 import {get, set, del, keys} from 'idb-keyval';
 import {fetchLatestQuestionId, fetchQuestionData} from "~/services/api";
+import {markupText} from "~/services/markupCode";
 
 const search = ref('');
 const questionsDataObject = ref([]);
@@ -57,6 +58,7 @@ async function loadQuestionData() {
   questionsDataObject.value = [];
   for (const key of questionKeys) {
     const question = await get(key);
+    question.markedExplanation = markupText(question.explanation);
     questionsDataObject.value.push(question);
   }
 }
