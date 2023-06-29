@@ -70,8 +70,8 @@ const login = async () => {
     });
     const data = await response.json();
     if (data.token) {
-      // Save the token in sessionStorage
-      sessionStorage.setItem('token', data.token);
+      // Save the token in localStorage
+      localStorage.setItem('token', data.token);
       // Redirect to the admin page
       router.push('/admin');
     } else {
@@ -80,8 +80,6 @@ const login = async () => {
   } catch (e) {
     message.value = 'Unable to connect to login server...'
   }
-
-
 };
 </script>
 

@@ -44,7 +44,7 @@ const router = useRouter();
 
 const logOut = function () {
   console.log('Logout')
-  sessionStorage.clear();
+  localStorage.clear();  // Changed this from sessionStorage to localStorage
   router.push('/login')
 };
 
@@ -72,11 +72,10 @@ const handleQuestionDeleted = (message) => {
   fetchData();
 };
 
-
-
 onMounted(fetchData);
 
 </script>
+
 
 <component name="QuestionForm" :is="QuestionForm" @questionSubmitted="fetchData" @questionDeleted="fetchData"/>
 <component name="QuestionAccordion" :is="QuestionAccordion" :questionData="questionData" @questionDeleted="fetchData"/>
