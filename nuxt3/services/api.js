@@ -1,4 +1,4 @@
-export const apiRemoteHost = 'https://api.hvcao.nl';
+export const apiRemoteHost = 'https://hvcao-api.sky-t.nl';
 
 //export const apiRemoteHost = 'http://0.0.0.0:8000';
 
