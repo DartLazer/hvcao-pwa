@@ -7,7 +7,7 @@ export default defineNuxtRouteMiddleware((to) => {
     // or only skip middleware on initial client load
     if (process.client && nuxtApp.isHydrating && nuxtApp.payload.serverRendered) return
 
-    const token = sessionStorage.getItem('token')
+    const token = localStorage.getItem('token')
 
     if (to.path === '/admin' && !token) {
         return navigateTo('/login')

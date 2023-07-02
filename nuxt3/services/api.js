@@ -1,4 +1,6 @@
-export const apiRemoteHost = 'https://hvcao-api.sky-t.nl';
+export const apiRemoteHost = 'https://api.hvcao.nl';
+
+//export const apiRemoteHost = 'http://0.0.0.0:8000';
 
 export async function fetchQuestionData() {
     const response = await fetch(apiRemoteHost + '/api/question-data/');
@@ -26,7 +28,7 @@ export async function fetchLatestQuestionId() {
 }
 
 export async function editQuestion(id, question) {
-    const token = sessionStorage.getItem('token');
+    const token = localStorage.getItem('token');
     try {
         const response = await fetch(apiRemoteHost + '/api/question-data/' + id + '/', {
             method: 'PUT',
@@ -51,7 +53,7 @@ export async function editQuestion(id, question) {
 
 
 export async function submitQuestion(question) {
-    const token = sessionStorage.getItem('token');
+    const token = localStorage.getItem('token');
     try {
         const response = await fetch(apiRemoteHost + '/api/question-data/', {
             method: 'POST',
@@ -71,7 +73,7 @@ export async function submitQuestion(question) {
 
 
 export async function changePassword(newPassword) {
-    const token = sessionStorage.getItem('token');
+    const token = localStorage.getItem('token');
     try {
         const response = await fetch(apiRemoteHost + '/api/change-password/', {
             method: 'POST',
@@ -90,7 +92,7 @@ export async function changePassword(newPassword) {
 }
 
 export async function deleteQuestion(id) {
-    const token = sessionStorage.getItem('token');
+    const token = localStorage.getItem('token');
     try {
         const response = await fetch(apiRemoteHost + `/api/question-data/delete/${id}/`, {
             method: 'DELETE',

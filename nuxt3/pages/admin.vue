@@ -44,7 +44,7 @@ const router = useRouter();
 
 const logOut = function () {
   console.log('Logout')
-  sessionStorage.clear();
+  localStorage.clear();
   router.push('/login')
 };
 
