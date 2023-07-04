@@ -1,59 +1,46 @@
 <template>
   <div>
-    <button @click="uploadOfflineQuestions()" v-if="offlineQuestions.length > 0" class="btn btn-success btn-block mt-3">{{offlineQuestions.length}} Offline vragen uploaden</button>
-
-
+    <button @click="uploadOfflineQuestions()" v-if="offlineQuestions.length > 0" class="btn btn-success btn-block mt-3">
+      {{ offlineQuestions.length }} Offline vragen uploaden
+    </button>
   </div>
-  </template>
+</template>
 
 <script setup>
-import {ref} from 'vue';
+import {useMainStore} from '~/store/mainStore';
 import {submitQuestion} from "~/services/api";
 
 
+// Use the question store
+const store = useMainStore();
 
+// Access offlineQuestions from the store
+const offlineQuestions = computed(() => store.offlineQuestions);
 
-const props = defineProps({
-  offlineQuestions: Array
-});
-
-console.log(props.offlineQuestions)
-
-
-// Define emitters
-const emit = defineEmits(['questionDeleted', 'errorAlert', 'questionSubmitted', 'successAlert']);
-
-
-
-const uploadOfflineQuestions = async function (){
-  const storedItems = localStorage.getItem('offlineSubmitted')
-  if (!storedItems){
+const uploadOfflineQuestions = async function () {
+  if (!offlineQuestions.value.length) {
     console.warn('Error! No offline questions found')
     return
   }
-  const offlineQuestionsArray = JSON.parse(storedItems)
-  let i = 0
-  while(i < offlineQuestionsArray.length){
-    const question = offlineQuestionsArray[i]
+
+  for (const question of offlineQuestions.value) {
     try {
       const successful_post = await submitQuestion(question);
-      if (!successful_post){
+      if (!successful_post) {
         console.warn('Error posting. Preserving offline questions')
+        store.showErrorAlert('Fout bij het uploaden van de vraag. Het kan zijn dat de database nog offline is of de internet verbinding niet goed. Probeer het later opnieuw')
         return
       }
     } catch (error) {
       // Error handling
       console.error(error);
-      emit('errorAlert', error.message)
-      $nuxt.emit('submissionError', error);
+      store.showErrorAlert('Fout bij het uploaden van de vraag. Het kan zijn dat de database nog offline is of de internet verbinding niet goed. Probeer het later opnieuw')
       return
     }
-    i ++
   }
-  localStorage.removeItem('offlineSubmitted')
-  emit('questionSubmitted')
-  emit('successAlert', 'Offline vragen zijn succesvol geupload!!')
-
+  // Clear the offline questions after they've been uploaded
+  store.removeAllOfflineQuestions();
+  store.showSuccessAlert('De offline vragen zijn succesvol geupload!')
+  store.requestRefresh()
 }
-
 </script>

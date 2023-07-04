@@ -33,22 +33,16 @@
       <input type="text" class="form-control" placeholder="Tags (comma seperated, helpen met zoeken)" required
              v-model="tags">
     </div>
-    <button class="btn btn-primary btn-block" type="submit">Submit</button>
+    <button class="btn btn-primary btn-block" type="submit">{{ submitButtonText }}</button>
+
     <br/>
   </form>
-  <handle-offline-questions :offline-questions="offlineQuestions" />
+  <handle-offline-questions />
 </template>
 
 <script setup>
-import {deleteQuestion, submitQuestion} from '~/services/api.js';
-
-
-// Define props
-const questionData = ref([]);
-const successMessage = ref('');
-const offlineQuestions = ref([])
-const showOfflineButton = ref(false);
-
+import {submitQuestion} from '~/services/api.js';
+import { useMainStore } from '~/store/mainStore'; // Import the store
 
 // Initialize fields
 const title = ref('');
@@ -57,38 +51,13 @@ const source = ref('');
 const category = ref('');
 const tags = ref('');
 
-// Define emitters
-const emit = defineEmits(['questionDeleted', 'errorAlert', 'questionSubmitted', 'successAlert']);
+const submitButtonText = ref('Uploaden');
 
-const deleteQuestionMethod = async (id) => {
-  try {
-    const message = await deleteQuestion(id);
-    emit('questionDeleted');
-    emit(message[0], message[1]);
-  } catch (error) {
-    console.error(error.message);
-    emit('errorAlert', error.message);
-  }
-};
-
-const loadOfflineQuestions = function () {
-  const storedItems = localStorage.getItem('offlineSubmitted')
-  if (storedItems) {
-    offlineQuestions.value = JSON.parse(storedItems)
-    showOfflineButton.value = true;
-  }
-}
-
-const saveOfflineQuestionToLocalStorage = function () {
-  localStorage.setItem('offlineSubmitted', JSON.stringify(offlineQuestions.value))
-}
+const store = useMainStore(); // Use the store
 
 const addOfflineQuestion = function (questionObject) {
-  console.log(offlineQuestions)
-  offlineQuestions.value.push(questionObject)
-  saveOfflineQuestionToLocalStorage()
+  store.addOfflineQuestion(questionObject) // Use the store method
 }
-
 
 const submitQuestionForm = async () => {
   const question = {
@@ -99,32 +68,34 @@ const submitQuestionForm = async () => {
     tags: tags.value,
   };
 
-  if (!navigator.onLine) { // Offline, save question into localStorage and upload later
+  if (!navigator.onLine) { // Offline, save question into store and upload later
     addOfflineQuestion(question)
+    store.showErrorAlert('Het is niet gelukt de vraag te uploaden. Hij is offline op uw apparaat opgeslagen. Probeer het later (wanneer je weer online bent) opnieuw.')
     return
   }
   try {
     const successfully_posted = await submitQuestion(question);
     if (!successfully_posted){
       addOfflineQuestion(question)
-      emit('errorAlert', 'Fout tijdens het uploaden van de vraag. De vraag is lokaal opgeslagen en kan later weer opnieuw geupload worden.')
+      store.showErrorAlert('Fout tijdens het uploaden van de vraag. De vraag is lokaal opgeslagen en kan later weer opnieuw geupload worden.') // Use the store method
       return
     }
-    emit('questionSubmitted')
-    emit('successAlert', 'Message submitted succesfully!')
+    store.showSuccessAlert('Vraag succesvol geupload!') // Use the store method
     title.value = '';
     explanation.value = '';
     source.value = '';
     category.value = '';
     tags.value = '';
+    store.requestRefresh()
   } catch (error) {
     // Error handling
     console.error(error);
     addOfflineQuestion(question)
-    emit('errorAlert', error.message)
-    $nuxt.emit('submissionError', error);
+    store.showErrorAlert(error.message) // Use the store method
   }
 };
 
-onMounted(loadOfflineQuestions)
+watchEffect(() => {
+  submitButtonText.value = navigator.onLine ? 'Uploaden' : 'Offline opslaan om later te uploaden';
+});
 </script>
