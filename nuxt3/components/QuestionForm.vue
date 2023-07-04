@@ -34,7 +34,9 @@
              v-model="tags">
     </div>
     <button class="btn btn-primary btn-block" type="submit">Submit</button>
+    <br/>
   </form>
+  <handle-offline-questions :offline-questions="offlineQuestions" />
 </template>
 
 <script setup>
@@ -44,6 +46,9 @@ import {deleteQuestion, submitQuestion} from '~/services/api.js';
 // Define props
 const questionData = ref([]);
 const successMessage = ref('');
+const offlineQuestions = ref([])
+const showOfflineButton = ref(false);
+
 
 // Initialize fields
 const title = ref('');
@@ -53,7 +58,7 @@ const category = ref('');
 const tags = ref('');
 
 // Define emitters
-const emit = defineEmits(['questionDeleted', 'errorAlert']);
+const emit = defineEmits(['questionDeleted', 'errorAlert', 'questionSubmitted', 'successAlert']);
 
 const deleteQuestionMethod = async (id) => {
   try {
@@ -65,16 +70,46 @@ const deleteQuestionMethod = async (id) => {
     emit('errorAlert', error.message);
   }
 };
+
+const loadOfflineQuestions = function () {
+  const storedItems = localStorage.getItem('offlineSubmitted')
+  if (storedItems) {
+    offlineQuestions.value = JSON.parse(storedItems)
+    showOfflineButton.value = true;
+  }
+}
+
+const saveOfflineQuestionToLocalStorage = function () {
+  localStorage.setItem('offlineSubmitted', JSON.stringify(offlineQuestions.value))
+}
+
+const addOfflineQuestion = function (questionObject) {
+  console.log(offlineQuestions)
+  offlineQuestions.value.push(questionObject)
+  saveOfflineQuestionToLocalStorage()
+}
+
+
 const submitQuestionForm = async () => {
+  const question = {
+    title: title.value,
+    explanation: explanation.value,
+    source: source.value,
+    category: category.value,
+    tags: tags.value,
+  };
+
+  if (!navigator.onLine) { // Offline, save question into localStorage and upload later
+    addOfflineQuestion(question)
+    return
+  }
   try {
-    const question = {
-      title: title.value,
-      explanation: explanation.value,
-      source: source.value,
-      category: category.value,
-      tags: tags.value,
-    };
-    await submitQuestion(question);
+    const successfully_posted = await submitQuestion(question);
+    if (!successfully_posted){
+      addOfflineQuestion(question)
+      emit('errorAlert', 'Fout tijdens het uploaden van de vraag. De vraag is lokaal opgeslagen en kan later weer opnieuw geupload worden.')
+      return
+    }
     emit('questionSubmitted')
     emit('successAlert', 'Message submitted succesfully!')
     title.value = '';
@@ -85,9 +120,11 @@ const submitQuestionForm = async () => {
   } catch (error) {
     // Error handling
     console.error(error);
+    addOfflineQuestion(question)
     emit('errorAlert', error.message)
     $nuxt.emit('submissionError', error);
   }
 };
 
+onMounted(loadOfflineQuestions)
 </script>

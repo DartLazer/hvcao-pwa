@@ -12,6 +12,10 @@
       {{ questionDeletedAlert.message }}
     </div>
 
+    <div v-if="offlineMessage.show" class="alert alert-info mt-3" role="alert">
+      {{ offlineMessage.message }}
+    </div>
+
     <hr/>
     <QuestionAccordion :questionData="questionData" @questionDeleted="fetchData" @questionEdited="fetchData"
                        @successAlert="handleQuestionSubmitted" @errorAlert="handleQuestionDeleted"/>
@@ -41,6 +45,7 @@ const questionData = ref([]);
 const questionSubmittedAlert = ref({show: false, message: ''});
 const questionDeletedAlert = ref({show: false, message: ''});
 const router = useRouter();
+const offlineMessage = {show: false, message: ""};
 
 const logOut = function () {
   console.log('Logout')
@@ -68,11 +73,17 @@ const handleQuestionDeleted = (message) => {
   questionDeletedAlert.value = {show: true, message};
   setTimeout(() => {
     questionDeletedAlert.value = {show: false, message: ''};
-  }, 3000);
+  }, 10000);
   fetchData();
 };
 
-
+if (!navigator.onLine) {
+  offlineMessage.message = 'U bent offline. ' +
+      'Opgeslagen berichten worden gesynschroniseerd met de server zodra er weer verbinding is.'
+  offlineMessage.show = true;
+} else {
+  offlineMessage.show = false;
+}
 
 onMounted(fetchData);
 
