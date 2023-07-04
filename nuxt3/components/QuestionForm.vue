@@ -34,15 +34,20 @@
              v-model="tags">
     </div>
     <button class="btn btn-primary btn-block" type="submit">{{ submitButtonText }}</button>
+    <div v-if="store.submittingQuestion">
+      <div class="spinner-border" role="status">
+      </div>
+      Verzenden...
+    </div>
 
     <br/>
   </form>
-  <handle-offline-questions />
+  <handle-offline-questions/>
 </template>
 
 <script setup>
 import {submitQuestion} from '~/services/api.js';
-import { useMainStore } from '~/store/mainStore'; // Import the store
+import {useMainStore} from '~/store/mainStore'; // Import the store
 
 // Initialize fields
 const title = ref('');
@@ -74,8 +79,10 @@ const submitQuestionForm = async () => {
     return
   }
   try {
+    store.submittingQuestion = true;
     const successfully_posted = await submitQuestion(question);
-    if (!successfully_posted){
+    store.submittingQuestion =false;
+    if (!successfully_posted) {
       addOfflineQuestion(question)
       store.showErrorAlert('Fout tijdens het uploaden van de vraag. De vraag is lokaal opgeslagen en kan later weer opnieuw geupload worden.') // Use the store method
       return

@@ -29,8 +29,7 @@
 
 <script setup>
 import {fetchQuestionData} from '~/services/api.js';
-import ChangePassword from "../components/changePassword";
-import { useMainStore } from '~/store/mainStore'; // Import the store
+import { useMainStore } from '~/store/mainStore';
 
 definePageMeta({
   middleware: ['auth']

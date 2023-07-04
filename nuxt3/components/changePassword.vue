@@ -40,7 +40,6 @@
 </template>
 
 <script setup>
-import {ref} from "vue";
 import {changePassword} from '~/services/api.js'
 
 const password = ref('');

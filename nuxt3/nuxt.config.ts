@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     modules: ['@vite-pwa/nuxt', '@pinia/nuxt'],
     pwa: {
         registerType: 'autoUpdate',
-        includeAssets: ['~/assets/styles/main.scss', '~/assets/styles/background.css', '~/public/static/background2.jpg'],
+        includeAssets: ['~/assets/styles/main.scss', '~/assets/styles/background.css', '~/public/static/mobile_bg.jpg', '~/public/static/desktop_bg.png'],
         manifest: {
             name: 'HV CAO Pwa',
             short_name: 'HVCAO',

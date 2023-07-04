@@ -1,30 +1,23 @@
 <template>
   <div>
     <h2>CAO Database</h2>
-    <div v-if="loadingAccordion">
+    <cao-accordion v-if="!delayLoadingAccording"/>
+    <div v-if="store.loadingAccordion">
       <div class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
       </div>
       Data wordt ingeladen...
     </div>
-    <client-only>
-      <cao-accordion v-if="!loadingAccordion"/>
-    </client-only>
   </div>
 </template>
 
-<script>
-import CaoAccordion from "../components/caoAccordion";
+<script setup>
+import {useMainStore} from '~/store/mainStore';
 
-export default {
-  components: {CaoAccordion},
-  data() {
-    return {
-      loadingAccordion: true,
-    };
-  },
-  mounted() {
-    this.loadingAccordion = false;
-  }
-};
+const store = useMainStore();
+
+const delayLoadingAccording = ref(true);
+
+onMounted(() => {
+  delayLoadingAccording.value = false;
+});
 </script>

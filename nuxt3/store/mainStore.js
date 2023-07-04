@@ -7,6 +7,8 @@ export const useMainStore = defineStore('main', {
         questionDeletedAlert: { show: false, message: '' },
         offlineMessage: { show: false, message: "" },
         shouldRefresh: false,
+        loadingAccordion: false,
+        submittingQuestion: false,
     }),
     getters: {
         // Add any getters here...
