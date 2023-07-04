@@ -2,19 +2,21 @@
   <div>
     <h1 class="pb-5">Admin Portal</h1>
 
-    <QuestionForm @questionSubmitted="fetchData" @successAlert="handleQuestionSubmitted"
-                  @errorAlert="handleQuestionDeleted"/>
-    <div v-if="questionSubmittedAlert.show" class="alert alert-success mt-3" role="alert">
-      {{ questionSubmittedAlert.message }}
+    <question-form />
+    <div v-if="store.questionSubmittedAlert.show" class="alert alert-success mt-3" role="alert">
+      {{ store.questionSubmittedAlert.message }}
     </div>
 
-    <div v-if="questionDeletedAlert.show" class="alert alert-danger mt-3" role="alert">
-      {{ questionDeletedAlert.message }}
+    <div v-if="store.questionDeletedAlert.show" class="alert alert-danger mt-3" role="alert">
+      {{ store.questionDeletedAlert.message }}
+    </div>
+
+    <div v-if="store.offlineMessage.show" class="alert alert-info mt-3" role="alert">
+      {{ store.offlineMessage.message }}
     </div>
 
     <hr/>
-    <QuestionAccordion :questionData="questionData" @questionDeleted="fetchData" @questionEdited="fetchData"
-                       @successAlert="handleQuestionSubmitted" @errorAlert="handleQuestionDeleted"/>
+    <question-database-accordion :questionData="questionData" />
     <div class="mt-5 mb-5">
       <change-password/>
 
@@ -26,21 +28,17 @@
 </template>
 
 <script setup>
-import {ref, onMounted} from 'vue';
-import QuestionForm from '~/components/QuestionForm.vue';
-import QuestionAccordion from '~/components/questionDatabaseAccordion.vue';
 import {fetchQuestionData} from '~/services/api.js';
-import {useRouter} from 'vue-router';
 import ChangePassword from "../components/changePassword";
+import { useMainStore } from '~/store/mainStore'; // Import the store
 
 definePageMeta({
   middleware: ['auth']
 })
 
 const questionData = ref([]);
-const questionSubmittedAlert = ref({show: false, message: ''});
-const questionDeletedAlert = ref({show: false, message: ''});
 const router = useRouter();
+const store = useMainStore(); // Use the store
 
 const logOut = function () {
   console.log('Logout')
@@ -56,23 +54,7 @@ const fetchData = async () => {
   }
 };
 
-const handleQuestionSubmitted = (message) => {
-  questionSubmittedAlert.value = {show: true, message};
-  setTimeout(() => {
-    questionSubmittedAlert.value = {show: false, message: ''};
-  }, 3000);
-  fetchData();
-};
-
-const handleQuestionDeleted = (message) => {
-  questionDeletedAlert.value = {show: true, message};
-  setTimeout(() => {
-    questionDeletedAlert.value = {show: false, message: ''};
-  }, 3000);
-  fetchData();
-};
-
-
+watch(() => store.shouldRefresh, fetchData);
 
 onMounted(fetchData);
 

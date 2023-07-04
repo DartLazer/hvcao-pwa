@@ -112,6 +112,9 @@
 import {ref} from 'vue';
 import {editQuestion, deleteQuestion as deleteQuestionAPI,} from '~/services/api.js';
 import {markupText} from "~/services/markupCode";
+import {useMainStore} from "~/store/mainStore";
+
+const store = useMainStore();
 
 // Initialize fields
 const title = ref('');
@@ -123,7 +126,6 @@ let editableQuestionId = null;
 const showEditSuccessAlert = ref({show: false, message: ''});
 const showEditErrorAlert = ref({show: false, message: ''});
 
-const emit = defineEmits(['questionDeleted', 'errorAlert', 'questionEdited']);
 
 const props = defineProps({
   questionData: {
@@ -132,16 +134,15 @@ const props = defineProps({
   },
 });
 
-const successMessage = ref('');
 
 const deleteItem = async (id) => {
   try {
     const message = await deleteQuestionAPI(id);
-    emit('questionDeleted');
-    emit(message[0], message[1])
+    store.showAlert(message[0], message[1])
+    store.requestRefresh()
   } catch (error) {
     console.error(error.message);
-    emit('errorAlert', error.message)
+    store.showErrorAlert(error.message)
   }
 };
 
@@ -166,17 +167,15 @@ const editQuestionForm = async () => {
     };
     const responseMessage = await editQuestion(editableQuestionId, question);
     await showEditedAlert(responseMessage)
-        emit('questionEdited')
+    store.requestRefresh()
   } catch (error) {
     // Error handling
     console.error(error);
-    emit('errorAlert', error.message)
-    $nuxt.emit('submissionError', error);
+    store.showErrorAlert(error.message)
   }
 };
 
 const showEditedAlert = function (messageArray) {
-  console.log(messageArray)
   const alertType = messageArray[0];
   const alertMessage = messageArray[1]
   // Read response and determine which message to show
@@ -191,8 +190,6 @@ const showEditedAlert = function (messageArray) {
     showEditErrorAlert.value = {show: false, message: ''};
     showEditSuccessAlert.value = {show: false, message: ''};
   }, 3000);
-
-
 }
 
 </script>

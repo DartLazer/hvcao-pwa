@@ -17,9 +17,11 @@
     "vite": "^4.3.9"
   },
   "dependencies": {
+    "@pinia/nuxt": "^0.4.11",
     "@popperjs/core": "^2.11.7",
     "bootstrap": "^5.2.3",
     "dompurify": "^3.0.3",
-    "idb-keyval": "^6.2.1"
+    "idb-keyval": "^6.2.1",
+    "pinia": "^2.1.4"
   }
 }

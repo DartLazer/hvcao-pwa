@@ -1,11 +1,12 @@
 // @ts-ignore
 export default defineNuxtConfig({
+    ssr: false,
     app: {
         pageTransition: {name: 'page', mode: 'out-in'}
     },
     css: ['~/assets/styles/main.scss', '~/assets/styles/background.css'],
     plugins: [{src: '~/plugins/IndexDatabase.client.js', mode: 'client'}, ],
-    modules: ['@vite-pwa/nuxt'],
+    modules: ['@vite-pwa/nuxt', '@pinia/nuxt'],
     pwa: {
         registerType: 'autoUpdate',
         includeAssets: ['~/assets/styles/main.scss', '~/assets/styles/background.css', '~/public/static/background2.jpg'],
