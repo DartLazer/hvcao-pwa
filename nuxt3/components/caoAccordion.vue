@@ -22,7 +22,7 @@
         <div :id="'collapse' + item.id" class="accordion-collapse collapse" :aria-labelledby="'heading' + item.id"
              data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            <p v-html="item.markedExplanation"> </p>
+            <p v-html="item.markedExplanation"></p>
             <p class="small">Bron: <strong>{{ item.source }}</strong></p>
             <p class="small">Toegevoegd op: <strong>{{ item.date_created }}</strong></p>
           </div>
@@ -37,11 +37,13 @@
 </template>
 
 <script setup>
-import {ref, onMounted, watchEffect} from 'vue';
 import {get, set, del, keys} from 'idb-keyval';
 import {fetchLatestQuestionId, fetchQuestionData} from "~/services/api";
 import {markupText} from "~/services/markupCode";
+import {useMainStore} from "~/store/mainStore";
 
+
+const store = useMainStore();
 const search = ref('');
 const questionsDataObject = ref([]);
 const category = ref('');
@@ -52,6 +54,7 @@ async function loadQuestionData() {
   const allKeys = await keys();
   const questionKeys = allKeys.filter(key => String(key).startsWith('question-'));
   if (questionKeys.length === 0) {
+    store.loadingAccordion = true;
     console.log("No question data available.")
     return
   }
@@ -83,29 +86,13 @@ async function performVersionCheck() {
     await set('questionsVersion', remoteVersion);
     await loadQuestionData();
   }
+  store.loadingAccordion = false;
 }
 
 // Generates a list of unique categories dynamically.
 const uniqueCategories = computed(() => {
   const categories = questionsDataObject.value.map(item => item.category);
   return [...new Set(categories)].sort(); // remove duplicates
-});
-
-
-onMounted(async () => {
-  await loadQuestionData();
-  await performVersionCheck();
-});
-watchEffect(() => {
-  if (search.value) {
-    category.value = '';
-  }
-});
-
-watchEffect(() => {
-  if (category.value) {
-    search.value = '';
-  }
 });
 
 
@@ -126,6 +113,22 @@ const filteredQuestionData = computed(() => {
       }
     }
 );
+
+onMounted(async () => {
+  await loadQuestionData();
+  await performVersionCheck();
+});
+watchEffect(() => {
+  if (search.value) {
+    category.value = '';
+  }
+});
+
+watchEffect(() => {
+  if (category.value) {
+    search.value = '';
+  }
+});
 </script>
 
 <style>

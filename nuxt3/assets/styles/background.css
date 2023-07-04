@@ -1,19 +1,7 @@
-/* Styles for desktop */
 body {
-    background-image: url("/static/desktop_bg.png");
+    background-image: url("/static/mobile_bg.jpg");
     background-size: cover;
-    background-position: center;
+    background-position: right;
     background-repeat: no-repeat;
-    background-attachment: fixed;
-}
-
-/* Styles for mobile */
-@media (max-width: 767px) {
-    body {
-        background-image: url("/static/mobile_bg.jpg");
-        background-size: cover;
-        background-position: right;
-        background-repeat: no-repeat;
-        background-attachment: fixed; /* This ensures the image doesn't scroll with the page. */
-    }
+    background-attachment: fixed; /* This ensures the image doesn't scroll with the page. */
 }

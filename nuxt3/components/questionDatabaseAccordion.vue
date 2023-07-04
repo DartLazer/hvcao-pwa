@@ -109,7 +109,6 @@
 </template>
 
 <script setup>
-import {ref} from 'vue';
 import {editQuestion, deleteQuestion as deleteQuestionAPI,} from '~/services/api.js';
 import {markupText} from "~/services/markupCode";
 import {useMainStore} from "~/store/mainStore";

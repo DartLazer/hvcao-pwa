@@ -37,9 +37,7 @@
 </template>
 
 <script setup>
-import {ref} from 'vue';
 import {apiRemoteHost} from '~/services/api';
-import {useRouter} from 'vue-router';
 
 const username = ref('');
 const password = ref('');
