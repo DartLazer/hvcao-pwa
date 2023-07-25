@@ -1,6 +1,7 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg" aria-label="Eighth navbar example" style="background: RGBA(248, 249, 250, 0.5)">
+    <nav class="navbar navbar-expand-lg" aria-label="Eighth navbar example"
+         style="background: RGBA(248, 249, 250, 0.5)">
       <div class="container">
         <NuxtLink class="navbar-brand text-white" to="/">HV Cao Vragen</NuxtLink>
         <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
@@ -15,10 +16,18 @@
               <NuxtLink @click.native="collapseNavbar" class="nav-link" active-class="active" to="/">Home</NuxtLink>
             </li>
             <li class="nav-item">
-              <NuxtLink @click.native="collapseNavbar" class="nav-link" exact-active-class="active" to="/about">Over deze app</NuxtLink>
+              <NuxtLink @click.native="collapseNavbar" class="nav-link" exact-active-class="active"
+                        to="/blokbescherming">Blokbescherming
+              </NuxtLink>
             </li>
             <li class="nav-item">
-              <NuxtLink @click.native="collapseNavbar" class="nav-link" exact-active-class="active" to="login">Admin</NuxtLink>
+              <NuxtLink @click.native="collapseNavbar" class="nav-link" exact-active-class="active" to="/about">Over
+                deze app
+              </NuxtLink>
+            </li>
+            <li class="nav-item">
+              <NuxtLink @click.native="collapseNavbar" class="nav-link" exact-active-class="active" to="login">Admin
+              </NuxtLink>
             </li>
           </ul>
         </div>
