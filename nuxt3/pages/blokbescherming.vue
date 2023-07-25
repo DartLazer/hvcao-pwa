@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container  col-md-auto rounded-1">
+    <div class="container col-12 col-md-auto mx-auto rounded-1">
       <h1>Blokbescherming</h1>
       <div class="rounded-2 p-3 pb-5 pt-3 text-black" style="background: RGBA(248, 249, 250, 0.9)">
         <h3>Wat is blokbescherming?</h3>
@@ -116,5 +116,14 @@ li {
 
 .btn{
   background: lightgrey;
+}
+
+/* Custom styles for full-screen width on phones */
+@media (max-width: 576px) { /* Phones */
+  .container {
+    width: 99%;
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 </style>
