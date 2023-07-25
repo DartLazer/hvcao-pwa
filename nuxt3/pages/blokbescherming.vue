@@ -76,6 +76,9 @@
         <h3>Uitzonderingen op de blokbescherming</h3>
         <ul>
           <li>
+            <b>Standby</b> op standby diensten geldt geen blokbescherming.
+          </li>
+          <li>
             Schemawijzigingen als gevolg van eigen verzoeken uit het verzoekensysteem, ruilingen, het niet verkrijgen
             van een medische verklaring of kwalificatie, en BIC- of sociale restricties, vallen niet onder de
             blokbescherming.
