@@ -57,22 +57,7 @@
           </tbody>
         </table>
 
-        <div class="accordion" id="accordionExample">
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="headingTwo">
-              <button class="accordion-button collapsed btn" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                Uitgebreide tabel openen
-              </button>
-            </h2>
-            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                 data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                <img src="/static/blokbescherming.jpg" alt="Blokbescherming tabel" class="img-fluid">
-              </div>
-            </div>
-          </div>
-        </div>
+        <blok-bescherming-tabel-accordion />
 
         <h3>Uitzonderingen op de blokbescherming</h3>
         <ul>
@@ -116,9 +101,6 @@ li {
   padding-top: 1rem;
 }
 
-.btn {
-  background: lightgrey;
-}
 
 /* Custom styles for full-screen width on phones */
 @media (max-width: 576px) {
@@ -129,4 +111,9 @@ li {
     padding-right: 0;
   }
 }
+
+
+ .button-accordion{
+   background: #f5eddf;
+ }
 </style>
