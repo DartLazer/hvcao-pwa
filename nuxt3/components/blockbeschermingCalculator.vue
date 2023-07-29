@@ -41,13 +41,13 @@
             <div>
               <h5 class="mt-3" style="color: black;">Nieuwe Dienst</h5>
               <div>
-                <label for="new-reporting-time" style="color: black;">Nieuwe aanmeldtijd:</label>
+                <label for="new-reporting-time" style="color: black;">Aanmeldtijd:</label>
               </div>
               <div>
                 <input type="datetime-local" v-model="newReportingTimestamp" id="new-reporting-time">
               </div>
               <div>
-                <label for="new-sign-out-time" style="color: black;">Nieuwe afmeldtijd:</label>
+                <label for="new-sign-out-time" style="color: black;">Afmeldtijd:</label>
               </div>
               <div>
                 <input type="datetime-local" v-model="newSignOutTimestamp" id="new-sign-out-time">
@@ -129,3 +129,9 @@ const calculateScheduleChange = () => {
 };
 
 </script>
+
+<style>
+input{
+  margin-bottom: .2rem;
+}
+</style>
