@@ -21,6 +21,7 @@
         </p>
         <p class="small">Blokbescherming wordt beschreven in Bijlage 7 Sectie C.9 van ons CAO</p>
 
+        <blockbescherming-calculator/>
         <h3>
           Wat mag wanneer veranderd worden?
         </h3>
@@ -89,7 +90,8 @@
           </li>
           <li>
             Indien de vlieger zich heeft aangemeld voor een vluchtopdracht en er veranderingen aan de ingetekende
-            vluchtopdracht noodzakelijk zijn vanwege de sluitingstijd van EIN of RTM. De overige bepalingen van G.8 (maximale FDP)
+            vluchtopdracht noodzakelijk zijn vanwege de sluitingstijd van EIN of RTM. De overige bepalingen van G.8
+            (maximale FDP)
             blijven wel van toepassing.
           </li>
           <li>
@@ -114,12 +116,13 @@ li {
   padding-top: 1rem;
 }
 
-.btn{
+.btn {
   background: lightgrey;
 }
 
 /* Custom styles for full-screen width on phones */
-@media (max-width: 576px) { /* Phones */
+@media (max-width: 576px) {
+  /* Phones */
   .container {
     width: 99%;
     padding-left: 0;
