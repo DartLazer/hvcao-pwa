@@ -12,6 +12,7 @@ This web app is written in Nuxt3, Vue.js 3, Django, and Docker. If you want to h
 
 - An extensive database of questions related to Transavia CLA
 - Offline support with Progressive Web App (PWA) features, allowing users to update the database offline and sync when internet is available
+- Tools to calculate certain CLA aspects
 - Responsive design for optimal mobile and desktop experience
 
 ## Tech Stack
