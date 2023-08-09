@@ -1,4 +1,5 @@
 <template>
+  <title>HVCAO.nl</title>
   <div>
     <!-- serviceworker -->
     <VitePwaManifest />
