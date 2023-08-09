@@ -63,9 +63,15 @@ export async function submitQuestion(question) {
             },
             body: JSON.stringify(question),
         });
+
         if (response.ok) {
             return true;
         }
+        if (response.status === 401) {
+           console.warn('Token invalid. logging out')
+           localStorage.clear('token')
+        }
+
     } catch (e) {
         console.warn('Unable to post to api. Offline?', e)
     }
