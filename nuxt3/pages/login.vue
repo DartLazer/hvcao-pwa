@@ -53,7 +53,6 @@ if (!navigator.onLine) {
 }
 
 const login = async () => {
-
   message.value = 'Attempting login...'
   try {
     const response = await fetch(apiRemoteHost + '/api-token-auth/', {
