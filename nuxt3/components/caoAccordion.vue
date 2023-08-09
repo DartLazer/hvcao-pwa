@@ -13,7 +13,7 @@
     </select>
 
 
-    <div class="accordion" id="caoFAQAccordion">
+    <div class="accordion pb-3" id="caoFAQAccordion">
       <div class="accordion-item" v-for="(item) in filteredQuestionData" :key="item.id">
         <h2 class="accordion-header" :id="'heading' + item.id">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
