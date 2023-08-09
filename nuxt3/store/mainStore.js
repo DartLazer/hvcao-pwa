@@ -9,6 +9,7 @@ export const useMainStore = defineStore('main', {
         shouldRefresh: false,
         loadingAccordion: false,
         submittingQuestion: false,
+        cleanFiltersAndSearchBar: false,
     }),
     getters: {
         // Add any getters here...
@@ -52,6 +53,9 @@ export const useMainStore = defineStore('main', {
         },
         requestRefresh() {
             this.shouldRefresh = !this.shouldRefresh;
+        },
+        cleanFiltersAndSearchBarNow() {
+            this.cleanFiltersAndSearchBar = !this.cleanFiltersAndSearchBar;
         },
         // Add other actions here...
     },

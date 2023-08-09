@@ -19,5 +19,6 @@ const delayLoadingAccording = ref(true);
 
 onMounted(() => {
   delayLoadingAccording.value = false;
+  store.cleanFiltersAndSearchBarNow();
 });
 </script>

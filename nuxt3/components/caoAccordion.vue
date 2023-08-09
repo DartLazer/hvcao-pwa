@@ -114,6 +114,13 @@ const filteredQuestionData = computed(() => {
     }
 );
 
+const clearSearchAndFilters = function (){
+  search.value = '';
+  category.value = '';
+};
+
+watch(() => store.cleanFiltersAndSearchBar, clearSearchAndFilters);
+
 onMounted(async () => {
   await loadQuestionData();
   await performVersionCheck();
