@@ -1,8 +1,10 @@
 <template>
   <div>
-    <div class="pb-3">
+    <div class="search-container pb-3">
       <input v-model="search" class="form-control" placeholder="Zoeken..."/>
+      <button v-if="search" class="clear-search" @click="store.cleanFiltersAndSearchBarNow()">&#10005;</button>
     </div>
+
 
 
     <select class="form-select form-group" aria-label="category" required v-model="category">
@@ -139,6 +141,23 @@ watchEffect(() => {
 </script>
 
 <style>
+.search-container {
+  position: relative;
+}
+
+.clear-search {
+  position: absolute;
+  right: 8px;  /* Adjusted for better spacing */
+  top: 33%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 2rem;  /* Increased size for better visibility */
+  color: #ac2925;
+  line-height: 1;  /* Adjusted for vertical centering */
+}
+
 .form-group {
   margin-bottom: 1rem;
 }
