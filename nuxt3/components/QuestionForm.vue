@@ -15,18 +15,18 @@
     <div class="form-group">
       <select class="form-select" aria-label="category" required v-model="category">
         <option disabled value="">Categorie</option>
-        <option value="basebeleid">Basebeleid</option>
+        <option value="Basebeleid">Basebeleid</option>
         <option value="Compensatie">Compensatie</option>
-        <option value="deeltijdenafbouw">Deeltijd & Afbouw</option>
+        <option value="Deeltijd & Afbouw">Deeltijd & Afbouw</option>
         <option value="Handige Info">Handige Info Non-CAO</option>
-        <option value="Overig">Overig Info CAO</option>
+        <option value="Overig Info CAO">Overig Info CAO</option>
         <option value="Salaris">Salaris</option>
         <option value="Vakantie">Vakantie</option>
-        <option value="WRR">WRR - CBM & Off-base melden</option>
-        <option value="WRR-standbyenreserve">WRR - Standby & Reserve</option>
-        <option value="WRR-uitvoering">WRR - Uitvoering & Ongepland Overnachten</option>
-        <option value="WRR-planning;">WRR - Planning</option>
-        <option value="WRR-jokverzoekenensnipperdagen">WRR - Jokerverzoeken & Snipperdagen</option>
+        <option value="WRR - CBM & Off-base melden">WRR - CBM & Off-base melden</option>
+        <option value="WRR - Standby & Reserve">WRR - Standby & Reserve</option>
+        <option value="WRR - Uitvoering & Ongepland Overnachten">WRR - Uitvoering & Ongepland Overnachten</option>
+        <option value="WRR - Planning">WRR - Planning</option>
+        <option value="WRR - Jokerverzoeken & Snipperdagen">WRR - Jokerverzoeken & Snipperdagen</option>
       </select>
     </div>
     <div class="form-group">
