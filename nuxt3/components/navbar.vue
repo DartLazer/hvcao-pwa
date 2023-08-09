@@ -44,9 +44,7 @@ const store = useMainStore(); // Use the store
 const navbarRef = ref(null);
 
 const collapseNavbar = () => {
-
   if (navbarRef.value) {
-    console.log('Ay');
     navbarRef.value.className = 'navbar-collapse collapse';
   }
 }
