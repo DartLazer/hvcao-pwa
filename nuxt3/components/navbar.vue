@@ -10,7 +10,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div ref="navbar" class="navbar-collapse collapse" id="navbarsExample07" style="">
+        <div ref="navbarRef" class="navbar-collapse collapse" id="navbarsExample07" style="">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <NuxtLink @click.native="collapseNavbar" @click="store.cleanFiltersAndSearchBarNow()" class="nav-link" active-class="active" to="/">Home</NuxtLink>
@@ -44,7 +44,9 @@ const store = useMainStore(); // Use the store
 const navbarRef = ref(null);
 
 const collapseNavbar = () => {
+
   if (navbarRef.value) {
+    console.log('Ay');
     navbarRef.value.className = 'navbar-collapse collapse';
   }
 }
