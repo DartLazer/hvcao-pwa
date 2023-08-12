@@ -10,6 +10,7 @@ export const useMainStore = defineStore('main', {
         loadingAccordion: false,
         submittingQuestion: false,
         cleanFiltersAndSearchBar: false,
+        goToQuestionID: null,
     }),
     getters: {
         // Add any getters here...
@@ -58,5 +59,8 @@ export const useMainStore = defineStore('main', {
             this.cleanFiltersAndSearchBar = !this.cleanFiltersAndSearchBar;
         },
         // Add other actions here...
+        goToQuestionIDNow(questionID) {
+            this.goToQuestionID = questionID;
+        },
     },
 })

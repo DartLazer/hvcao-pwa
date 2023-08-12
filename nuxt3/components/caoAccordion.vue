@@ -6,7 +6,6 @@
     </div>
 
 
-
     <select class="form-select form-group" aria-label="category" required v-model="category">
       <option value="">Alle Categorieën</option>
       <option v-for="(cat, index) in uniqueCategories" :value="cat" :key="index">{{ cat }}</option>
@@ -19,12 +18,13 @@
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                   :data-bs-target="'#collapse' + item.id" aria-expanded="false" :aria-controls="'collapse' + item.id">
             {{ item.title }}
+
           </button>
         </h2>
         <div :id="'collapse' + item.id" class="accordion-collapse collapse" :aria-labelledby="'heading' + item.id"
              data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            <p v-html="item.markedExplanation"></p>
+            <MarkedExplanation :rawText="item.explanation"/>
             <p class="small">Bron: <strong>{{ item.source }}</strong></p>
             <p class="small">Toegevoegd op: <strong>{{ item.date_created }}</strong></p>
           </div>
@@ -49,6 +49,7 @@ const store = useMainStore();
 const search = ref('');
 const questionsDataObject = ref([]);
 const category = ref('');
+let stopWatch;
 
 
 async function loadQuestionData() {
@@ -116,12 +117,30 @@ const filteredQuestionData = computed(() => {
     }
 );
 
-const clearSearchAndFilters = function (){
+const clearSearchAndFilters = function () {
   search.value = '';
   category.value = '';
 };
 
+
+const goToQuestionID = function () {
+  search.value = store.goToQuestionID;
+
+  // Stop the watch to prevent a retrigger
+  stopWatch();
+
+  store.goToQuestionID = '';
+
+  // Restart the watcher
+  stopWatch = watch(() => store.goToQuestionID, goToQuestionID);
+}
+
+// Initialize the watcher and capture its stop method in stopWatch
+stopWatch = watch(() => store.goToQuestionID, goToQuestionID);
+
+
 watch(() => store.cleanFiltersAndSearchBar, clearSearchAndFilters);
+
 
 onMounted(async () => {
   await loadQuestionData();
@@ -147,15 +166,15 @@ watchEffect(() => {
 
 .clear-search {
   position: absolute;
-  right: 8px;  /* Adjusted for better spacing */
+  right: 8px; /* Adjusted for better spacing */
   top: 33%;
   transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 2rem;  /* Increased size for better visibility */
+  font-size: 2rem; /* Increased size for better visibility */
   color: #ac2925;
-  line-height: 1;  /* Adjusted for vertical centering */
+  line-height: 1; /* Adjusted for vertical centering */
 }
 
 .form-group {

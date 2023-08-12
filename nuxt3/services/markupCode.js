@@ -17,5 +17,8 @@ export const markupText = function (text) {
     // Links
     newText = newText.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
 
+    // Custom question links
+    newText = newText.replace(/\[\[(.*?)\|(.*?)\]\]/g, '<a class="link-secondary" @click="goToQuestionID(\'$1\')">$2</a>');
+
     return DOMPurify.sanitize(newText);
 };
