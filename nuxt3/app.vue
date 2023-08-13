@@ -1,6 +1,8 @@
 <template>
-  <title>HVCAO.nl</title>
   <div>
+    <Head>
+      <Title>HVCAO - {{ store.pageTitle }}</Title>
+    </Head>
     <!-- serviceworker -->
     <VitePwaManifest />
     <navbar/>
@@ -15,6 +17,9 @@
 <script setup>
 import Navbar from "./components/navbar"
 import MainContent from "~/components/mainContent.vue";
+import { useMainStore } from '~/store/mainStore';
+
+let store = useMainStore();
 
 const loadingData = ref(true)
 

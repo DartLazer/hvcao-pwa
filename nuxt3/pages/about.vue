@@ -21,9 +21,9 @@
 
           <h5 class="pt-3">Hoe kan ik deze webapp offline gebruiken?</h5>
           <p>Apple gebruikers: <i>Druk op het delen icoontje (vierkantje met pijl naar
-            boven) en klik op zet op beginscherm.</i><br />
+            boven) en klik op zet op beginscherm.</i><br/>
             Voor Android gebruikers: <i>installeer de app via de pop-up of druk op instellingen
-            en dan zet op thuis/beginscherm.</i></p>
+              en dan zet op thuis/beginscherm.</i></p>
 
           <h5 class="pt-3">Vragen, opmerkingen of suggesties?</h5>
           <p>Altijd welkom! <a class="link-secondary" href="https://wa.me/31652500397">Stuur mij even een whatsapp
@@ -35,5 +35,13 @@
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
+import {useMainStore} from "~/store/mainStore";
+
+let store = useMainStore();
+
+onMounted(() => {
+  store.setPageTitle('About')
+});
 </script>

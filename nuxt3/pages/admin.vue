@@ -32,7 +32,7 @@ import {fetchQuestionData} from '~/services/api.js';
 import { useMainStore } from '~/store/mainStore';
 
 definePageMeta({
-  middleware: ['auth']
+  middleware: ['auth'],
 })
 
 const questionData = ref([]);
@@ -56,8 +56,11 @@ const fetchData = async () => {
 watch(() => store.shouldRefresh, fetchData);
 
 onMounted(fetchData);
-
+onMounted(() => {
+  store.setPageTitle('Admin')
+});
 </script>
+
 
 <component name="QuestionForm" :is="QuestionForm" @questionSubmitted="fetchData" @questionDeleted="fetchData"/>
 <component name="QuestionAccordion" :is="QuestionAccordion" :questionData="questionData" @questionDeleted="fetchData"/>

@@ -38,7 +38,9 @@
 
 <script setup>
 import {apiRemoteHost} from '~/services/api';
+import {useMainStore} from "~/store/mainStore";
 
+let store = useMainStore();
 const username = ref('');
 const password = ref('');
 const message = ref('');
@@ -77,9 +79,12 @@ const login = async () => {
   } catch (e) {
     message.value = 'Unable to connect to login server...'
   }
-
-
 };
+
+onMounted(() => {
+  store.setPageTitle('Login')
+});
+
 </script>
 
 <style scoped>

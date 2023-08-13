@@ -17,8 +17,10 @@ const store = useMainStore();
 
 const delayLoadingAccording = ref(true);
 
+
 onMounted(() => {
   delayLoadingAccording.value = false;
   store.cleanFiltersAndSearchBarNow();
+  store.setPageTitle('Home')
 });
 </script>

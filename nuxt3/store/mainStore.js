@@ -11,6 +11,7 @@ export const useMainStore = defineStore('main', {
         submittingQuestion: false,
         cleanFiltersAndSearchBar: false,
         goToQuestionID: null,
+        pageTitle: 'Home',
     }),
     getters: {
         // Add any getters here...
@@ -61,6 +62,9 @@ export const useMainStore = defineStore('main', {
         // Add other actions here...
         goToQuestionIDNow(questionID) {
             this.goToQuestionID = questionID;
+        },
+        setPageTitle(title){
+          this.pageTitle = title;
         },
     },
 })

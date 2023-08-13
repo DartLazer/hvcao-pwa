@@ -93,7 +93,15 @@
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
+import {useMainStore} from "~/store/mainStore";
+
+let store = useMainStore();
+
+onMounted(() => {
+  store.setPageTitle('Blokbescherming')
+});
 </script>
 
 <style>
