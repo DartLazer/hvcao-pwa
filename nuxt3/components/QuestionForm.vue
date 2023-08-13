@@ -6,7 +6,7 @@
     </div>
     <div class="form-group">
       <textarea class="form-control"
-                placeholder="Antwoord. Gebruik *tekst* voor schuine tekst en **tekst** voor dikgedrukte tekst en [Link Text](URL) voor links" required
+                placeholder="Antwoord gebruik de volgende tags:. &#13;&#10;*tekst* voor schuine tekst &#13;&#10;**tekst** voor dikgedrukte tekst &#13;&#10;[Link Text](URL) voor links&#13;&#10;[[zoekterm|tekst]] zoekbar link" required
                 rows="5" v-model="explanation"></textarea>
     </div>
     <div class="form-group">
