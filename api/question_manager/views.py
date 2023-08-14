@@ -8,8 +8,8 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from question_manager.models import QuestionData, QuestionVersion
-from question_manager.serializers import QuestionDataSerializer, QuestionDataGetSerializer
+from .models import QuestionData, QuestionVersion
+from .serializers import QuestionDataSerializer, QuestionDataGetSerializer
 
 
 @api_view(['POST'])
@@ -72,7 +72,7 @@ class QuestionDataCreateAPIView(APIView):
         question = self.get_object(pk)
         serializer = QuestionDataSerializer(question, data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(last_edited=request.user)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
