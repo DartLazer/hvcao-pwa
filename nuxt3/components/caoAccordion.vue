@@ -26,7 +26,7 @@
           <div class="accordion-body">
             <MarkedExplanation :rawText="item.explanation"/>
             <p class="small">Bron: <strong>{{ item.source }}</strong></p>
-            <p class="small">Toegevoegd op: <strong>{{ item.date_created }}</strong></p>
+            <p class="small">Toegevoegd op: <strong>{{ item.date_updated }}</strong></p>
           </div>
         </div>
       </div>

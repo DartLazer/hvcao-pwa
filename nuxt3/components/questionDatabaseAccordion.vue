@@ -21,7 +21,7 @@
             <MarkedExplanation :rawText="item.explanation" />
             <p class="small">Bron: {{ item.source }}</p>
             <p class="small">Created by: <strong>{{ item.created_by }}</strong> at
-              <strong>{{ item.date_created }}</strong></p>
+              <strong>{{ item.date_updated }}</strong></p>
             <p v-if="item.last_edited_by" class="small">Last Edited by: <strong>{{item.last_edited_by}}</strong></p>
             <p class="small">
               <strong>Tags: </strong>
