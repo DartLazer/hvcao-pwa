@@ -24,7 +24,7 @@ class QuestionDataGetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = QuestionData
-        fields = ['id', 'title', 'explanation', 'source', 'category', 'tags', 'created_by', 'date_created', 'last_edited_by']
+        fields = ['id', 'title', 'explanation', 'source', 'category', 'tags', 'created_by', 'date_updated', 'last_edited_by']
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)

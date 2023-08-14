@@ -9,7 +9,7 @@ class QuestionData(models.Model):
     explanation = models.TextField()
     source = models.CharField(max_length=255)
     category = models.CharField(max_length=255)
-    date_created = models.DateField(auto_now_add=True)
+    date_updated = models.DateField(auto_now=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="created_by_questions")
     last_edited_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,
                                        related_name="last_edited_by_questions")
