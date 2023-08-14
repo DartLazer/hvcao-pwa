@@ -72,7 +72,8 @@ class QuestionDataCreateAPIView(APIView):
         question = self.get_object(pk)
         serializer = QuestionDataSerializer(question, data=request.data)
         if serializer.is_valid():
-            serializer.save(last_edited=request.user)
+            # set last_edited_by field to the user making the request
+            serializer.save(last_edited_by=request.user)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
