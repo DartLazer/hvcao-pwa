@@ -4,7 +4,7 @@ from .models import QuestionData
 
 @admin.register(QuestionData)
 class QuestionDataAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'source', 'category', 'date_created', 'created_by', 'tags']
-    list_filter = ['category', 'date_created']
+    list_display = ['id', 'title', 'source', 'category', 'date_updated', 'created_by', 'tags', 'last_edited_by']
+    list_filter = ['category', 'date_updated']
     search_fields = ['title', 'explanation']
 
