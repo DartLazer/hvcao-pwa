@@ -14,16 +14,17 @@ class QuestionDataSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = QuestionData
-        fields = ['id', 'title', 'explanation', 'source', 'category', 'tags']
+        fields = ['id', 'title', 'explanation', 'source', 'category', 'tags', 'last_edited_by']
 
 
 class QuestionDataGetSerializer(serializers.ModelSerializer):
     tags = serializers.ListField(child=serializers.CharField())
     created_by = serializers.StringRelatedField()
+    last_edited_by = serializers.StringRelatedField()
 
     class Meta:
         model = QuestionData
-        fields = ['id', 'title', 'explanation', 'source', 'category', 'tags', 'created_by', 'date_created']
+        fields = ['id', 'title', 'explanation', 'source', 'category', 'tags', 'created_by', 'date_created', 'last_edited_by']
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
