@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container col-12 col-md-auto mx-auto rounded-1">
+    <div class="container col-12 col-md-auto mx-auto rounded-1 pb-5">
       <h1>Blokbescherming</h1>
       <div class="rounded-2 p-3 pb-5 pt-3 text-black" style="background: RGBA(248, 249, 250, 0.9)">
         <h3>Wat is blokbescherming?</h3>
@@ -119,7 +119,6 @@ li {
     padding-right: 0;
   }
 }
-
 
  .button-accordion{
    background: #f5eddf;
