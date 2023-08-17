@@ -40,7 +40,7 @@
 
 <script setup>
 import {get, set, del, keys} from 'idb-keyval';
-import {fetchLatestQuestionId, fetchQuestionData} from "~/services/api";
+import {fetchLatestQuestionDatabaseVersion, fetchQuestionData} from "~/services/api";
 import {markupText} from "~/services/markupCode";
 import {useMainStore} from "~/store/mainStore";
 
@@ -72,7 +72,7 @@ async function loadQuestionData() {
 async function performVersionCheck() {
   // Checks with the remote API which question set ID is available.
   // If different then it will update the indexedDB
-  const remoteVersion = await fetchLatestQuestionId()
+  const remoteVersion = await fetchLatestQuestionDatabaseVersion()
   const localVersion = await get('questionsVersion');
 
   if (remoteVersion !== localVersion) {
