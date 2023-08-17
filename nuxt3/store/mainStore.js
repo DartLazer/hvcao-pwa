@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+// Main store that uses pinia (vuex alternative) to set global variables
 
 export const useMainStore = defineStore('main', {
     state: () => ({

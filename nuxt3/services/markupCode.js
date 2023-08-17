@@ -1,6 +1,8 @@
 import DOMPurify from 'dompurify';
 
 export const markupText = function (text) {
+    // This function marks up a string of text using predefined patters, so that they can be displayed accoridngly
+    // in the bootstraps accordions on the app.
     if (!text) return "";
 
     let newText = text;

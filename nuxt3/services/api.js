@@ -1,8 +1,10 @@
-export const apiRemoteHost = 'https://hvcao-api.sky-t.nl';
+//This file contains al functions related to handling the calls to the remote API that contains the question database.
+// export const apiRemoteHost = 'https://hvcao-api.sky-t.nl';
 
-//export const apiRemoteHost = 'http://0.0.0.0:8000';
+export const apiRemoteHost = 'http://0.0.0.0:8000';
 
 export async function fetchQuestionData() {
+    // Retrieves the latest question database from the API Server
     const response = await fetch(apiRemoteHost + '/api/question-data/');
     try {
         if (response.ok) {
@@ -15,7 +17,9 @@ export async function fetchQuestionData() {
     throw new Error('Failed to fetch question data');
 }
 
-export async function fetchLatestQuestionId() {
+export async function fetchLatestQuestionDatabaseVersion() {
+    // Retrieves the latest QuestionDatabase version number to compare with the local question database.
+    // This will be used to decide if the remote database will be downloaded
     try {
         const response = await fetch(apiRemoteHost + '/api/question-version/');
         if (response.ok) {
@@ -28,6 +32,7 @@ export async function fetchLatestQuestionId() {
 }
 
 export async function editQuestion(id, question) {
+    // Update a question on the remote server database
     const token = localStorage.getItem('token');
     try {
         const response = await fetch(apiRemoteHost + '/api/question-data/' + id + '/', {
@@ -53,6 +58,7 @@ export async function editQuestion(id, question) {
 
 
 export async function submitQuestion(question) {
+    // Add a new question to the remote question database
     const token = localStorage.getItem('token');
     try {
         const response = await fetch(apiRemoteHost + '/api/question-data/', {
@@ -79,6 +85,7 @@ export async function submitQuestion(question) {
 
 
 export async function changePassword(newPassword) {
+    // Change a users password
     const token = localStorage.getItem('token');
     try {
         const response = await fetch(apiRemoteHost + '/api/change-password/', {
@@ -98,6 +105,7 @@ export async function changePassword(newPassword) {
 }
 
 export async function deleteQuestion(id) {
+    // Delete a question from the remote server
     const token = localStorage.getItem('token');
     try {
         const response = await fetch(apiRemoteHost + `/api/question-data/delete/${id}/`, {
