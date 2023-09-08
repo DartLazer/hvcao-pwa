@@ -25,6 +25,7 @@
              data-bs-parent="#accordionExample">
           <div class="accordion-body">
             <MarkedExplanation :rawText="item.explanation"/>
+            <hr />
             <p class="small">Bron: <strong>{{ item.source }}</strong></p>
             <p class="small">Toegevoegd op: <strong>{{ item.date_updated }}</strong></p>
           </div>
