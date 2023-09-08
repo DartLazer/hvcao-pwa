@@ -1,7 +1,7 @@
 //This file contains al functions related to handling the calls to the remote API that contains the question database.
-// export const apiRemoteHost = 'https://hvcao-api.sky-t.nl';
+ export const apiRemoteHost = 'https://hvcao-api.sky-t.nl';
 
-export const apiRemoteHost = 'http://0.0.0.0:8000';
+// export const apiRemoteHost = 'http://0.0.0.0:8000';
 
 export async function fetchQuestionData() {
     // Retrieves the latest question database from the API Server
