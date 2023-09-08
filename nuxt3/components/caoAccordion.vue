@@ -25,7 +25,7 @@
              data-bs-parent="#accordionExample">
           <div class="accordion-body">
             <MarkedExplanation :rawText="item.explanation"/>
-            <hr />
+            <hr class="thin-hr-line" />
             <p class="small">Bron: <strong>{{ item.source }}</strong></p>
             <p class="small">Toegevoegd op: <strong>{{ item.date_updated }}</strong></p>
           </div>
@@ -160,7 +160,7 @@ watchEffect(() => {
 });
 </script>
 
-<style>
+<style scoped>
 .search-container {
   position: relative;
 }
@@ -180,5 +180,11 @@ watchEffect(() => {
 
 .form-group {
   margin-bottom: 1rem;
+}
+
+.thin-hr-line {
+  border: none;
+  height: 2px; /* Adjust the height to make it thinner */
+  background-color: #000000; /* Change the color as desired */
 }
 </style>
