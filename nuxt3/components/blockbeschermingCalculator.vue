@@ -4,7 +4,7 @@
       <h2 class="accordion-header" id="scheduleChangeHeader">
         <button class="accordion-button collapsed button-accordion" type="button" data-bs-toggle="collapse"
                 data-bs-target="#scheduleChangeCollapse" aria-expanded="true" aria-controls="scheduleChangeCollapse">
-          Blokbescherming Calculator
+          Blokbescherming Calculator (Ge-update!!!)
         </button>
       </h2>
       <div id="scheduleChangeCollapse" class="accordion-collapse collapse " aria-labelledby="scheduleChangeHeader"
