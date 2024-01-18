@@ -2,11 +2,13 @@
   <div class="accordion pb-3" id="scheduleChangeAccordion">
     <div class="accordion-item">
       <h2 class="accordion-header" id="scheduleChangeHeader">
-        <button class="accordion-button collapsed button-accordion" type="button" data-bs-toggle="collapse" data-bs-target="#scheduleChangeCollapse" aria-expanded="true" aria-controls="scheduleChangeCollapse">
+        <button class="accordion-button collapsed button-accordion" type="button" data-bs-toggle="collapse"
+                data-bs-target="#scheduleChangeCollapse" aria-expanded="true" aria-controls="scheduleChangeCollapse">
           Blokbescherming Calculator
         </button>
       </h2>
-      <div id="scheduleChangeCollapse" class="accordion-collapse collapse " aria-labelledby="scheduleChangeHeader" data-bs-parent="#scheduleChangeAccordion">
+      <div id="scheduleChangeCollapse" class="accordion-collapse collapse " aria-labelledby="scheduleChangeHeader"
+           data-bs-parent="#scheduleChangeAccordion">
         <div class="accordion-body">
           <!-- Tool Section -->
           <div class="container col-12 col-md-auto mx-auto mt-3 rounded-1">
@@ -56,10 +58,10 @@
 
             <!-- Calculate Schedule Change Section -->
             <div class="mt-3">
-              <button class="btn btn-primary" @click="calculateScheduleChange" >Bereken</button>
+              <button class="btn btn-primary" @click="calculateScheduleChange">Bereken</button>
               <p style="color: black;" v-if="calculationResult">
-                <strong>Bracket:</strong> {{ calculationResult.bracket }}<br />
-                <strong>Bewilliging Vereist:</strong> {{ calculationResult.permissionRequired }}<br />
+                <strong>Bracket:</strong> {{ calculationResult.bracket }}<br/>
+                <strong>Bewilliging Vereist:</strong> {{ calculationResult.permissionRequired }}<br/>
                 <strong>Compensatie:</strong> {{ calculationResult.compensation }}
               </p>
             </div>
@@ -109,16 +111,25 @@ const calculateScheduleChange = () => {
     }
   } else if (hoursDiff <= 168 && hoursDiff >= 24) {
     bracket = 3;
-    if ((reportTimeChange < -3 || reportTimeChange > -2) || (signOutTimeChange > 3 || signOutTimeChange < 2)) {
-      permissionRequired = "Ja";
+    if ((reportTimeChange > -2 && signOutTimeChange < 2)) {
+      permissionRequired = "Nee";
+      compensation = "Geen";
+    } else if ((reportTimeChange > -3) && (signOutTimeChange < 3)) {
+      permissionRequired = "Nee";
       compensation = '1 PD';
+    } else if (reportTimeChange <= -3 || signOutTimeChange >= 3) {
+      permissionRequired = "Ja";
+      compensation = "1 PD";
     }
   } else {
     bracket = 4;
     if (reportTimeChange < 0 || signOutTimeChange > 2) {
       permissionRequired = "Ja";
+      compensation = '1 PD';
+    } else {
+      permissionRequired = "Nee";
+      compensation = "Geen";
     }
-    compensation = '1 PD';
   }
 
   calculationResult.value = {
@@ -131,7 +142,7 @@ const calculateScheduleChange = () => {
 </script>
 
 <style>
-input{
+input {
   margin-bottom: .2rem;
 }
 </style>
