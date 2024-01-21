@@ -7,7 +7,7 @@ export default defineNuxtConfig({
     css: ['~/assets/styles/main.scss', '~/assets/styles/background.css'],
     plugins: [{src: '~/plugins/IndexDatabase.client.js', mode: 'client'},
         {src: '~/plugins/analytics.client.js', mode: 'client'},
-        {src: '~/plugins/posthog.js', mode:'client'}],
+        {src: '~/plugins/posthog-plugin.js', mode:'client'}],
     modules: ['@vite-pwa/nuxt', '@pinia/nuxt'],
     pwa: {
         registerType: 'autoUpdate',
