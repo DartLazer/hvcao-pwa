@@ -23,6 +23,7 @@
     "dompurify": "^3.0.8",
     "flatpickr": "^4.6.13",
     "idb-keyval": "^6.2.1",
-    "pinia": "^2.1.7"
+    "pinia": "^2.1.7",
+    "posthog-js": "^1.100.0"
   }
 }

@@ -5,8 +5,9 @@ export default defineNuxtConfig({
         pageTransition: {name: 'page', mode: 'out-in'}
     },
     css: ['~/assets/styles/main.scss', '~/assets/styles/background.css'],
-    plugins: [  {src: '~/plugins/IndexDatabase.client.js', mode: 'client'},
-                {src: '~/plugins/analytics.client.js', mode: 'client'}],
+    plugins: [{src: '~/plugins/IndexDatabase.client.js', mode: 'client'},
+        {src: '~/plugins/analytics.client.js', mode: 'client'},
+        {src: '~/plugins/posthog.js', mode:'client'}],
     modules: ['@vite-pwa/nuxt', '@pinia/nuxt'],
     pwa: {
         registerType: 'autoUpdate',
