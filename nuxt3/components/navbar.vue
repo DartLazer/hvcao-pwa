@@ -3,7 +3,9 @@
     <nav class="navbar navbar-expand-lg" aria-label="Eighth navbar example"
          style="background: RGBA(248, 249, 250, 0.5)">
       <div class="container">
-        <NuxtLink class="navbar-brand text-white" @click="store.cleanFiltersAndSearchBarNow()" to="/">HV Cao Vragen</NuxtLink>
+        <NuxtLink class="navbar-brand text-white mt-auto pb-2" @click="store.cleanFiltersAndSearchBarNow()" to="/">HV
+          Cao Vragen
+        </NuxtLink>
         <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -13,7 +15,9 @@
         <div ref="navbarRef" class="navbar-collapse collapse" id="navbarsExample07" style="">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <NuxtLink @click.native="collapseNavbar" @click="store.cleanFiltersAndSearchBarNow()" class="nav-link" active-class="active" to="/">Home</NuxtLink>
+              <NuxtLink @click.native="collapseNavbar" @click="store.cleanFiltersAndSearchBarNow()" class="nav-link"
+                        active-class="active" to="/">Home
+              </NuxtLink>
             </li>
             <li class="nav-item">
               <NuxtLink @click.native="collapseNavbar" class="nav-link" exact-active-class="active"
@@ -49,3 +53,31 @@ const collapseNavbar = () => {
   }
 }
 </script>
+
+<style scoped>
+
+.container {
+    color: white;
+  }
+
+  .navbar .nav-link {
+    //color: white !important;
+  }
+
+.navbar .nav-link:hover {
+  transform: scale(1.1); /* This scales the text up by 10% */
+  font-weight: bold;
+}
+
+  .navbar .nav-link:active,
+  .navbar .nav-link:focus{
+    //color: white !important;
+    font-weight: bold;
+  }
+
+  .navbar-brand,
+  .navbar-brand:hover {
+    //color: white !important;
+    font-weight: bold;
+  }
+</style>
