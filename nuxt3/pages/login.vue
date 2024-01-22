@@ -11,7 +11,7 @@
       <div v-if="message">
         <p class="alert alert-info mt-2">{{ message }}</p>
       </div>
-      <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">Sign in</button>
+      <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">Inloggen</button>
     </form>
 
     <div class="accordion mt-5" id="accordionExample">
@@ -25,10 +25,13 @@
         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
              data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            <strong>We zijn op zoek naar database-auteurs!</strong> Dit project wordt vrijwillig onderhouden door
-            collega's binnen Transavia vanuit de cockpit. Als je een goede kennis hebt van de CAO en andere randzaken en
-            graag wilt bijdragen, <a href="https://wa.me/31652500397" class="link-secondary">stuur me dan een berichtje
-            via WhatsApp!</a>
+            <p class="fw-semibold">We zijn op zoek naar database-auteurs!</p>
+            <p>Dit project wordt vrijwillig onderhouden door
+              collega's binnen Transavia vanuit de cockpit. Als je een goede kennis hebt van de CAO en andere randzaken
+              en graag wilt bijdragen,
+              <a href="https://wa.me/31652500397" class="link-secondary">
+                stuur me dan een berichtje via WhatsApp!</a>
+            </p>
           </div>
         </div>
       </div>
@@ -89,7 +92,7 @@ onMounted(() => {
 
 <style scoped>
 .container {
-  max-width: 330px;
+  max-width: 430px;
   padding: 15px;
   margin: 0 auto;
 }
