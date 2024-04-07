@@ -1,8 +1,8 @@
 <template>
   <div>
-    <Head>
-      <Title>HVCAO - {{ store.pageTitle }}</Title>
-    </Head>
+    <head>
+      <title>HVCAO - {{ store.pageTitle }}</title>
+    </head>
     <!-- serviceworker -->
     <VitePwaManifest />
     <navbar/>
