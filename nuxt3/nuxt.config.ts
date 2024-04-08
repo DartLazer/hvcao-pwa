@@ -2,6 +2,11 @@
 export default defineNuxtConfig({
     ssr: false,
     app: {
+        head: {
+            meta: [
+                { name: 'google-adsense-account', content: 'ca-pub-8641079467137219' }
+            ]
+        },
         pageTransition: {name: 'page', mode: 'out-in'}
     },
     css: ['~/assets/styles/main.scss', '~/assets/styles/background.css'],
