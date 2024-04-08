@@ -2,6 +2,7 @@
   <div>
     <head>
       <title>HVCAO - {{ store.pageTitle }}</title>
+      <meta name="google-adsense-account" content="ca-pub-8641079467137219">
     </head>
     <!-- serviceworker -->
     <VitePwaManifest />
