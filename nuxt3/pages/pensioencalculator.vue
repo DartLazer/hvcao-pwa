@@ -3,29 +3,31 @@
     <div class="col-12 col-md-auto mx-auto rounded-1">
       <h1>Pensioenbijdrage Calculator</h1>
       <div class="rounded-2 p-3 text-black" style="background: RGBA(248, 249, 250, 0.9)">
-        <p class="col-8">
+        <p class="col-lg-8">
           Deze tool is ontworpen om je inzicht te geven in hoeveel van je salaris je <strong>netto</strong> apart zou
           moeten zetten voor je pensioen, gebaseerd op je huidige salarisschaal, om te voldoen aan de bedachte
-          pensioensopbouw.
+          pensioensopbouw zoals bedoeld in het CAO.
         </p>
         <form @submit.prevent="calculateContribution">
           <div class="mb-3">
+            <div class="mb-3">
+              <label for="function" class="form-label">Functie</label>
+              <select id="function" class="form-select" v-model="formData.function">
+                <option value="CPT">CPT</option>
+                <option value="FO">FO</option>
+              </select>
+            </div>
             <label for="salaryScale" class="form-label">Salarisschaal</label>
             <select id="salaryScale" class="form-select" v-model="formData.salaryScale">
-              <option v-for="scale in 32" :key="scale" :value="scale">Schaal {{ scale }}</option>
+              <option v-for="scale in 32" :key="scale" :value="scale">Schaal {{ scale }} (€
+                {{ getSalaryByFunctionAndScale(formData.function, scale) }})
+              </option>
             </select>
           </div>
           <div class="mb-3">
-            <label for="age" class="form-label">Leeftijd</label>
+            <label for="age" class="form-label">Leeftijd (die je bereikt in dit kalenderjaar)</label>
             <select id="age" class="form-select" v-model="formData.age">
               <option v-for="age in 37" :key="age" :value="age + 20">{{ age + 20 }}</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="function" class="form-label">Functie</label>
-            <select id="function" class="form-select" v-model="formData.function">
-              <option value="CPT">CPT</option>
-              <option value="FO">FO</option>
             </select>
           </div>
           <div class="mb-3">
@@ -40,11 +42,11 @@
         </form>
 
         <div class="fw-light small text-muted mt-2">
-          <p>Disclaimer: De data gebruikt voor deze zijn gebaseerd op de vrijvalstaffels van 2024 en de salaristabel per
-            1 januari 2024. Hoewel er grote zorg is besteed aan de nauwkeurigheid van deze informatie, vraag ik je
-            om altijd zelf de gegevens te controleren. Deze informatie wordt uitsluitend ter advies aangeboden en is
-            niet bindend. Ik aanvaard geen aansprakelijkheid voor eventuele onjuistheden of de gevolgen van het
-            gebruik van deze informatie.</p>
+          <p>Disclaimer: De informatie en data die door deze tool en deze pagina worden worden verstrekt, zijn uitsluitend bedoeld voor
+            informatieve doeleinden. Let op: De verstrekte informatie mag niet worden gezien als financieel advies,
+            investeringsadvies of enige vorm van aanbeveling. Wij kunnen niet verantwoordelijk worden gehouden door
+            eventuele onjuistheden in deze informatie of voor de gevolgen van beslissingen die genomen worden op basis
+            van deze informatie. </p>
         </div>
 
         <div v-if="showResults" class="mt-3">
@@ -100,12 +102,12 @@
             </table>
             <p class="fw-light">
               Op je loonstrookje staan deze bedragen als volgt vermeld:
+              </p>
               <ul>
                 <li><span class="fw-semibold">Bruto Toeslag:</span> Bruto Toeslag</li>
-                <li><span class="fw-semibold">Vrijvalstaffels</span> Pensioentoeslag bas</li>
+                <li><span class="fw-semibold">Vrijvalstaffel 1</span> Pensioentoeslag bas.</li>
+                <li><span class="fw-semibold">Vrijvalstaffel 2</span> Pensioentoeslag bov.</li>
               </ul>
-            </p>
-
           </div>
 
 
@@ -170,7 +172,7 @@ function calculateVrijval(monthly_salary, staffels) {
   let vrijval_2;
   // if retirement giving salary more than max_employer_contribution
   if (retirement_giving_salary > max_employer_contribution) {
-    vrijval_1 = max_employer_contribution /12 * staffels[1];
+    vrijval_1 = (max_employer_contribution / 12) * staffels[1];
     vrijval_2 = (retirement_giving_salary - max_employer_contribution) / 12 * staffels[2];
   } else {
     vrijval_1 = retirement_giving_salary / 12 * staffels[1];
@@ -186,16 +188,19 @@ function calculateVrijval(monthly_salary, staffels) {
 function calculateContribution() {
   // Determine salary based on function and salaryScale
   const monthly_salary = getSalaryByFunctionAndScale(formData.value.function, formData.value.salaryScale);
-  // log salary to console and indicate what it is
   console.log('salary:', monthly_salary);
+
   const staffels = getVrijvalStaffelsByAge(formData.value.age);
   const vrijval = calculateVrijval(monthly_salary, staffels);
+
   const bruto_contribution = ((monthly_salary * 12.83) / 12) * 0.073;
   const completed_bruto_contribution = bruto_contribution * 11 / 7.3;
   brutoToeslag.value = bruto_contribution;
   netoBrutoToeslag.value = completed_bruto_contribution;
   // log bruto_contribution to console and indicate what it is
   console.log('bruto_contribution:', bruto_contribution);
+
+  // Total net salary designated for retirement
   calculatedContribution.value = (completed_bruto_contribution + vrijval) / 2;
   showResults.value = true;
 }
