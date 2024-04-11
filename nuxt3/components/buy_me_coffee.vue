@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="alert alert-info col-lg-5 rounded-3 mt-3 alert-dismissible fade show" role="alert">
-      <h4 class="alert-heading">Een klein gebaar!</h4>
+      <h4 class="alert-heading">Blij met deze tool?</h4>
       <p>Dit soort projecten maak ik graag gratis, maar kosten veel tijd. Waardeer je het?</p>
       <hr>
       <p class="mb-0">
