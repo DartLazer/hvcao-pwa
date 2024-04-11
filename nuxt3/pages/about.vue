@@ -29,6 +29,9 @@
           <p>Altijd welkom! <a class="link-secondary" href="https://wa.me/31652500397">Stuur mij even een whatsapp
             bericht</a> en dan kom ik zo snel mogelijk bij je terug!</p>
         </div>
+
+        <buy-me-coffee />
+
         <p class="small">Deze web-app is geschreven met Nuxt3, Vuejs3, Django en Docker. Als je benieuwd bent naar de
           code <a href="https://github.com/DartLazer/hvcao-pwa" class="link-secondary">klik dan hier!</a></p>
       </div>

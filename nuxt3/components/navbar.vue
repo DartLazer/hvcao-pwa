@@ -25,6 +25,11 @@
               </NuxtLink>
             </li>
             <li class="nav-item">
+              <NuxtLink @click.native="collapseNavbar" class="nav-link" exact-active-class="active"
+                        to="/pensioencalculator">Pensioenbijdrage Calculator
+              </NuxtLink>
+            </li>
+            <li class="nav-item">
               <NuxtLink @click.native="collapseNavbar" class="nav-link" exact-active-class="active" to="/about">Over
                 deze app
               </NuxtLink>
