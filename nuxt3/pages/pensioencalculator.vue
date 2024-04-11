@@ -170,7 +170,7 @@ function calculateVrijval(monthly_salary, staffels) {
   let vrijval_2;
   // if retirement giving salary more than max_employer_contribution
   if (retirement_giving_salary > max_employer_contribution) {
-    vrijval_1 = max_employer_contribution * staffels[1];
+    vrijval_1 = max_employer_contribution /12 * staffels[1];
     vrijval_2 = (retirement_giving_salary - max_employer_contribution) / 12 * staffels[2];
   } else {
     vrijval_1 = retirement_giving_salary / 12 * staffels[1];
