@@ -119,7 +119,7 @@
 import salarisTabel from '@/assets/salaris_tabel.json';
 import vrijvalStaffels from '@/assets/vrijvalstaffels.json';
 
-const max_employer_contribution = 138000;
+const max_employer_contribution = 137800;
 
 const formData = ref({
   salaryScale: 1,
@@ -163,15 +163,17 @@ function getVrijvalStaffelsByAge(age) {
 function calculateVrijval(monthly_salary, staffels) {
   // Calculate vrijval based on salary and staffels
   const retirement_giving_salary = monthly_salary * 12.83;
-  const vrijval_1 = retirement_giving_salary / 12 * staffels[1];
+  let vrijval_1;
   // log vrijval1 to console and indicate what it is
   console.log('vrijval_1:', vrijval_1);
 
   let vrijval_2;
   // if retirement giving salary more than max_employer_contribution
   if (retirement_giving_salary > max_employer_contribution) {
+    vrijval_1 = max_employer_contribution * staffels[1];
     vrijval_2 = (retirement_giving_salary - max_employer_contribution) / 12 * staffels[2];
   } else {
+    vrijval_1 = retirement_giving_salary / 12 * staffels[1];
     vrijval_2 = 0;
   }
   // log vrijval2 to console and indicate what it is
