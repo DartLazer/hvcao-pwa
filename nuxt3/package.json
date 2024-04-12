@@ -19,8 +19,8 @@
   "dependencies": {
     "@pinia/nuxt": "^0.5.1",
     "@popperjs/core": "^2.11.8",
+    "bignumber.js": "^9.1.2",
     "bootstrap": "^5.3.2",
-    "decimal": "^0.0.2",
     "dompurify": "^3.0.8",
     "flatpickr": "^4.6.13",
     "idb-keyval": "^6.2.1",
