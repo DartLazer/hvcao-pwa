@@ -1,17 +1,17 @@
 <template>
-  <div class="container my-5">
+  <div class="container my-2">
     <div class="col-12 col-md-auto mx-auto rounded-1">
       <h1>Pensioenbijdrage Calculator</h1>
       <div class="rounded-2 p-3 text-black" style="background: RGBA(248, 249, 250, 0.9)">
         <p class="col-lg-8">
           Deze tool is ontwikkeld om inzichtelijk te maken welk deel van het netto bedrag dat je van je werkgever
-          ontvangt reeds bestemd is voor je pensioen, conform de richtlijnen in je CAO.
+          ontvangt reeds bestemd is voor je pensioen, conform de richtlijnen in de CAO.
         </p>
         <p class="col-lg-8">
           Dit is geen advies over hoeveel
           je zou moeten sparen/beleggen, maar een weergave van het deel van je nettoloon dat volgens de CAO voor je
           pensioen is
-          gereserveerd.
+          bedoeld.
         </p>
         <form @submit.prevent="calculateContribution">
           <div class="mb-3">
@@ -69,7 +69,7 @@
 
           <h6>Details:</h6>
 
-          <div class="col-lg-5">
+          <div class="col-lg-7">
             <table class="table table-striped col-3">
               <thead>
               <tr>
@@ -79,11 +79,11 @@
               </thead>
               <tbody>
               <tr>
-                <th scope="row" class="fw-normal">Bruto Toeslag</th>
+                <th scope="row" class="fw-normal">Bruto Toeslag (7.3%)</th>
                 <td>€{{ formatNumber(brutoToeslag) }}</td>
               </tr>
               <tr>
-                <th scope="row" class="fw-normal">Aanvulling Bruto Toeslag</th>
+                <th scope="row" class="fw-normal">Aanvullen Bruto Toeslag tot 11%</th>
                 <td>€{{ formatNumber((netoBrutoToeslag - brutoToeslag)) }}</td>
               </tr>
               <tr>
@@ -113,6 +113,9 @@
             </p>
             <ul>
               <li><span class="fw-semibold">Bruto Toeslag:</span> Bruto Toeslag</li>
+              <li><span class="fw-semibold">Zelf aanvullen Bruto Toeslag:</span> Niet vermeld aangezien je dit zelf moet
+                doen.
+              </li>
               <li><span class="fw-semibold">Vrijvalstaffel 1</span> Pensioentoeslag bas.</li>
               <li><span class="fw-semibold">Vrijvalstaffel 2</span> Pensioentoeslag bov.</li>
             </ul>
