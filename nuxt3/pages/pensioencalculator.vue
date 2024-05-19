@@ -133,7 +133,10 @@ import BigNumber from 'bignumber.js';
 import salarisTabel from '@/assets/salaris_tabel.json';
 import vrijvalStaffels from '@/assets/vrijvalstaffels.json';
 
-const max_employer_contribution = new BigNumber(137800);
+const maxEmployerContribution = new BigNumber(137800);
+const taxOneMaxYearlySalary = new BigNumber(67000)
+const tarrifOnePercentage = new BigNumber(0.63)
+const tarrifTwoPercentage = new BigNumber(0.48)
 
 const formData = ref({
   salaryScale: 1,
@@ -172,11 +175,11 @@ function getVrijvalStaffelsByAge(age) {
 }
 
 function calculateVrijval(monthly_salary, staffels, retirement_giving_salary) {
-  let vrijval_1 = new BigNumber(0);
-  let vrijval_2 = new BigNumber(0);
-  if (retirement_giving_salary.isGreaterThan(max_employer_contribution)) {
-    vrijval_1 = max_employer_contribution.dividedBy(12).multipliedBy(staffels[1]);
-    vrijval_2 = retirement_giving_salary.minus(max_employer_contribution).dividedBy(12).multipliedBy(staffels[2]);
+  let vrijval_1;
+  let vrijval_2;
+  if (retirement_giving_salary.isGreaterThan(maxEmployerContribution)) {
+    vrijval_1 = maxEmployerContribution.dividedBy(12).multipliedBy(staffels[1]);
+    vrijval_2 = retirement_giving_salary.minus(maxEmployerContribution).dividedBy(12).multipliedBy(staffels[2]);
   } else {
     vrijval_1 = retirement_giving_salary.dividedBy(12).multipliedBy(staffels[1]);
     vrijval_2 = new BigNumber(0);
@@ -188,20 +191,34 @@ function calculateVrijval(monthly_salary, staffels, retirement_giving_salary) {
 
 
 function calculateContribution() {
-  const monthly_salary = getSalaryByFunctionAndScale(formData.value.function, formData.value.salaryScale);
-  const retirement_giving_salary = monthly_salary.multipliedBy(12.84);
+  const monthlySalary = getSalaryByFunctionAndScale(formData.value.function, formData.value.salaryScale);
+  const retirementGivingSalary = monthlySalary.multipliedBy(12.84);
   const staffels = getVrijvalStaffelsByAge(formData.value.age);
-  const vrijval = calculateVrijval(monthly_salary, staffels, retirement_giving_salary);
+  const vrijval = calculateVrijval(monthlySalary, staffels, retirementGivingSalary);
 
-  const bruto_contribution = retirement_giving_salary.dividedBy(12).multipliedBy(0.073);
-  const completed_bruto_contribution = bruto_contribution.multipliedBy(11).dividedBy(7.3);
-  brutoToeslag.value = bruto_contribution;
-  netoBrutoToeslag.value = completed_bruto_contribution;
+  const brutoContribution = retirementGivingSalary.dividedBy(12).multipliedBy(0.073);
+  const completedBrutoContribution = brutoContribution.multipliedBy(11).dividedBy(7.3);
+  brutoToeslag.value = brutoContribution;
+  netoBrutoToeslag.value = completedBrutoContribution;
   // Big number sum of netoBrutoToeslag and both vrijval
-  totalBruto.value = completed_bruto_contribution.plus(vrijval);
+  totalBruto.value = completedBrutoContribution.plus(vrijval);
 
+  if (monthlySalary.multipliedBy(12).isGreaterThan(taxOneMaxYearlySalary)){
+    calculatedContribution.value = completedBrutoContribution.plus(vrijval).dividedBy(2);
+    console.log('Alles schaal 2')
+  }else if (monthlySalary.multipliedBy(12).plus(totalBruto.value.multipliedBy(12)).isGreaterThan(taxOneMaxYearlySalary)){
+    let tarrifOneLeftOver = taxOneMaxYearlySalary.minus(monthlySalary.multipliedBy(12))
+    console.log('Tarrif one leftover:' + tarrifOneLeftOver)
+    let tarrifTwoAmount = totalBruto.value.multipliedBy(12).minus(tarrifOneLeftOver)
+    console.log('Tarrif two amount:' + tarrifTwoAmount)
+    let netYearly = tarrifOneLeftOver.multipliedBy(tarrifOnePercentage).plus(tarrifTwoAmount.multipliedBy(tarrifTwoPercentage))
+    calculatedContribution.value = netYearly.dividedBy(12)
+    console.log('Semi schaal 1/2')
+  } else {
+    calculatedContribution.value = totalBruto.value.multipliedBy(tarrifOnePercentage)
+    console.log('Alles schaal 1')
+  }
 
-  calculatedContribution.value = completed_bruto_contribution.plus(vrijval).dividedBy(2);
   showResults.value = true;
 
   nextTick(() => {
