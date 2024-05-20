@@ -134,9 +134,9 @@ import salarisTabel from '@/assets/salaris_tabel.json';
 import vrijvalStaffels from '@/assets/vrijvalstaffels.json';
 
 const maxEmployerContribution = new BigNumber(137800);
-const taxOneMaxYearlySalary = new BigNumber(67000)
+const taxOneMaxYearlySalary = new BigNumber(75518)
 const tarrifOnePercentage = new BigNumber(0.63)
-const tarrifTwoPercentage = new BigNumber(0.48)
+const tarrifTwoPercentage = new BigNumber(0.505)
 
 const formData = ref({
   salaryScale: 1,
