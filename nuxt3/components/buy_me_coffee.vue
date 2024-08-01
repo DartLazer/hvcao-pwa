@@ -5,7 +5,7 @@
       <p>Dit soort projecten maak ik graag gratis, maar kosten veel tijd. Waardeer je het?</p>
       <hr>
       <p class="mb-0">
-        <a href="https://betaalverzoek.rabobank.nl/betaalverzoek/?id=2vEFivQfSNKhZr6nlABGoA" class="alert-link">Koop een koffie voor me</a> zodat ik de kosten kan dekken.
+        <a href="https://paymentlink.mollie.com/payment/oDakkG2QgbpcVOvpdcFJs/" class="alert-link">Koop een koffie voor me</a> zodat ik de kosten kan dekken.
       </p>
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
