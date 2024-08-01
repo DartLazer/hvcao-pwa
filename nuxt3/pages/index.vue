@@ -32,12 +32,12 @@ onMounted(() => {
 
   if (!alertLastShown || daysBetween(new Date(alertLastShown), new Date()) > 90) {
     showAlert.value = true;
-    setCookie('alertLastShown', new Date().toISOString(), 90);
   }
 });
 
 function dismissAlert() {
   showAlert.value = false;
+  setCookie('alertLastShown', new Date().toISOString(), 90);
 }
 
 function daysBetween(date1, date2) {
