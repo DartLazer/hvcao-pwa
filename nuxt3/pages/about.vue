@@ -5,9 +5,8 @@
       <div class="rounded-2 p-3  text-black" style="background: RGBA(248, 249, 250, 0.9)">
         <div class="pb-3 pt-3">
           <h5>De handige CAO FAQ</h5>
-          <p>Deze webapp, nog volop in ontwikkeling, streeft ernaar om een uitgebreide database te worden met
-            veelgestelde
-            vragen over het Transavia cao. Dit zijn vragen die regelmatig leven binnen ons vliegerskorps.</p>
+          <p>Deze webapp streeft ernaar om een uitgebreide tool te worden om de belangrijkste elementen uit het CAO snel toegankelijk te maken.
+          De app is ondertussen voorzien van een uitgebreide CAO FAQ, blokbescherming-tool & pensioenbijdrage calculator.</p>
           <p>De webapp is ontwikkeld door <a class="link-secondary" href="https://www.sky-t.nl">Rik Beernink
             (Sky-T)</a>, de maker van o.a. <a href="www.vluchtjeruilen.nl" class="link-secondary">vluchtjeruilen.nl</a>.
             De vragen database wordt zorgvuldig onderhouden door meerdere
