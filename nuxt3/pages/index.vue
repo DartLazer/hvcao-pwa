@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>CAO Database</h2>
+    <h2>CAO FAQ Database</h2>
     <div v-if="showAlert" class="alert alert-info alert-dismissible fade show" role="alert">
       De informatie op HVCAO.nl is zorgvuldig samengesteld. Toch kunnen er verschillen zijn met de actuele CAO. Bij
       discrepanties is de officiële CAO of info van de VNV leidend.
