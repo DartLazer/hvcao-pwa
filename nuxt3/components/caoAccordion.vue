@@ -78,9 +78,12 @@ async function loadQuestionData() {
 
 async function performVersionCheck() {
   // Checks with the remote API which question set ID is available.
-  // If different then it will update the indexedDB
+  // If different, then it will update the indexedDB
   const remoteVersion = await fetchLatestQuestionDatabaseVersion();
   const localVersion = await get('questionsVersion');
+
+  // Determine if this is the initial load
+  const isInitialLoad = localVersion === undefined;
 
   if (remoteVersion !== localVersion) {
     const questionsData = await fetchQuestionData();
@@ -99,7 +102,8 @@ async function performVersionCheck() {
       const localQuestion = localQuestions[questionKey];
 
       if (!localQuestion) {
-        question.status = 'new';
+        // Mark as seen if it's the initial load, otherwise mark as new
+        question.status = isInitialLoad ? 'seen' : 'new';
         await set(questionKey, question);
       } else {
         const isTitleDifferent = localQuestion.title !== question.title;
