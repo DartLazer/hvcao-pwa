@@ -15,17 +15,23 @@
     <div class="accordion pb-3" id="caoFAQAccordion">
       <div class="accordion-item" v-for="(item) in filteredQuestionData" :key="item.id">
         <h2 class="accordion-header" :id="'heading' + item.id">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                  :data-bs-target="'#collapse' + item.id" aria-expanded="false" :aria-controls="'collapse' + item.id">
-            {{ item.title }}
-
+          <button class="accordion-button collapsed d-flex justify-content-between align-items-center" type="button"
+                  data-bs-toggle="collapse"
+                  :data-bs-target="'#collapse' + item.id" aria-expanded="false" :aria-controls="'collapse' + item.id"
+                  @click="markAsSeen(item.id)"
+          >
+            <span>{{ item.title }}</span>
+            <span>
+              <span class="badge bg-info ms-2" v-if="item.status === 'new'">Nieuw</span>
+              <span class="badge bg-warning ms-2" v-if="item.status === 'updated'">Veranderd</span>
+            </span>
           </button>
         </h2>
         <div :id="'collapse' + item.id" class="accordion-collapse collapse" :aria-labelledby="'heading' + item.id"
              data-bs-parent="#accordionExample">
           <div class="accordion-body">
             <MarkedExplanation :rawText="item.explanation"/>
-            <hr class="thin-hr-line" />
+            <hr class="thin-hr-line"/>
             <p class="small">Bron: <strong>{{ item.source }}</strong></p>
             <p class="small">Toegevoegd op: <strong>{{ item.date_updated }}</strong></p>
           </div>
@@ -73,7 +79,7 @@ async function loadQuestionData() {
 async function performVersionCheck() {
   // Checks with the remote API which question set ID is available.
   // If different then it will update the indexedDB
-  const remoteVersion = await fetchLatestQuestionDatabaseVersion()
+  const remoteVersion = await fetchLatestQuestionDatabaseVersion();
   const localVersion = await get('questionsVersion');
 
   if (remoteVersion !== localVersion) {
@@ -81,17 +87,46 @@ async function performVersionCheck() {
     const allKeys = await keys();
     const questionKeys = allKeys.filter(key => String(key).startsWith('question-'));
 
+    const localQuestions = {};
     for (const key of questionKeys) {
-      await del(key);
+      localQuestions[key] = await get(key);
     }
+
+    const remoteQuestionIds = new Set(questionsData.map(question => 'question-' + question.id));
+
     for (const question of questionsData) {
-      await set('question-' + question.id, question);
+      const questionKey = 'question-' + question.id;
+      const localQuestion = localQuestions[questionKey];
+
+      if (!localQuestion) {
+        question.status = 'new';
+        await set(questionKey, question);
+      } else {
+        const isTitleDifferent = localQuestion.title !== question.title;
+        const isExplanationDifferent = localQuestion.explanation !== question.explanation;
+
+        if (isTitleDifferent || isExplanationDifferent) {
+          question.status = 'updated';
+          await set(questionKey, question);
+        } else {
+          localQuestion.status = 'seen';
+          await set(questionKey, localQuestion);
+        }
+      }
     }
+
+    for (const key of questionKeys) {
+      if (!remoteQuestionIds.has(key)) {
+        await del(key);
+      }
+    }
+
     await set('questionsVersion', remoteVersion);
     await loadQuestionData();
   }
   store.loadingAccordion = false;
 }
+
 
 // Generates a list of unique categories dynamically.
 const uniqueCategories = computed(() => {
@@ -117,6 +152,21 @@ const filteredQuestionData = computed(() => {
       }
     }
 );
+
+async function markAsSeen(questionId) {
+  const questionKey = 'question-' + questionId;
+  const question = await get(questionKey);
+  if (question && question.status !== 'seen') {
+    question.status = 'seen';
+    await set(questionKey, question);
+
+    // Update local state
+    const localQuestionIndex = questionsDataObject.value.findIndex(q => q.id === questionId);
+    if (localQuestionIndex !== -1) {
+      questionsDataObject.value[localQuestionIndex].status = 'seen';
+    }
+  }
+}
 
 const clearSearchAndFilters = function () {
   search.value = '';
