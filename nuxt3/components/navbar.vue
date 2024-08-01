@@ -3,8 +3,8 @@
     <nav class="navbar navbar-expand-lg" aria-label="Eighth navbar example"
          style="background: RGBA(248, 249, 250, 0.5)">
       <div class="container">
-        <NuxtLink class="navbar-brand text-white mt-auto pb-2" @click="store.cleanFiltersAndSearchBarNow()" to="/">HV
-          Cao Vragen
+        <NuxtLink class="navbar-brand text-white mt-auto pb-2" @click="store.cleanFiltersAndSearchBarNow()" to="/">
+          HV CAO
         </NuxtLink>
         <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false"
