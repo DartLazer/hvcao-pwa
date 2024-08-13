@@ -7,12 +7,23 @@
           Deze tool is ontwikkeld om inzichtelijk te maken welk deel van het netto bedrag dat je van je werkgever
           ontvangt reeds bestemd is voor je pensioen, conform de richtlijnen in de CAO.
         </p>
-        <p class="col-lg-8">
+        <p class="col-lg-8 text-small">
           Dit is geen advies over hoeveel
           je zou moeten sparen/beleggen, maar een weergave van het deel van je nettoloon dat volgens de CAO voor je
           pensioen is
           bedoeld.
         </p>
+        <div>
+
+          <div v-if="showAlert" class="alert alert-info col-lg-8 rounded-3 mt-3 alert-dismissible fade show"
+               role="alert">
+            <h4 class="alert-heading">Tool bijgewerkt conform nieuw CAO</h4>
+            <p class="mb-0">De data die door de tool gebruikt worden zijn bijgewerkt conform de nieuwe cao.</p>
+            <p>Momenteel wordt de salaris tabel per 1 Augustus 2024 gebruikt en de nieuwe bruto-toeslag van 10%.</p>
+            <button type="button" class="btn-close" @click="dismissAlert" aria-label="Close"></button>
+          </div>
+
+        </div>
         <form @submit.prevent="calculateContribution">
           <div class="mb-3">
             <div class="mb-3">
@@ -79,7 +90,7 @@
               </thead>
               <tbody>
               <tr>
-                <th scope="row" class="fw-normal">Bruto Toeslag (7.3%)</th>
+                <th scope="row" class="fw-normal">Bruto Toeslag (10%) <span class="badge bg-info ms-2">Nieuw</span></th>
                 <td>€{{ formatNumber(brutoToeslag) }}</td>
               </tr>
               <tr>
@@ -132,11 +143,15 @@
 import BigNumber from 'bignumber.js';
 import salarisTabel from '@/assets/salaris_tabel.json';
 import vrijvalStaffels from '@/assets/vrijvalstaffels.json';
+import {ref} from "vue";
+import {getCookie, setCookie} from "~/services/CookieHandler";
+import {daysBetween} from "~/services/dateTimeUtils";
 
 const maxEmployerContribution = new BigNumber(137800);
 const taxOneMaxYearlySalary = new BigNumber(75518)
 const tarrifOnePercentage = new BigNumber(0.63)
 const tarrifTwoPercentage = new BigNumber(0.505)
+
 
 const formData = ref({
   salaryScale: 1,
@@ -153,6 +168,21 @@ const staffel_2 = ref(new BigNumber(0));
 const totalBruto = ref(new BigNumber(0));
 const resultsRef = ref(null);
 const showResults = ref(false);
+const showAlert = ref(false);
+
+const alertLastShown = getCookie('newRetirementDataAug2024');
+
+
+// Check if the new data alert has already been shown & dismissed. If not show it.
+if (!alertLastShown || daysBetween(new Date(alertLastShown), new Date()) > 90) {
+  showAlert.value = true;
+}
+
+function dismissAlert() {
+  showAlert.value = false;
+  setCookie('newRetirementDataAug2024', new Date().toISOString(), 90);
+}
+
 
 function getSalaryByFunctionAndScale(func, scale) {
   const scaleEntry = salarisTabel[scale.toString()];
@@ -196,17 +226,17 @@ function calculateContribution() {
   const staffels = getVrijvalStaffelsByAge(formData.value.age);
   const vrijval = calculateVrijval(monthlySalary, staffels, retirementGivingSalary);
 
-  const brutoContribution = retirementGivingSalary.dividedBy(12).multipliedBy(0.073);
-  const completedBrutoContribution = brutoContribution.multipliedBy(11).dividedBy(7.3);
+  const brutoContribution = retirementGivingSalary.dividedBy(12).multipliedBy(0.1);
+  const completedBrutoContribution = brutoContribution.multipliedBy(11).dividedBy(10);
   brutoToeslag.value = brutoContribution;
   netoBrutoToeslag.value = completedBrutoContribution;
   // Big number sum of netoBrutoToeslag and both vrijval
   totalBruto.value = completedBrutoContribution.plus(vrijval);
 
-  if (monthlySalary.multipliedBy(12).isGreaterThan(taxOneMaxYearlySalary)){
+  if (monthlySalary.multipliedBy(12).isGreaterThan(taxOneMaxYearlySalary)) {
     calculatedContribution.value = completedBrutoContribution.plus(vrijval).dividedBy(2);
     console.log('Alles schaal 2')
-  }else if (monthlySalary.multipliedBy(12).plus(totalBruto.value.multipliedBy(12)).isGreaterThan(taxOneMaxYearlySalary)){
+  } else if (monthlySalary.multipliedBy(12).plus(totalBruto.value.multipliedBy(12)).isGreaterThan(taxOneMaxYearlySalary)) {
     let tarrifOneLeftOver = taxOneMaxYearlySalary.minus(monthlySalary.multipliedBy(12))
     console.log('Tarrif one leftover:' + tarrifOneLeftOver)
     let tarrifTwoAmount = totalBruto.value.multipliedBy(12).minus(tarrifOneLeftOver)

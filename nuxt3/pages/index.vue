@@ -17,7 +17,9 @@
 
 <script setup>
 import {useMainStore} from '~/store/mainStore';
-import {ref, onMounted} from 'vue';
+import {onMounted, ref} from 'vue';
+import {getCookie, setCookie} from "~/services/CookieHandler";
+import {daysBetween} from "~/services/dateTimeUtils";
 
 const store = useMainStore();
 const delayLoadingAccordion = ref(true);
@@ -40,28 +42,6 @@ function dismissAlert() {
   setCookie('alertLastShown', new Date().toISOString(), 90);
 }
 
-function daysBetween(date1, date2) {
-  const oneDay = 24 * 60 * 60 * 1000;
-  return Math.round(Math.abs((date2 - date1) / oneDay));
-}
-
-function setCookie(name, value, days) {
-  const date = new Date();
-  date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-  const expires = "; expires=" + date.toUTCString();
-  document.cookie = name + "=" + (value || "") + expires + "; path=/";
-}
-
-function getCookie(name) {
-  const nameEQ = name + "=";
-  const ca = document.cookie.split(';');
-  for (let i = 0; i < ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-  }
-  return null;
-}
 </script>
 
 <style>
