@@ -20,6 +20,7 @@
             <h4 class="alert-heading">Tool bijgewerkt conform nieuw CAO</h4>
             <p class="mb-0">De data die door de tool gebruikt worden zijn bijgewerkt conform de nieuwe cao.</p>
             <p>Momenteel wordt de salaris tabel per 1 Augustus 2024 gebruikt en de nieuwe bruto-toeslag van 10%.</p>
+            <p>Daarnaast is de tool per 26/08/2024, na overleg met de VNV, aangepast zodat het aanvullen van de bruto-toeslag tot 15% wordt weergegeven.</p>
             <button type="button" class="btn-close" @click="dismissAlert" aria-label="Close"></button>
           </div>
 
@@ -94,7 +95,7 @@
                 <td>€{{ formatNumber(brutoToeslag) }}</td>
               </tr>
               <tr>
-                <th scope="row" class="fw-normal">Aanvullen Bruto Toeslag tot 11%</th>
+                <th scope="row" class="fw-normal">Aanvullen Bruto Toeslag tot 15%<span class="badge bg-info ms-2">Nieuw</span></th>
                 <td>€{{ formatNumber((netoBrutoToeslag - brutoToeslag)) }}</td>
               </tr>
               <tr>
@@ -170,7 +171,7 @@ const resultsRef = ref(null);
 const showResults = ref(false);
 const showAlert = ref(false);
 
-const alertLastShown = getCookie('newRetirementDataAug2024');
+const alertLastShown = getCookie('newRetirementData26Aug2024');
 
 
 // Check if the new data alert has already been shown & dismissed. If not show it.
@@ -227,7 +228,7 @@ function calculateContribution() {
   const vrijval = calculateVrijval(monthlySalary, staffels, retirementGivingSalary);
 
   const brutoContribution = retirementGivingSalary.dividedBy(12).multipliedBy(0.1);
-  const completedBrutoContribution = brutoContribution.multipliedBy(11).dividedBy(10);
+  const completedBrutoContribution = brutoContribution.multipliedBy(15).dividedBy(10);
   brutoToeslag.value = brutoContribution;
   netoBrutoToeslag.value = completedBrutoContribution;
   // Big number sum of netoBrutoToeslag and both vrijval
