@@ -22,7 +22,7 @@
             <ul>
               <li>Momenteel wordt de salaristabel van 1 oktober 2024 gehanteerd.</li>
               <li>Je kunt nu zelf kiezen tot welk percentage je de bruto toeslag wilt aanvullen.</li>
-              <li>Het belastingpercentage voor schaal twee is aangepast naar 49.5% i.p.v. 50%</li>
+              <li>Het belastingpercentage voor schaal twee is aangepast naar 49,5% in plaats van 50%. Op het loonstrookje wordt echter nog steeds met 50% gerekend, wat kan leiden tot een verschil met de hier getoonde waarden.</li>
             </ul>
             <button type="button" class="btn-close" @click="dismissAlert" aria-label="Close"></button>
           </div>
