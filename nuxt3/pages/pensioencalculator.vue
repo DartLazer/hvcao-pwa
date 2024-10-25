@@ -96,7 +96,7 @@
               </tr>
               <tr>
                 <th scope="row" class="fw-normal">
-                  Aanvullen Bruto Toeslag tot
+                  Aanvullen bruto toeslag tot
                   <select class="form-select d-inline w-auto" v-model="selectedPercentage" @change="calculateContribution">
                     <option v-for="percent in [11, 12, 13, 14, 15]" :key="percent" :value="percent">{{ percent }}%</option>
                   </select>
@@ -157,7 +157,7 @@ import {daysBetween} from "~/services/dateTimeUtils";
 const maxEmployerContribution = new BigNumber(137800);
 const taxOneMaxYearlySalary = new BigNumber(75518)
 const tarrifOnePercentage = new BigNumber(0.63)
-const tarrifTwoPercentage = new BigNumber(0.505)
+const tarrifTwoPercentage = new BigNumber(0.495)
 
 
 const formData = ref({
