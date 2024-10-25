@@ -156,7 +156,7 @@ import {daysBetween} from "~/services/dateTimeUtils";
 const maxEmployerContribution = 137800;
 const taxOneMaxYearlySalary = 75518;
 const tarrifOnePercentage = 0.63;
-const tarrifTwoPercentage = 0.495;
+const tarrifTwoPercentage = 0.505;
 
 const formData = ref({
   salaryScale: 1,
