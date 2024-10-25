@@ -17,10 +17,9 @@
 
           <div v-if="showAlert" class="alert alert-info col-lg-8 rounded-3 mt-3 alert-dismissible fade show"
                role="alert">
-            <h4 class="alert-heading">Tool bijgewerkt conform nieuw CAO</h4>
-            <p class="mb-0">De data die door de tool gebruikt worden zijn bijgewerkt conform de nieuwe cao.</p>
-            <p>Momenteel wordt de salaris tabel per 1 Augustus 2024 gebruikt en de nieuwe bruto-toeslag van 10%.</p>
-            <p>Daarnaast is de tool per 26/08/2024, na overleg met de VNV, aangepast zodat het aanvullen van de bruto-toeslag tot 15% wordt weergegeven.</p>
+            <h4 class="alert-heading">Tool bijgewerkt volgens de nieuwe salaristabel.</h4>
+            <p class="mb-0">De gegevens die door de tool worden gebruikt, zijn bijgewerkt volgens de nieuwe cao.</p>
+            <p>Momenteel wordt de salaristabel van 1 oktober 2024 gehanteerd.</p>
             <button type="button" class="btn-close" @click="dismissAlert" aria-label="Close"></button>
           </div>
 
@@ -171,7 +170,7 @@ const resultsRef = ref(null);
 const showResults = ref(false);
 const showAlert = ref(false);
 
-const alertLastShown = getCookie('newRetirementData26Aug2024');
+const alertLastShown = getCookie('newRetirementData25Oct2024');
 
 
 // Check if the new data alert has already been shown & dismissed. If not show it.
