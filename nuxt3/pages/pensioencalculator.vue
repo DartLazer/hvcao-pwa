@@ -98,7 +98,7 @@
                 <th scope="row" class="fw-normal">
                   Aanvullen bruto toeslag tot
                   <select class="form-select d-inline w-auto" v-model="selectedPercentage" @change="calculateContribution">
-                    <option v-for="percent in [11, 12, 13, 14, 15]" :key="percent" :value="percent">{{ percent }}%</option>
+                    <option v-for="percent in [10, 11, 12, 13, 14, 15]" :key="percent" :value="percent">{{ percent }}%</option>
                   </select>
                   <span class="badge bg-info ms-2">Nieuw</span>
                 </th>
