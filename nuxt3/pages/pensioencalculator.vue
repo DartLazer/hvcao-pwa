@@ -19,8 +19,11 @@
                role="alert">
             <h4 class="alert-heading">Tool bijgewerkt volgens de nieuwe salaristabel.</h4>
             <p class="mb-0">De gegevens die door de tool worden gebruikt, zijn bijgewerkt volgens de nieuwe cao.</p>
-            <p>Momenteel wordt de salaristabel van 1 oktober 2024 gehanteerd.</p>
-            <p>Je kunt nu zelf kiezen tot welk percentage je de bruto toeslag wilt aanvullen.</p>
+            <ul>
+              <li>Momenteel wordt de salaristabel van 1 oktober 2024 gehanteerd.</li>
+              <li>Je kunt nu zelf kiezen tot welk percentage je de bruto toeslag wilt aanvullen.</li>
+              <li>Het belastingpercentage voor schaal twee is aangepast naar 49.5% i.p.v. 50%</li>
+            </ul>
             <button type="button" class="btn-close" @click="dismissAlert" aria-label="Close"></button>
           </div>
 
@@ -70,7 +73,9 @@
         <div v-if="showResults" ref="resultsRef" class="mt-3">
           <buy-me-coffee/>
           <h5>Berekende Pensioenbijdrage</h5>
-          <p>Op basis van de ingevoerde informatie zou je maandelijks <strong>€{{ formatNumber(calculatedContribution) }} netto</strong> apart moeten zetten voor je pensioen.</p>
+          <p>Op basis van de ingevoerde informatie zou je maandelijks <strong>€{{
+              formatNumber(calculatedContribution)
+            }} netto</strong> apart moeten zetten voor je pensioen.</p>
 
           <h6>Details:</h6>
 
@@ -90,8 +95,12 @@
               <tr>
                 <th scope="row" class="fw-normal">
                   Aanvullen bruto toeslag tot
-                  <select class="form-select d-inline w-auto" v-model="selectedPercentage" @change="calculateContribution">
-                    <option v-for="percent in [10, 11, 12, 13, 14, 15]" :key="percent" :value="percent">{{ percent }}%</option>
+                  <select class="form-select d-inline w-auto" v-model="selectedPercentage"
+                          @change="calculateContribution">
+                    <option v-for="percent in [10, 11, 12, 13, 14, 15]" :key="percent" :value="percent">{{
+                        percent
+                      }}%
+                    </option>
                   </select>
                   <span class="badge bg-info ms-2">Nieuw</span>
                 </th>
@@ -140,9 +149,9 @@
 <script setup>
 import salarisTabel from '@/assets/salaris_tabel.json';
 import vrijvalStaffels from '@/assets/vrijvalstaffels.json';
-import { ref, nextTick } from "vue";
-import { getCookie, setCookie } from "~/services/CookieHandler";
-import { daysBetween } from "~/services/dateTimeUtils";
+import {ref, nextTick} from "vue";
+import {getCookie, setCookie} from "~/services/CookieHandler";
+import {daysBetween} from "~/services/dateTimeUtils";
 
 const maxEmployerContribution = 137800;
 const taxOneMaxYearlySalary = 75518;
@@ -167,7 +176,7 @@ const showResults = ref(false);
 const showAlert = ref(false);
 const selectedPercentage = ref(15);
 
-const alertLastShown = getCookie('newRetirementData25Oct2024');
+const alertLastShown = getCookie('newRetirementData25Oct2024v3');
 
 if (!alertLastShown || daysBetween(new Date(alertLastShown), new Date()) > 90) {
   showAlert.value = true;
