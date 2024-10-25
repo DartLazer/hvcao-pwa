@@ -20,6 +20,7 @@
             <h4 class="alert-heading">Tool bijgewerkt volgens de nieuwe salaristabel.</h4>
             <p class="mb-0">De gegevens die door de tool worden gebruikt, zijn bijgewerkt volgens de nieuwe cao.</p>
             <p>Momenteel wordt de salaristabel van 1 oktober 2024 gehanteerd.</p>
+            <p>Je kunt nu zelf kiezen tot welk percentage je de bruto toeslag wilt aanvullen.</p>
             <button type="button" class="btn-close" @click="dismissAlert" aria-label="Close"></button>
           </div>
 
@@ -90,11 +91,17 @@
               </thead>
               <tbody>
               <tr>
-                <th scope="row" class="fw-normal">Bruto Toeslag (10%) <span class="badge bg-info ms-2">Nieuw</span></th>
+                <th scope="row" class="fw-normal">Bruto Toeslag (10%)</th>
                 <td>€{{ formatNumber(brutoToeslag) }}</td>
               </tr>
               <tr>
-                <th scope="row" class="fw-normal">Aanvullen Bruto Toeslag tot 15%<span class="badge bg-info ms-2">Nieuw</span></th>
+                <th scope="row" class="fw-normal">
+                  Aanvullen Bruto Toeslag tot
+                  <select class="form-select d-inline w-auto" v-model="selectedPercentage" @change="calculateContribution">
+                    <option v-for="percent in [11, 12, 13, 14, 15]" :key="percent" :value="percent">{{ percent }}%</option>
+                  </select>
+                  <span class="badge bg-info ms-2">Nieuw</span>
+                </th>
                 <td>€{{ formatNumber((netoBrutoToeslag - brutoToeslag)) }}</td>
               </tr>
               <tr>
@@ -169,6 +176,7 @@ const totalBruto = ref(new BigNumber(0));
 const resultsRef = ref(null);
 const showResults = ref(false);
 const showAlert = ref(false);
+const selectedPercentage = ref(15); // Default to 15%
 
 const alertLastShown = getCookie('newRetirementData25Oct2024');
 
@@ -227,26 +235,25 @@ function calculateContribution() {
   const vrijval = calculateVrijval(monthlySalary, staffels, retirementGivingSalary);
 
   const brutoContribution = retirementGivingSalary.dividedBy(12).multipliedBy(0.1);
-  const completedBrutoContribution = brutoContribution.multipliedBy(15).dividedBy(10);
+  const completedBrutoContribution = brutoContribution.multipliedBy(selectedPercentage.value).dividedBy(10);
   brutoToeslag.value = brutoContribution;
   netoBrutoToeslag.value = completedBrutoContribution;
-  // Big number sum of netoBrutoToeslag and both vrijval
   totalBruto.value = completedBrutoContribution.plus(vrijval);
 
   if (monthlySalary.multipliedBy(12).isGreaterThan(taxOneMaxYearlySalary)) {
     calculatedContribution.value = completedBrutoContribution.plus(vrijval).dividedBy(2);
     console.log('Alles schaal 2')
   } else if (monthlySalary.multipliedBy(12).plus(totalBruto.value.multipliedBy(12)).isGreaterThan(taxOneMaxYearlySalary)) {
-    let tarrifOneLeftOver = taxOneMaxYearlySalary.minus(monthlySalary.multipliedBy(12))
-    console.log('Tarrif one leftover:' + tarrifOneLeftOver)
-    let tarrifTwoAmount = totalBruto.value.multipliedBy(12).minus(tarrifOneLeftOver)
-    console.log('Tarrif two amount:' + tarrifTwoAmount)
-    let netYearly = tarrifOneLeftOver.multipliedBy(tarrifOnePercentage).plus(tarrifTwoAmount.multipliedBy(tarrifTwoPercentage))
-    calculatedContribution.value = netYearly.dividedBy(12)
-    console.log('Semi schaal 1/2')
+    let tarrifOneLeftOver = taxOneMaxYearlySalary.minus(monthlySalary.multipliedBy(12));
+    console.log('Tarrif one leftover:' + tarrifOneLeftOver);
+    let tarrifTwoAmount = totalBruto.value.multipliedBy(12).minus(tarrifOneLeftOver);
+    console.log('Tarrif two amount:' + tarrifTwoAmount);
+    let netYearly = tarrifOneLeftOver.multipliedBy(tarrifOnePercentage).plus(tarrifTwoAmount.multipliedBy(tarrifTwoPercentage));
+    calculatedContribution.value = netYearly.dividedBy(12);
+    console.log('Semi schaal 1/2');
   } else {
-    calculatedContribution.value = totalBruto.value.multipliedBy(tarrifOnePercentage)
-    console.log('Alles schaal 1')
+    calculatedContribution.value = totalBruto.value.multipliedBy(tarrifOnePercentage);
+    console.log('Alles schaal 1');
   }
 
   showResults.value = true;
