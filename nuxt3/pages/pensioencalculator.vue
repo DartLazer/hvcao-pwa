@@ -68,16 +68,9 @@
         </div>
 
         <div v-if="showResults" ref="resultsRef" class="mt-3">
-
           <buy-me-coffee/>
-
-
           <h5>Berekende Pensioenbijdrage</h5>
-          <p>Op basis van de ingevoerde informatie zou je maandelijks <strong>€{{
-              formatNumber(calculatedContribution)
-            }}
-            netto</strong>
-            apart moeten zetten voor je pensioen.</p>
+          <p>Op basis van de ingevoerde informatie zou je maandelijks <strong>€{{ formatNumber(calculatedContribution) }} netto</strong> apart moeten zetten voor je pensioen.</p>
 
           <h6>Details:</h6>
 
@@ -102,7 +95,7 @@
                   </select>
                   <span class="badge bg-info ms-2">Nieuw</span>
                 </th>
-                <td>€{{ formatNumber((netoBrutoToeslag - brutoToeslag)) }}</td>
+                <td>€{{ formatNumber(netoBrutoToeslag - brutoToeslag) }}</td>
               </tr>
               <tr>
                 <th scope="row" class="fw-normal">Staffel 1</th>
@@ -112,7 +105,6 @@
                 <th scope="row" class="fw-normal">Staffel 2</th>
                 <td>€{{ formatNumber(staffel_2) }}</td>
               </tr>
-              <!-- Empty row for spacing -->
               <tr>
                 <td colspan="2" style="height: 20px;"></td>
               </tr>
@@ -126,6 +118,7 @@
               </tr>
               </tbody>
             </table>
+
             <p class="fw-light">
               Op je loonstrookje staan deze bedragen als volgt vermeld:
             </p>
@@ -138,8 +131,6 @@
               <li><span class="fw-semibold">Vrijvalstaffel 2</span> Pensioentoeslag bov.</li>
             </ul>
           </div>
-
-
         </div>
       </div>
     </div>
@@ -147,18 +138,16 @@
 </template>
 
 <script setup>
-import BigNumber from 'bignumber.js';
 import salarisTabel from '@/assets/salaris_tabel.json';
 import vrijvalStaffels from '@/assets/vrijvalstaffels.json';
-import {ref} from "vue";
-import {getCookie, setCookie} from "~/services/CookieHandler";
-import {daysBetween} from "~/services/dateTimeUtils";
+import { ref, nextTick } from "vue";
+import { getCookie, setCookie } from "~/services/CookieHandler";
+import { daysBetween } from "~/services/dateTimeUtils";
 
-const maxEmployerContribution = new BigNumber(137800);
-const taxOneMaxYearlySalary = new BigNumber(75518)
-const tarrifOnePercentage = new BigNumber(0.63)
-const tarrifTwoPercentage = new BigNumber(0.495)
-
+const maxEmployerContribution = 137800;
+const taxOneMaxYearlySalary = 75518;
+const tarrifOnePercentage = 0.63;
+const tarrifTwoPercentage = 0.495;
 
 const formData = ref({
   salaryScale: 1,
@@ -167,111 +156,84 @@ const formData = ref({
   age: 21,
 });
 
-const calculatedContribution = ref(new BigNumber(0));
-const brutoToeslag = ref(new BigNumber(0));
-const netoBrutoToeslag = ref(new BigNumber(0));
-const staffel_1 = ref(new BigNumber(0));
-const staffel_2 = ref(new BigNumber(0));
-const totalBruto = ref(new BigNumber(0));
+const calculatedContribution = ref(0);
+const brutoToeslag = ref(0);
+const netoBrutoToeslag = ref(0);
+const staffel_1 = ref(0);
+const staffel_2 = ref(0);
+const totalBruto = ref(0);
 const resultsRef = ref(null);
 const showResults = ref(false);
 const showAlert = ref(false);
-const selectedPercentage = ref(15); // Default to 15%
+const selectedPercentage = ref(15);
 
 const alertLastShown = getCookie('newRetirementData25Oct2024');
 
-
-// Check if the new data alert has already been shown & dismissed. If not show it.
 if (!alertLastShown || daysBetween(new Date(alertLastShown), new Date()) > 90) {
   showAlert.value = true;
 }
 
 function dismissAlert() {
   showAlert.value = false;
-  setCookie('newRetirementDataAug2024', new Date().toISOString(), 90);
+  setCookie('newRetirementData25Oct2024', new Date().toISOString(), 90);
 }
-
 
 function getSalaryByFunctionAndScale(func, scale) {
   const scaleEntry = salarisTabel[scale.toString()];
   if (!scaleEntry) {
     console.error('Scale entry not found');
-    return new BigNumber(0);
+    return 0;
   }
   const salaryString = func === 'FO' ? scaleEntry.fo : scaleEntry.cpt;
-  return new BigNumber(salaryString.replace(',', '.')).multipliedBy(formData.value.employmentPercentage).dividedBy(100);
+  return Number(salaryString.replace(',', '.')) * (formData.value.employmentPercentage / 100);
 }
 
 function getVrijvalStaffelsByAge(age) {
-  const ageKey = age.toString();
-  const staffelsForAge = vrijvalStaffels[ageKey];
-  if (!staffelsForAge) {
-    console.error('No entry found for this age');
-    return {};
-  }
-  return staffelsForAge;
+  return vrijvalStaffels[age.toString()] || {};
 }
 
-function calculateVrijval(monthly_salary, staffels, retirement_giving_salary) {
-  let vrijval_1;
-  let vrijval_2;
-  if (retirement_giving_salary.isGreaterThan(maxEmployerContribution)) {
-    vrijval_1 = maxEmployerContribution.dividedBy(12).multipliedBy(staffels[1]);
-    vrijval_2 = retirement_giving_salary.minus(maxEmployerContribution).dividedBy(12).multipliedBy(staffels[2]);
-  } else {
-    vrijval_1 = retirement_giving_salary.dividedBy(12).multipliedBy(staffels[1]);
-    vrijval_2 = new BigNumber(0);
-  }
+function calculateVrijval(monthlySalary, staffels, retirementGivingSalary) {
+  const vrijval_1 = retirementGivingSalary > maxEmployerContribution
+      ? (maxEmployerContribution / 12) * staffels[1]
+      : (retirementGivingSalary / 12) * staffels[1];
+  const vrijval_2 = retirementGivingSalary > maxEmployerContribution
+      ? ((retirementGivingSalary - maxEmployerContribution) / 12) * staffels[2]
+      : 0;
   staffel_1.value = vrijval_1;
   staffel_2.value = vrijval_2;
-  return vrijval_1.plus(vrijval_2);
+  return vrijval_1 + vrijval_2;
 }
-
 
 function calculateContribution() {
   const monthlySalary = getSalaryByFunctionAndScale(formData.value.function, formData.value.salaryScale);
-  const retirementGivingSalary = monthlySalary.multipliedBy(12.84);
+  const retirementGivingSalary = monthlySalary * 12.84;
   const staffels = getVrijvalStaffelsByAge(formData.value.age);
   const vrijval = calculateVrijval(monthlySalary, staffels, retirementGivingSalary);
 
-  const brutoContribution = retirementGivingSalary.dividedBy(12).multipliedBy(0.1);
-  const completedBrutoContribution = brutoContribution.multipliedBy(selectedPercentage.value).dividedBy(10);
+  const brutoContribution = retirementGivingSalary / 12 * 0.1;
+  const completedBrutoContribution = brutoContribution * (selectedPercentage.value / 10);
   brutoToeslag.value = brutoContribution;
   netoBrutoToeslag.value = completedBrutoContribution;
-  totalBruto.value = completedBrutoContribution.plus(vrijval);
+  totalBruto.value = completedBrutoContribution + vrijval;
 
-  if (monthlySalary.multipliedBy(12).isGreaterThan(taxOneMaxYearlySalary)) {
-    calculatedContribution.value = completedBrutoContribution.plus(vrijval).dividedBy(2);
-    console.log('Alles schaal 2')
-  } else if (monthlySalary.multipliedBy(12).plus(totalBruto.value.multipliedBy(12)).isGreaterThan(taxOneMaxYearlySalary)) {
-    let tarrifOneLeftOver = taxOneMaxYearlySalary.minus(monthlySalary.multipliedBy(12));
-    console.log('Tarrif one leftover:' + tarrifOneLeftOver);
-    let tarrifTwoAmount = totalBruto.value.multipliedBy(12).minus(tarrifOneLeftOver);
-    console.log('Tarrif two amount:' + tarrifTwoAmount);
-    let netYearly = tarrifOneLeftOver.multipliedBy(tarrifOnePercentage).plus(tarrifTwoAmount.multipliedBy(tarrifTwoPercentage));
-    calculatedContribution.value = netYearly.dividedBy(12);
-    console.log('Semi schaal 1/2');
+  if (monthlySalary * 12 > taxOneMaxYearlySalary) {
+    calculatedContribution.value = (completedBrutoContribution + vrijval) * tarrifTwoPercentage;
+  } else if ((monthlySalary * 12) + (totalBruto.value * 12) > taxOneMaxYearlySalary) {
+    const tarrifOneLeftOver = taxOneMaxYearlySalary - (monthlySalary * 12);
+    const tarrifTwoAmount = (totalBruto.value * 12) - tarrifOneLeftOver;
+    const netYearly = tarrifOneLeftOver * tarrifOnePercentage + tarrifTwoAmount * tarrifTwoPercentage;
+    calculatedContribution.value = netYearly / 12;
   } else {
-    calculatedContribution.value = totalBruto.value.multipliedBy(tarrifOnePercentage);
-    console.log('Alles schaal 1');
+    calculatedContribution.value = totalBruto.value * tarrifOnePercentage;
   }
 
   showResults.value = true;
-
   nextTick(() => {
-    if (resultsRef.value) {
-      resultsRef.value.scrollIntoView({behavior: 'smooth'});
-    }
+    resultsRef.value?.scrollIntoView({behavior: 'smooth'});
   });
 }
 
-const formatNumber = (value) => {
-  // Ensure the value is a BigNumber instance
-  const bigNumberValue = BigNumber.isBigNumber(value) ? value : new BigNumber(value);
-
-  // Convert to a string with two decimal places
-  return bigNumberValue.toFixed(2);
-};
+const formatNumber = (value) => value.toFixed(2);
 </script>
 
 <style scoped>
