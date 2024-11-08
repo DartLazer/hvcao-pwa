@@ -67,6 +67,7 @@ const store = useMainStore();
 const search = ref('');
 const questionsDataObject = ref([]);
 const category = ref('');
+let ready = ref(false);
 let stopWatch;
 
 async function loadQuestionData() {
@@ -180,6 +181,15 @@ async function markAsSeen(questionId) {
   }
 }
 
+const updateSearchFromURL = () => {
+  const url = new URL(window.location.href);
+  console.log(url);
+  const queryValue = url.searchParams.get('q');
+  if (queryValue) {
+    search.value = queryValue;
+  }
+};
+
 const clearSearchAndFilters = function () {
   search.value = '';
   category.value = '';
@@ -203,13 +213,26 @@ stopWatch = watch(() => store.goToQuestionID, goToQuestionID);
 watch(() => store.cleanFiltersAndSearchBar, clearSearchAndFilters);
 
 onMounted(async () => {
+  updateSearchFromURL();
   await loadQuestionData();
   await performVersionCheck();
+  ready.value = true; // Set ready flag to true after initial setup
 });
 watchEffect(() => {
   if (search.value) {
     category.value = '';
   }
+});
+
+watchEffect(() => {
+  if (!ready.value) return; // Skip until ready
+  const url = new URL(window.location.href);
+  if (search.value) {
+    url.searchParams.set('q', search.value);
+  } else {
+    url.searchParams.delete('q');
+  }
+  window.history.replaceState({}, '', url);
 });
 
 watchEffect(() => {
