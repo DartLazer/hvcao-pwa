@@ -1,24 +1,26 @@
 <template>
   <div>
     <div class="search-container pb-3">
-      <input v-model="search" class="form-control" placeholder="Zoeken..."/>
+      <input v-model="search" class="form-control" placeholder="Zoeken..." />
       <button v-if="search" class="clear-search" @click="store.cleanFiltersAndSearchBarNow()">&#10005;</button>
     </div>
-
 
     <select class="form-select form-group" aria-label="category" required v-model="category">
       <option value="">Alle Categorieën</option>
       <option v-for="(cat, index) in uniqueCategories" :value="cat" :key="index">{{ cat }}</option>
     </select>
 
-
     <div class="accordion pb-3" id="caoFAQAccordion">
-      <div class="accordion-item" v-for="(item) in filteredQuestionData" :key="item.id">
+      <div class="accordion-item" v-for="item in filteredQuestionData" :key="item.id">
         <h2 class="accordion-header" :id="'heading' + item.id">
-          <button class="accordion-button collapsed d-flex justify-content-between align-items-center" type="button"
-                  data-bs-toggle="collapse"
-                  :data-bs-target="'#collapse' + item.id" aria-expanded="false" :aria-controls="'collapse' + item.id"
-                  @click="markAsSeen(item.id)"
+          <button
+            class="accordion-button collapsed d-flex justify-content-between align-items-center"
+            type="button"
+            data-bs-toggle="collapse"
+            :data-bs-target="'#collapse' + item.id"
+            aria-expanded="false"
+            :aria-controls="'collapse' + item.id"
+            @click="markAsSeen(item.id)"
           >
             <span>{{ item.title }}</span>
             <span>
@@ -27,13 +29,23 @@
             </span>
           </button>
         </h2>
-        <div :id="'collapse' + item.id" class="accordion-collapse collapse" :aria-labelledby="'heading' + item.id"
-             data-bs-parent="#accordionExample">
+        <div
+          :id="'collapse' + item.id"
+          class="accordion-collapse collapse"
+          :aria-labelledby="'heading' + item.id"
+          data-bs-parent="#accordionExample"
+        >
           <div class="accordion-body">
-            <MarkedExplanation :rawText="item.explanation"/>
-            <hr class="thin-hr-line"/>
-            <p class="small">Bron: <strong>{{ item.source }}</strong></p>
-            <p class="small">Toegevoegd op: <strong>{{ item.date_updated }}</strong></p>
+            <MarkedExplanation :rawText="item.explanation" />
+            <hr class="thin-hr-line" />
+            <p class="small">
+              Bron:
+              <strong>{{ item.source }}</strong>
+            </p>
+            <p class="small">
+              Toegevoegd op:
+              <strong>{{ item.date_updated }}</strong>
+            </p>
           </div>
         </div>
       </div>
@@ -46,11 +58,10 @@
 </template>
 
 <script setup>
-import {get, set, del, keys} from 'idb-keyval';
-import {fetchLatestQuestionDatabaseVersion, fetchQuestionData} from "~/services/api";
-import {markupText} from "~/services/markupCode";
-import {useMainStore} from "~/store/mainStore";
-
+import { get, set, del, keys } from 'idb-keyval';
+import { fetchLatestQuestionDatabaseVersion, fetchQuestionData } from '~/services/api';
+import { markupText } from '~/services/markupCode';
+import { useMainStore } from '~/store/mainStore';
 
 const store = useMainStore();
 const search = ref('');
@@ -58,15 +69,14 @@ const questionsDataObject = ref([]);
 const category = ref('');
 let stopWatch;
 
-
 async function loadQuestionData() {
   // Function that loads the question data from the indexedDB into an object if available.
   const allKeys = await keys();
-  const questionKeys = allKeys.filter(key => String(key).startsWith('question-'));
+  const questionKeys = allKeys.filter((key) => String(key).startsWith('question-'));
   if (questionKeys.length === 0) {
     store.loadingAccordion = true;
-    console.log("No question data available.")
-    return
+    console.log('No question data available.');
+    return;
   }
   questionsDataObject.value = [];
   for (const key of questionKeys) {
@@ -88,14 +98,14 @@ async function performVersionCheck() {
   if (remoteVersion !== localVersion) {
     const questionsData = await fetchQuestionData();
     const allKeys = await keys();
-    const questionKeys = allKeys.filter(key => String(key).startsWith('question-'));
+    const questionKeys = allKeys.filter((key) => String(key).startsWith('question-'));
 
     const localQuestions = {};
     for (const key of questionKeys) {
       localQuestions[key] = await get(key);
     }
 
-    const remoteQuestionIds = new Set(questionsData.map(question => 'question-' + question.id));
+    const remoteQuestionIds = new Set(questionsData.map((question) => 'question-' + question.id));
 
     for (const question of questionsData) {
       const questionKey = 'question-' + question.id;
@@ -131,31 +141,29 @@ async function performVersionCheck() {
   store.loadingAccordion = false;
 }
 
-
 // Generates a list of unique categories dynamically.
 const uniqueCategories = computed(() => {
-  const categories = questionsDataObject.value.map(item => item.category);
+  const categories = questionsDataObject.value.map((item) => item.category);
   return [...new Set(categories)].sort(); // remove duplicates
 });
 
-
 const filteredQuestionData = computed(() => {
-      let searchLower = search.value.toLowerCase();
-      if (searchLower) {
-        return questionsDataObject.value.filter(item =>
-            item.title.toLowerCase().includes(searchLower) ||
-            item.tags.some(tag => tag.toLowerCase().includes(searchLower))
-        );
-      }
-      if (category.value !== '') {
-        return questionsDataObject.value.filter(item =>
-            item.category.toLowerCase().includes(category.value.toLowerCase())
-        );
-      } else {
-        return questionsDataObject.value;
-      }
-    }
-);
+  let searchLower = search.value.toLowerCase();
+  if (searchLower) {
+    return questionsDataObject.value.filter(
+      (item) =>
+        item.title.toLowerCase().includes(searchLower) ||
+        item.tags.some((tag) => tag.toLowerCase().includes(searchLower))
+    );
+  }
+  if (category.value !== '') {
+    return questionsDataObject.value.filter((item) =>
+      item.category.toLowerCase().includes(category.value.toLowerCase())
+    );
+  } else {
+    return questionsDataObject.value;
+  }
+});
 
 async function markAsSeen(questionId) {
   const questionKey = 'question-' + questionId;
@@ -165,7 +173,7 @@ async function markAsSeen(questionId) {
     await set(questionKey, question);
 
     // Update local state
-    const localQuestionIndex = questionsDataObject.value.findIndex(q => q.id === questionId);
+    const localQuestionIndex = questionsDataObject.value.findIndex((q) => q.id === questionId);
     if (localQuestionIndex !== -1) {
       questionsDataObject.value[localQuestionIndex].status = 'seen';
     }
@@ -177,7 +185,6 @@ const clearSearchAndFilters = function () {
   category.value = '';
 };
 
-
 const goToQuestionID = function () {
   search.value = store.goToQuestionID;
 
@@ -188,14 +195,12 @@ const goToQuestionID = function () {
 
   // Restart the watcher
   stopWatch = watch(() => store.goToQuestionID, goToQuestionID);
-}
+};
 
 // Initialize the watcher and capture its stop method in stopWatch
 stopWatch = watch(() => store.goToQuestionID, goToQuestionID);
 
-
 watch(() => store.cleanFiltersAndSearchBar, clearSearchAndFilters);
-
 
 onMounted(async () => {
   await loadQuestionData();
