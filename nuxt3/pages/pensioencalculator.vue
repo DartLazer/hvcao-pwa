@@ -17,13 +17,8 @@
 
           <div v-if="showAlert" class="alert alert-info col-lg-8 rounded-3 mt-3 alert-dismissible fade show"
                role="alert">
-            <h4 class="alert-heading">Tool bijgewerkt volgens de nieuwe salaristabel.</h4>
-            <p class="mb-0">De gegevens die door de tool worden gebruikt, zijn bijgewerkt volgens de nieuwe cao.</p>
-            <ul>
-              <li>Momenteel wordt de salaristabel van 1 oktober 2024 gehanteerd.</li>
-              <li>Je kunt nu zelf kiezen tot welk percentage je de bruto toeslag wilt aanvullen.</li>
-              <li>Het belastingpercentage voor schaal twee is aangepast naar 49,5% in plaats van 50%. Op het loonstrookje wordt echter nog steeds met 50% gerekend, wat kan leiden tot een verschil met de hier getoonde waarden.</li>
-            </ul>
+            <h4 class="alert-heading">Tool bijgewerkt volgens de salaristabel van Januari 2025.</h4>
+            <p class="mb-0">De gegevens die door de tool worden gebruikt zijn bijgewerkt volgens de nieuwste salaristabel in de cao.</p>
             <button type="button" class="btn-close" @click="dismissAlert" aria-label="Close"></button>
           </div>
 
@@ -176,7 +171,7 @@ const showResults = ref(false);
 const showAlert = ref(false);
 const selectedPercentage = ref(15);
 
-const alertLastShown = getCookie('newRetirementData25Oct2024v3');
+const alertLastShown = getCookie('newRetirementData21Feb2025v1');
 
 if (!alertLastShown || daysBetween(new Date(alertLastShown), new Date()) > 90) {
   showAlert.value = true;
