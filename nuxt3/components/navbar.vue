@@ -20,8 +20,10 @@
               </NuxtLink>
             </li>
             <li class="nav-item">
-              <NuxtLink @click.native="collapseNavbar" class="nav-link" exact-active-class="active"
-                        to="/blokbescherming">Blokbescherming
+              <NuxtLink @click.native="handleBlokbeschermingClick" class="nav-link" exact-active-class="active"
+                        to="/blokbescherming">
+                Blokbescherming
+                <span v-if="showBlokbeschermingBadge" class="badge bg-info ms-2">Nieuw</span>
               </NuxtLink>
             </li>
             <li class="nav-item">
@@ -47,6 +49,9 @@
 
 <script setup>
 import {useMainStore} from "~/store/mainStore";
+import {ref, onMounted} from 'vue';
+import {getCookie, setCookie} from '~/services/CookieHandler';
+
 
 const store = useMainStore(); // Use the store
 
@@ -57,32 +62,49 @@ const collapseNavbar = () => {
     navbarRef.value.className = 'navbar-collapse collapse';
   }
 }
+
+const showBlokbeschermingBadge = ref(true);
+
+onMounted(() => {
+  const badgeSeen = getCookie('blokbeschermingBadgeSeen');
+  if (badgeSeen) {
+    showBlokbeschermingBadge.value = false;
+  }
+});
+
+const handleBlokbeschermingClick = () => {
+  setCookie('blokbeschermingBadgeSeen', 'yes', 365);
+  showBlokbeschermingBadge.value = false;
+  collapseNavbar();
+};
+
+
 </script>
 
 <style scoped>
 
 .container {
-    color: white;
-  }
+  color: white;
+}
 
-  .navbar .nav-link {
-    //color: white !important;
-  }
+.navbar .nav-link {
+  //color: white !important;
+}
 
 .navbar .nav-link:hover {
   transform: scale(1.1); /* This scales the text up by 10% */
   font-weight: bold;
 }
 
-  .navbar .nav-link:active,
-  .navbar .nav-link:focus{
-    //color: white !important;
-    font-weight: bold;
-  }
+.navbar .nav-link:active,
+.navbar .nav-link:focus {
+  //color: white !important;
+  font-weight: bold;
+}
 
-  .navbar-brand,
-  .navbar-brand:hover {
-    //color: white !important;
-    font-weight: bold;
-  }
+.navbar-brand,
+.navbar-brand:hover {
+  //color: white !important;
+  font-weight: bold;
+}
 </style>
