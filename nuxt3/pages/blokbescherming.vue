@@ -57,9 +57,91 @@
           </tbody>
         </table>
 
-        <blok-bescherming-tabel-accordion />
+        <blok-bescherming-tabel-accordion/>
 
-        <h3>Uitzonderingen op de blokbescherming</h3>
+        <!-- Standby Blok bescherming -->
+
+        <h3>Blokbescherming op Standby’s en Reserves <span class="badge bg-info ms-2">Nieuw</span></h3>
+        <p>
+          Vanaf 1 april 2025 geldt er ook blokbescherming op Standby- en Reservediensten.
+        </p>
+
+        <p>
+          <h5>Wat betekent dit concreet?</h5>
+          - Het wijzigen van de <b>start- of eindtijd</b> van een Standby of Reserve is alleen toegestaan volgens
+          onderstaande tabel.<br>
+          - Het <b>ombouwen</b> van een Standby of Reserve naar een vliegopdracht (VO) of simulatoropdracht (SO) is
+          alleen toegestaan als de <strong>starttijd</strong> van die nieuwe dienst valt binnen de grenzen uit de tabel.<br>
+          - Het is <b>niet toegestaan</b> om meerdere kleine wijzigingen na elkaar door te voeren (“slepen”) die samen
+          buiten de grenzen van de tabel vallen.
+        </p>
+
+        <p>
+          In de tabel hieronder zie je welke compensatie geldt bij wijzigingen, en of daarvoor toestemming van de
+          vlieger nodig is (aangegeven met een <b>*</b>).
+        </p>
+
+        <table class="table table-striped table-bordered">
+          <thead class="thead-dark">
+          <tr>
+            <th>Tijd tot start van de dienst</th>
+            <th>Vervroegen toegestaan</th>
+            <th>Verlaten toegestaan</th>
+            <th>Compensatie / Bewilliging</th>
+            <th>Referentiepunt</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>&gt; 168 uur (7 dagen)</td>
+            <td>Vrij</td>
+            <td>Vrij</td>
+            <td>Geen</td>
+            <td>–</td>
+          </tr>
+          <tr>
+            <td>&le; 168 uur, &gt; 48 uur</td>
+            <td>&le; 4 uur: vrij<br>&gt; 4 uur: 1 PD*</td>
+            <td>&le; 4 uur: vrij<br>&gt; 4 uur: 1 PD*</td>
+            <td>Zie kolommen</td>
+            <td>Laatst gepubliceerde dienst vóór de wijziging</td>
+          </tr>
+          <tr>
+            <td>&le; 48 uur</td>
+            <td>&le; 2 uur: 1 PD<br>&gt; 2 uur: 1 PD*</td>
+            <td>&le; 2 uur: vrij<br>&gt; 2 uur: 1 PD*</td>
+            <td>Zie kolommen</td>
+            <td>Laatst gepubliceerde dienst vóór de wijziging</td>
+          </tr>
+          </tbody>
+        </table>
+        <p class="mb-5">
+          <small>
+            * Bewilliging is noodzakelijk
+          </small>
+        </p>
+
+        <h5>
+          Testperiode: 1 april t/m 30 september 2025
+        </h5>
+        <p>
+          In deze periode wordt het effect van vervroegingen binnen 48 uur getest:
+        </p>
+
+        <ul>
+          <li>
+            Wordt het <b>vervroegen met maximaal 2 uur binnen 48 uur</b> <u>minder dan 184 keer</u> toegepast, dan is
+            voortaan <b>toestemming (bewilliging)</b> nodig. Je ontvangt dan 1 PD compensatie als je akkoord gaat.
+          </li>
+          <li>
+            Wordt deze wijziging <u>184 keer of vaker</u> toegepast, dan is <b>geen toestemming</b> nodig. Je ontvangt
+            dan automatisch 1 PD compensatie.
+          </li>
+        </ul>
+        <hr class="mt-5" />
+        <!-- Einde Standby Blok bescherming -->
+
+        <h3 class="pt-4">Uitzonderingen op de blokbescherming</h3>
         <ul>
           <li>
             <b>Standby</b> op standby diensten geldt geen blokbescherming.
@@ -120,7 +202,7 @@ li {
   }
 }
 
- .button-accordion{
-   background: #f5eddf;
- }
+.button-accordion {
+  background: #f5eddf;
+}
 </style>
