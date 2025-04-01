@@ -202,8 +202,11 @@ li {
   }
 
   .table-responsive-mobile {
-    margin-left: -1rem;
-    margin-right: -1rem;
+    padding-left: 0.0rem;
+    padding-right: 0.0rem;
+    margin-left: 0.0rem;
+    margin-right: 0.0rem;
+
   }
 }
 
