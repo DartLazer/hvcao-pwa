@@ -17,7 +17,7 @@
 
           <div v-if="showAlert" class="alert alert-info col-lg-8 rounded-3 mt-3 alert-dismissible fade show"
                role="alert">
-            <h4 class="alert-heading">Tool bijgewerkt volgens de salaristabel van Januari 2025.</h4>
+            <h4 class="alert-heading">Tool bijgewerkt volgens de salaristabel van Juli 2025 & de Vrijvalstaffels voor 2025.</h4>
             <p class="mb-0">De gegevens die door de tool worden gebruikt zijn bijgewerkt volgens de nieuwste salaristabel in de cao.</p>
             <button type="button" class="btn-close" @click="dismissAlert" aria-label="Close"></button>
           </div>
@@ -171,7 +171,7 @@ const showResults = ref(false);
 const showAlert = ref(false);
 const selectedPercentage = ref(15);
 
-const alertLastShown = getCookie('newRetirementData21Feb2025v1');
+const alertLastShown = getCookie('newSalaryScalesJuly2025v1');
 
 if (!alertLastShown || daysBetween(new Date(alertLastShown), new Date()) > 90) {
   showAlert.value = true;
@@ -179,7 +179,7 @@ if (!alertLastShown || daysBetween(new Date(alertLastShown), new Date()) > 90) {
 
 function dismissAlert() {
   showAlert.value = false;
-  setCookie('newRetirementData25Oct2024', new Date().toISOString(), 90);
+  setCookie('newSalaryScalesJuly2025v1', new Date().toISOString(), 90);
 }
 
 function getSalaryByFunctionAndScale(func, scale) {

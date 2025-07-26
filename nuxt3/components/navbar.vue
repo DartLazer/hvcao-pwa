@@ -23,13 +23,13 @@
               <NuxtLink @click.native="handleBlokbeschermingClick" class="nav-link" exact-active-class="active"
                         to="/blokbescherming">
                 Blokbescherming
-                <span v-if="showBlokbeschermingBadge" class="badge bg-info ms-2">Nieuw</span>
+
               </NuxtLink>
             </li>
             <li class="nav-item">
               <NuxtLink @click.native="collapseNavbar" class="nav-link" exact-active-class="active"
                         to="/pensioencalculator">Pensioenbijdrage Calculator
-              </NuxtLink>
+              </NuxtLink><span v-if="showBlokbeschermingBadge" class="badge bg-info ms-2">Nieuw</span>
             </li>
             <li class="nav-item">
               <NuxtLink @click.native="collapseNavbar" class="nav-link" exact-active-class="active" to="/about">Over
