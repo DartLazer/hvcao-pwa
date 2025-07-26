@@ -40,7 +40,7 @@
             </select>
           </div>
           <div class="mb-3">
-            <label for="age" class="form-label">Leeftijd (die je bereikt in dit kalenderjaar)</label>
+            <label for="age" class="form-label">Leeftijd (op de eerste dag van de huidige maand)</label>
             <select id="age" class="form-select" v-model="formData.age">
               <option v-for="age in 38" :key="age" :value="age + 20">{{ age + 20 }}</option>
             </select>
