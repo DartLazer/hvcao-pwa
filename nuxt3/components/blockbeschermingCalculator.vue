@@ -169,7 +169,7 @@ const calculateScheduleChange = () => {
     }
   } else if (hoursDiff <= 168 && hoursDiff >= 24) {
     bracket = 3;
-    if ((reportTimeChange > -2 && signOutTimeChange < 2)) {
+    if ((reportTimeChange > -2 && signOutTimeChange <= 2)) {
       permissionRequired = "Nee";
       compensation = "Geen";
     } else if ((reportTimeChange > -3) && (signOutTimeChange < 3)) {
