@@ -17,7 +17,7 @@
 
           <div v-if="showAlert" class="alert alert-info col-lg-8 rounded-3 mt-3 alert-dismissible fade show"
                role="alert">
-            <h4 class="alert-heading">Tool bijgewerkt volgens de salaristabel van Juli 2025 & de Vrijvalstaffels voor 2025.</h4>
+            <h4 class="alert-heading">Tool bijgewerkt volgens de salaristabel van Jan 2026 & de Vrijvalstaffels voor 2026.</h4>
             <p class="mb-0">De gegevens die door de tool worden gebruikt zijn bijgewerkt volgens de nieuwste salaristabel in de cao.</p>
             <button type="button" class="btn-close" @click="dismissAlert" aria-label="Close"></button>
           </div>
