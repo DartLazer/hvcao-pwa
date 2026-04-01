@@ -220,16 +220,13 @@ function calculateContribution() {
   netoBrutoToeslag.value = completedBrutoContribution;
   totalBruto.value = completedBrutoContribution + vrijval;
 
-  if (monthlySalary * 12 > taxOneMaxYearlySalary) {
-    calculatedContribution.value = (completedBrutoContribution + vrijval) * tarrifTwoPercentage;
-  } else if ((monthlySalary * 12) + (totalBruto.value * 12) > taxOneMaxYearlySalary) {
-    const tarrifOneLeftOver = taxOneMaxYearlySalary - (monthlySalary * 12);
-    const tarrifTwoAmount = (totalBruto.value * 12) - tarrifOneLeftOver;
-    const netYearly = tarrifOneLeftOver * tarrifOnePercentage + tarrifTwoAmount * tarrifTwoPercentage;
-    calculatedContribution.value = netYearly / 12;
-  } else {
-    calculatedContribution.value = totalBruto.value * tarrifOnePercentage;
-  }
+  const yearlySalary = monthlySalary * 12;
+  if (yearlySalary <= 0) return;
+  const totalNetSalary = yearlySalary > taxOneMaxYearlySalary
+      ? taxOneMaxYearlySalary * tarrifOnePercentage + (yearlySalary - taxOneMaxYearlySalary) * tarrifTwoPercentage
+      : yearlySalary * tarrifOnePercentage;
+  const effectiveTaxRate = totalNetSalary / yearlySalary;
+  calculatedContribution.value = totalBruto.value * effectiveTaxRate;
 
   showResults.value = true;
   nextTick(() => {
