@@ -1,5 +1,9 @@
 {
   "private": true,
+  "engines": {
+    "node": ">=22 <23",
+    "npm": ">=10"
+  },
   "scripts": {
     "build": "nuxt generate",
     "dev": "nuxt dev",
@@ -7,23 +11,24 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "start": "nuxt start",
-    "buildandpreview": "nuxt generate && nuxt preview"
+    "buildandpreview": "nuxt generate && nuxt preview",
+    "test:calc": "node --test tests/calculators.test.mjs"
   },
   "devDependencies": {
-    "@types/node": "^18.19.8",
-    "@vite-pwa/nuxt": "^0.4.0",
-    "nuxt": "^3.8.2",
-    "sass": "^1.70.0"
+    "@types/node": "^22.18.0",
+    "@vite-pwa/nuxt": "^0.10.8",
+    "nuxt": "^3.21.11",
+    "sass": "^1.93.2"
   },
   "dependencies": {
-    "@pinia/nuxt": "^0.5.1",
+    "@pinia/nuxt": "^0.6.1",
     "@popperjs/core": "^2.11.8",
     "bignumber.js": "^9.1.2",
     "bootstrap": "^5.3.2",
-    "dompurify": "^3.3.2",
+    "dompurify": "^3.4.17",
     "flatpickr": "^4.6.13",
     "idb-keyval": "^6.2.1",
-    "pinia": "^2.1.7",
+    "pinia": "^2.2.5",
     "posthog-js": "^1.100.0"
   }
 }
