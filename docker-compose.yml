@@ -15,12 +15,14 @@ services:
     build:
       context: .
       dockerfile: Nuxt3Dockerfile
+      args:
+        NUXT_PUBLIC_API_REMOTE_HOST: ${NUXT_PUBLIC_API_REMOTE_HOST:-https://hvcao-api.sky-t.nl}
     command: npx nuxt start
     ports:
       - '3099:3000'
     environment:
       - NODE_ENV=production
-      - NUXT_PUBLIC_API_REMOTE_HOST=https://hvcao-api.sky-t.nl
+      - NUXT_PUBLIC_API_REMOTE_HOST=${NUXT_PUBLIC_API_REMOTE_HOST:-https://hvcao-api.sky-t.nl}
     restart: always
     networks:
       - hv_cao_network

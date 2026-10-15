@@ -147,11 +147,7 @@ import vrijvalStaffels from '@/assets/vrijvalstaffels.json';
 import {ref, nextTick} from "vue";
 import {getCookie, setCookie} from "~/services/CookieHandler";
 import {daysBetween} from "~/services/dateTimeUtils";
-
-const maxEmployerContribution = 137800;
-const taxOneMaxYearlySalary = 75518;
-const tarrifOnePercentage = 0.63;
-const tarrifTwoPercentage = 0.505;
+import {calculatePensionContribution, getSalaryByFunctionAndScale as getSalaryByFunctionAndScaleBase} from "~/services/pensionCalculator";
 
 const formData = ref({
   salaryScale: 1,
@@ -183,53 +179,25 @@ function dismissAlert() {
 }
 
 function getSalaryByFunctionAndScale(func, scale) {
-  const scaleEntry = salarisTabel[scale.toString()];
-  if (!scaleEntry) {
-    console.error('Scale entry not found');
-    return 0;
-  }
-  const salaryString = func === 'FO' ? scaleEntry.fo : scaleEntry.cpt;
-  return Number(salaryString.replace(',', '.')) * (formData.value.employmentPercentage / 100);
-}
-
-function getVrijvalStaffelsByAge(age) {
-  return vrijvalStaffels[age.toString()] || {};
-}
-
-function calculateVrijval(monthlySalary, staffels, retirementGivingSalary) {
-  const vrijval_1 = retirementGivingSalary > maxEmployerContribution
-      ? (maxEmployerContribution / 12) * staffels[1]
-      : (retirementGivingSalary / 12) * staffels[1];
-  const vrijval_2 = retirementGivingSalary > maxEmployerContribution
-      ? ((retirementGivingSalary - maxEmployerContribution) / 12) * staffels[2]
-      : 0;
-  staffel_1.value = vrijval_1;
-  staffel_2.value = vrijval_2;
-  return vrijval_1 + vrijval_2;
+  return getSalaryByFunctionAndScaleBase(salarisTabel, func, scale, formData.value.employmentPercentage);
 }
 
 function calculateContribution() {
-  const monthlySalary = getSalaryByFunctionAndScale(formData.value.function, formData.value.salaryScale);
-  const retirementGivingSalary = monthlySalary * 12.84;
-  const staffels = getVrijvalStaffelsByAge(formData.value.age);
-  const vrijval = calculateVrijval(monthlySalary, staffels, retirementGivingSalary);
-
-  const brutoContribution = retirementGivingSalary / 12 * 0.1;
-  const completedBrutoContribution = brutoContribution * (selectedPercentage.value / 10);
-  brutoToeslag.value = brutoContribution;
-  netoBrutoToeslag.value = completedBrutoContribution;
-  totalBruto.value = completedBrutoContribution + vrijval;
-
-  if (monthlySalary * 12 > taxOneMaxYearlySalary) {
-    calculatedContribution.value = (completedBrutoContribution + vrijval) * tarrifTwoPercentage;
-  } else if ((monthlySalary * 12) + (totalBruto.value * 12) > taxOneMaxYearlySalary) {
-    const tarrifOneLeftOver = taxOneMaxYearlySalary - (monthlySalary * 12);
-    const tarrifTwoAmount = (totalBruto.value * 12) - tarrifOneLeftOver;
-    const netYearly = tarrifOneLeftOver * tarrifOnePercentage + tarrifTwoAmount * tarrifTwoPercentage;
-    calculatedContribution.value = netYearly / 12;
-  } else {
-    calculatedContribution.value = totalBruto.value * tarrifOnePercentage;
-  }
+  const calculation = calculatePensionContribution({
+    salaryTable: salarisTabel,
+    vrijvalStaffels,
+    func: formData.value.function,
+    scale: formData.value.salaryScale,
+    employmentPercentage: formData.value.employmentPercentage,
+    age: formData.value.age,
+    selectedPercentage: selectedPercentage.value,
+  });
+  brutoToeslag.value = calculation.brutoContribution;
+  netoBrutoToeslag.value = calculation.completedBrutoContribution;
+  staffel_1.value = calculation.staffel1;
+  staffel_2.value = calculation.staffel2;
+  totalBruto.value = calculation.totalBruto;
+  calculatedContribution.value = calculation.calculatedContribution;
 
   showResults.value = true;
   nextTick(() => {

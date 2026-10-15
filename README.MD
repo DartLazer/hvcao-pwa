@@ -35,5 +35,6 @@ We appreciate your interest in our project and welcome any contributions or feed
 - Frontend runtime target: **Node.js 22 LTS** (see `Nuxt3Dockerfile` and `nuxt3/package.json` engines).
 - Backend runtime target: **Python 3.12** (see `api/ApiDjangoDockerfile`).
 - For reproducible frontend installs, use `npm ci` in `nuxt3/`.
+- Because the frontend uses `nuxt generate`, `NUXT_PUBLIC_API_REMOTE_HOST` is a **build-time** setting for the produced static assets: rebuild the frontend image whenever this value changes.
 - Backend startup should run `python manage.py migrate` (migrations are committed in-repo; avoid runtime `makemigrations` in production).
 - `docker-compose.yml` intentionally keeps an unpinned `postgres` image because the currently deployed PostgreSQL major version must be confirmed by operators before pinning or upgrading the existing data directory.

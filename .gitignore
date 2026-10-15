@@ -1,0 +1,9 @@
+# Python cache artifacts
+**/__pycache__/
+*.py[cod]
+
+# Local database artifacts
+api/db.sqlite3
+
+# OS/editor cruft
+.DS_Store

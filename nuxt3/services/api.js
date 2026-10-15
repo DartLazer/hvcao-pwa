@@ -96,11 +96,16 @@ export async function changePassword(newPassword) {
             },
             body: JSON.stringify({"newPassword": newPassword})
         });
+        const responseData = await response.json().catch(() => ({}));
         if (response.ok) {
-            return true;
+            return { success: true, message: responseData.status || 'Wachtwoord is veranderd!' };
         }
+        const rawError = responseData.error;
+        const message = Array.isArray(rawError) ? rawError.join(' ') : (rawError || 'Wachtwoord niet veranderd, error serverside!');
+        return { success: false, message };
     } catch (e) {
         console.warn('Unable to post to api. Offline?', e)
+        return { success: false, message: 'Unable to connect to password endpoint.' };
     }
 }
 

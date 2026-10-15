@@ -23,6 +23,9 @@
               <input type="password" class="form-control" placeholder="Nieuwe Wachtwoord" required
                      v-model="passwordCheck">
             </div>
+            <p class="small text-muted mt-2">
+              Gebruik minimaal 8 tekens. Veelvoorkomende of volledig numerieke wachtwoorden worden geweigerd.
+            </p>
             <div v-if="passwordChangeError.show" class="alert mt-3"
                  :class="{'alert-danger': !passwordChangeError.success, 'alert-success': passwordChangeError.success}"
                  role="alert">
@@ -45,25 +48,23 @@ import {changePassword} from '~/services/api.js'
 const password = ref('');
 const passwordCheck = ref('');
 const passwordChangeError = ref({show: false, message: ''});
-
 const changePasswordForm = async () => {
-  console.log(password + passwordCheck)
   if (password.value !== passwordCheck.value) {
     showErrorMessage("Wachtwoorden komen niet overeen.")
     return
   }
 
-  if (password.value.length < 6) {
-    showErrorMessage("Minimale wachtwoord lengte is 6.")
+  if (password.value.length < 8) {
+    showErrorMessage("Minimale wachtwoord lengte is 8.")
     return
   }
 
   const response = await changePassword(password.value)
 
-  if (response) {
-    showErrorMessage('Wachtwoord is veranderd!', true, false)
+  if (response.success) {
+    showErrorMessage(response.message, true, false)
   } else {
-    showErrorMessage('Wachtwoord niet veranderd, error serverside!')
+    showErrorMessage(response.message)
   }
 }
 
