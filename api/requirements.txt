@@ -1,4 +1,4 @@
-Django==5.2.18
+Django==6.1.2
 djangorestframework==3.17.2
 whitenoise==6.12.0
 gunicorn==26.2.0
