@@ -1,6 +1,11 @@
 // @ts-ignore
 export default defineNuxtConfig({
   ssr: false,
+  runtimeConfig: {
+      public: {
+          apiRemoteHost: process.env.NUXT_PUBLIC_API_REMOTE_HOST || 'https://hvcao-api.sky-t.nl'
+      }
+  },
 
   app: {
       head: {

@@ -1,4 +1,6 @@
 from django.contrib.auth import authenticate
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 from django.http import Http404
 from rest_framework import status, generics
 from rest_framework.decorators import api_view
@@ -49,6 +51,8 @@ class GetQuestionVersion(APIView):
         """
         try:
             question_version = QuestionVersion.objects.first()
+            if question_version is None:
+                raise Http404
             return Response({"version": question_version.version})
         except QuestionVersion.DoesNotExist:
             raise Http404
@@ -59,6 +63,7 @@ class QuestionDataCreateAPIView(APIView):
     permission_classes_by_method = {
         'POST': [IsAuthenticated],
         'GET': [AllowAny],
+        'PUT': [IsAuthenticated],
         'DELETE': [IsAuthenticated],
     }
 
@@ -122,9 +127,10 @@ class ChangePasswordView(APIView):
         if new_password is None:
             return Response({'error': 'Wachtwoord veld is leeg'}, status=status.HTTP_400_BAD_REQUEST)
 
-        if len(new_password) < 6:
-            return Response({'error': 'Wachtwoord moet minimaal 6 tekens lang zijn'},
-                            status=status.HTTP_411_LENGTH_REQUIRED)
+        try:
+            validate_password(new_password, user=user)
+        except ValidationError as exc:
+            return Response({'error': exc.messages}, status=status.HTTP_400_BAD_REQUEST)
 
         user.set_password(new_password)
         user.save()

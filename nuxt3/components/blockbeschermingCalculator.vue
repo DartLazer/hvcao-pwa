@@ -72,6 +72,7 @@
 
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.css';
+import {calculateBlockProtection} from "~/services/blockProtectionCalculator";
 
 const notificationDatePicker = ref(null);
 const originalReportingDatePicker = ref(null);
@@ -142,59 +143,13 @@ onMounted(() => {
 
 
 const calculateScheduleChange = () => {
-  let notificationTime = new Date(notificationTimestamp.value).getTime();
-  let originalReportingTime = new Date(originalReportingTimestamp.value).getTime();
-  let originalSignOutTime = new Date(originalSignOutTimestamp.value).getTime();
-  let newReportingTime = new Date(newReportingTimestamp.value).getTime();
-  let newSignOutTime = new Date(newSignOutTimestamp.value).getTime();
-
-  let timeDiff = Math.abs(notificationTime - originalReportingTime);
-  let hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60));
-
-  let bracket;
-  let permissionRequired = "Nee";
-  let compensation;
-
-  let reportTimeChange = (newReportingTime - originalReportingTime) / (1000 * 60 * 60);
-  let signOutTimeChange = (newSignOutTime - originalSignOutTime) / (1000 * 60 * 60);
-
-  if (hoursDiff > 336) {
-    bracket = 1;
-    compensation = 0;
-  } else if (hoursDiff <= 336 && hoursDiff > 168) {
-    bracket = 2;
-    if (Math.abs(reportTimeChange) > 3 || Math.abs(signOutTimeChange) > 3) {
-      permissionRequired = "Ja";
-      compensation = '1 PD';
-    }
-  } else if (hoursDiff <= 168 && hoursDiff >= 24) {
-    bracket = 3;
-    if ((reportTimeChange > -2 && signOutTimeChange <= 2)) {
-      permissionRequired = "Nee";
-      compensation = "Geen";
-    } else if ((reportTimeChange > -3) && (signOutTimeChange < 3)) {
-      permissionRequired = "Nee";
-      compensation = '1 PD';
-    } else if (reportTimeChange <= -3 || signOutTimeChange >= 3) {
-      permissionRequired = "Ja";
-      compensation = "1 PD";
-    }
-  } else {
-    bracket = 4;
-    if (reportTimeChange < 0 || signOutTimeChange > 2) {
-      permissionRequired = "Ja";
-      compensation = '1 PD';
-    } else {
-      permissionRequired = "Nee";
-      compensation = "Geen";
-    }
-  }
-
-  calculationResult.value = {
-    bracket,
-    permissionRequired,
-    compensation
-  };
+  calculationResult.value = calculateBlockProtection({
+    notificationTimestamp: notificationTimestamp.value,
+    originalReportingTimestamp: originalReportingTimestamp.value,
+    originalSignOutTimestamp: originalSignOutTimestamp.value,
+    newReportingTimestamp: newReportingTimestamp.value,
+    newSignOutTimestamp: newSignOutTimestamp.value,
+  });
 };
 
 </script>

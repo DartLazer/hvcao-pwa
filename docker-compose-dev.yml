@@ -5,18 +5,23 @@ services:
     build:
       context: .
       dockerfile: Nuxt3Dockerfile
+      args:
+        NUXT_PUBLIC_API_REMOTE_HOST: ${NUXT_PUBLIC_API_REMOTE_HOST:-http://localhost:8002}
     command: npm run dev
     ports:
       - '3099:3000'
     environment:
       - NODE_ENV=production
+      - NUXT_PUBLIC_API_REMOTE_HOST=${NUXT_PUBLIC_API_REMOTE_HOST:-http://localhost:8002}
     restart: always
 
   hvcao_api_docker:
     build:
       context: ./api
       dockerfile: ApiDjangoDockerfile
-    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver "
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8002"
+    ports:
+      - "127.0.0.1:8002:8002"
     volumes:
       - hvcao_static_volume:/code/django_static
       - hv_cao_media_volume:/code/django_mediafiles
