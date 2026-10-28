@@ -60,3 +60,11 @@ jobs:
           python manage.py check
           python manage.py makemigrations --check --dry-run
           python manage.py test
+
+  deployment-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate deployment gate and production health checks
+        run: python3 -m unittest discover -s deploy -p 'test_deploy.py' -v

@@ -1,0 +1,12 @@
+.git
+.env
+config_files
+postgres
+sql_backups
+releases
+**/node_modules
+**/.nuxt
+**/.output
+**/__pycache__
+**/*.pyc
+**/db.sqlite3
