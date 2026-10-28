@@ -36,6 +36,16 @@ class DeploymentGateTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, 'CORS'):
                 deploy.health()
 
+    def test_backup_uses_running_api_database_role(self):
+        with patch.object(deploy, 'capture', return_value='["existing_app_role", "existing_db"]'):
+            command = deploy.database_backup_command(['/tmp/compose.yml'])
+        self.assertEqual(command[-5:], ['pg_dump', '--no-owner', '-U', 'existing_app_role', 'existing_db'])
+
+    def test_backup_rejects_missing_app_configuration(self):
+        with patch.object(deploy, 'capture', return_value='[null, null]'):
+            with self.assertRaisesRegex(RuntimeError, 'connection settings'):
+                deploy.database_backup_command(['/tmp/compose.yml'])
+
 
 if __name__ == '__main__':
     unittest.main()

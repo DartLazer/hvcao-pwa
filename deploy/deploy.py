@@ -12,6 +12,7 @@ from pathlib import Path
 import re
 import shutil
 import subprocess
+import sys
 import time
 import urllib.request
 
@@ -107,13 +108,22 @@ def baseline():
     return state
 
 
+def database_backup_command(files):
+    # Database container environment can be stale after an existing volume was restored.
+    # Use the same database role/name as the currently running application.
+    user, database = json.loads(capture(compose(files, 'exec', '-T', 'hvcao_api_docker',
+        'python', '-c', 'import os,json; print(json.dumps([os.environ.get("SQL_USER"), os.environ.get("SQL_DATABASE")]))')))
+    if not user or not database:
+        raise RuntimeError('Running API does not provide database connection settings')
+    return compose(files, 'exec', '-T', 'database', 'pg_dump', '--no-owner', '-U', user, database)
+
+
 def backup_database(files):
     directory = ROOT / 'backups'
     directory.mkdir(exist_ok=True)
     stamp = dt.datetime.now(dt.timezone.utc).strftime('%Y%m%dT%H%M%SZ')
     destination = directory / (stamp + '.sql.gz')
-    command = compose(files, 'exec', '-T', 'database', 'sh', '-c',
-        'exec pg_dump --no-owner -U "$POSTGRES_USER" "$POSTGRES_DB"')
+    command = database_backup_command(files)
     with subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE) as process:
         with gzip.open(destination, 'wb') as output:
             shutil.copyfileobj(process.stdout, output)
@@ -231,4 +241,8 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except Exception:
+        LOG.exception('Automatic deployment check failed')
+        sys.exit(1)
