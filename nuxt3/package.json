@@ -17,7 +17,7 @@
   "devDependencies": {
     "@types/node": "^22.18.0",
     "@vite-pwa/nuxt": "^0.10.8",
-    "nuxt": "^3.21.11",
+    "nuxt": "^4.6.2",
     "sass": "^1.93.2"
   },
   "dependencies": {
